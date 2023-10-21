@@ -8,6 +8,8 @@
 }
 
 button{
+    font-size: 1em;
+    text-wrap: nowrap;
     width: 100%;
     padding: 1px;
     margin:1px
