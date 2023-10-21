@@ -1,5 +1,6 @@
 body{
   background-color: lightgray;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .container{
@@ -34,6 +35,14 @@ body{
   height: 300px;
 }
 
+.module-title{
+  padding: 0;
+  margin: 0;
+  margin-right: 2px;
+  margin-left: 2px;
+  text-decoration: underline;
+}
+
 .close-module{
   background-color: aquamarine;
   width: 20px;
@@ -42,7 +51,6 @@ body{
   padding: 0;
   margin-right: 2px;
   margin-left: 2px;
-  margin-bottom: 3px;
   cursor: pointer;
 }
 
@@ -50,7 +58,9 @@ body{
   display: flex;
   flex-direction: row;
   background-color: white;
-  justify-content: end;
+  justify-content: space-between;
+  padding-bottom: 3px;
+  /* justify-content: end; */
   /* border: solid; */
   /* border-bottom: 3px solid rgb(19, 19, 19); */
 }
