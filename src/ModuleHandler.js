@@ -1,16 +1,20 @@
 import Module from './Module.js'
 import './App.css';
 
-export default function ModuleHandler() {
+export default function ModuleHandler(moduleList) {
+    // console.log(moduleList.moduleList[0].props.purpose)
+    // console.log(moduleList.moduleList[1].props.purpose)
+    console.log(moduleList);
     return (
         <div className="module-container">
             <div className="row"> {/* row could be a component that renders x amount of modules based on props, module container could do the same thing rendering x rows of x modules*/}
-                <Module
+                {moduleList.moduleList}
+                {/* <Module
                     purpose="notes"
-                    title="Notes" />
-                <Module
+                    title="Notes" /> */}
+                {/* <Module
                     purpose="kanban"
-                    title="Kanban Board" />
+                    title="Kanban Board" /> */}
                 <Module
                     purpose="reflective"
                     title="Reflective Journal" />

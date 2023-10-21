@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 
 export default function Module(props) {
-    console.log(props);
+    // console.log(props);
     let [open, updateOpen] = useState(true);
     function checkStatus() {
         if (open) {
             return (<div className="module">
                 <div className="menu-bar">
-                    {console.log(props.title)}
+                    {/* {console.log(props.title)} */}
                     <p className="module-title">{props.title}</p>
                     <button onClick={closeMod} className="close-module">X</button>
                 </div>
