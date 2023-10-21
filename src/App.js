@@ -1,42 +1,19 @@
 import './App.css';
+import Module from './Module.js'
 
 function App() {
   return (
     <div class="container">
       <div class="module-container">
         <div class="row">
-          <div class="module">
-            <div class="menu-bar">
-              <button class="close-module">X</button>
-            </div>
-          </div>
-          <div class="module">
-            <div class="menu-bar">
-              <button class="close-module">X</button>
-            </div>
-          </div>
-          <div class="module">
-            <div class="menu-bar">
-              <button class="close-module">X</button>
-            </div>
-          </div>
+          <Module />
+          <Module />
+          <Module />
         </div>
         <div class="row">
-          <div class="module">
-            <div class="menu-bar">
-              <button class="close-module">X</button>
-            </div>
-          </div>
-          <div class="module">
-            <div class="menu-bar">
-              <button class="close-module">X</button>
-            </div>
-          </div>
-          <div class="module">
-            <div class="menu-bar">
-              <button class="close-module">X</button>
-            </div>
-          </div>
+          <Module />
+          <Module />
+          <Module />
         </div>
       </div>
     </div>
