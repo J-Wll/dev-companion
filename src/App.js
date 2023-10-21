@@ -37,7 +37,6 @@ function App() {
 
   return (
     <div className="container">
-      {/* <button onClick={addNotes}>cl</button> */}
       <Sidebar />
       <ModuleHandler moduleList={moduleList} />
     </div>
