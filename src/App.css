@@ -24,15 +24,14 @@ body{
 .module{
   resize: both;
   overflow: auto;
-  background-color: grey;
-  border: solid;
-  border-color: white;
   min-width: 100px;
-  min-height: 100px;
   width: 300px;
-  height: 300px;
   max-width: 90%;
   margin: 2px;
+  background-color: grey;
+  border: 3px solid white;
+  min-height: 100px;
+  height: 300px;
 }
 
 .close-module{
@@ -53,5 +52,18 @@ body{
   background-color: white;
   justify-content: end;
   /* border: solid; */
-  border-bottom: 3px solid rgb(19, 19, 19);
+  /* border-bottom: 3px solid rgb(19, 19, 19); */
+}
+
+.module-body{
+  display: flex;
+  justify-content: center;
+  height: 92%;
+}
+
+textarea{
+  /* max-width: 95%; */
+  width: 95%;
+  height: 95%;
+  resize: none;
 }
