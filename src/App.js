@@ -1,18 +1,19 @@
-import './App.css';
-import './Sidebar.css'
+import './css/App.css';
+import './css/Sidebar.css'
 import Module from './Module';
 import ModuleHandler from './ModuleHandler';
 import { useState } from "react";
 
 
 function App() {
-
+  // [stateVariable, functionToUpdateState] = useState(defaultValue)
   let [modulesCreated, updateModulesCreated] = useState(0)
   let [moduleList, updateModuleList] = useState([
     <Module key="-1" purpose="notes" title="Notes" />,
     <Module key="-2" purpose="kanban" title="Kanban Board" />
   ]);
 
+  // Adds a notes module to the array that gets rendered in ModuleHandler
   function addNotes() {
     updateModuleList([...moduleList, <Module key={modulesCreated} purpose="notes" title="Notes" />])
 
@@ -21,6 +22,7 @@ function App() {
     console.log(modulesCreated)
   }
 
+  // Sidebar for controlling the main application
   function Sidebar() {
     return (
       // these buttons could check how many in row, if already 3 create new row, else add to existing row

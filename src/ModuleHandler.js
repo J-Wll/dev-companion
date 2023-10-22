@@ -1,5 +1,6 @@
 import Module from './Module.js'
-import './App.css';
+import './css/App.css';
+import './css/ModuleHandler.css'
 
 export default function ModuleHandler(moduleList) {
     // console.log(moduleList.moduleList[0].props.purpose)

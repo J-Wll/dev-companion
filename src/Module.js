@@ -1,9 +1,11 @@
 import { useState} from "react";
+import './css/Module.css'
 
 export default function Module(props) {
     // console.log(props);
     let [open, updateOpen] = useState(true);
     function checkStatus() {
+        // only returns modules with open === true
         if (open) {
             return (<div className="module">
                 <div className="menu-bar">
@@ -18,6 +20,7 @@ export default function Module(props) {
         }
     }
 
+    // toggle open - this can be used for minimising modules to just the menu bar too
     function closeMod() {
         updateOpen(open => !open)
     }
@@ -34,6 +37,7 @@ export default function Module(props) {
     }
 
     return (
+        // Only returns anything if checkstatus passes
         checkStatus()
     )
 }
