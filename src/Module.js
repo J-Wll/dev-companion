@@ -2,7 +2,7 @@ import { useState} from "react";
 import './css/Module.css'
 
 export default function Module(props) {
-    // console.log(props);
+    console.log(props);
     let [open, updateOpen] = useState(true);
     function checkStatus() {
         // only returns modules with open === true

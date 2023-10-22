@@ -6,12 +6,24 @@ import { useState } from "react";
 
 
 function App() {
+  // default config during testing
+  // row implementation is temporary, that'll be automatically configured based on module count and or settings
+  let arr = [];
+  let startingModules = [
+    <div key="row-1" className="row">
+      <Module key="-1" purpose="notes" title="Notes" />
+      <Module key="-2" purpose="kanban" title="Kanban Board" />
+      <Module key="-3" purpose="reflective" title="Reflective Journal" />
+    </div>,
+    <div key="row-" className="row">
+      <Module key="-4" purpose="wireframe" title="Wireframes" />
+      <Module key="-5" purpose="gitStatus" title="Git Status" />
+      <Module key="-6" purpose="aiChat" title="Chat With AI" />
+    </div>
+  ]
   // [stateVariable, functionToUpdateState] = useState(defaultValue)
   let [modulesCreated, updateModulesCreated] = useState(0)
-  let [moduleList, updateModuleList] = useState([
-    <Module key="-1" purpose="notes" title="Notes" />,
-    <Module key="-2" purpose="kanban" title="Kanban Board" />
-  ]);
+  let [moduleList, updateModuleList] = useState(startingModules);
 
   // Adds a notes module to the array that gets rendered in ModuleHandler
   function addNotes() {

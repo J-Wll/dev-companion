@@ -1,12 +1,14 @@
 .module-container{
     margin:auto;
     display: flex;
+    /* for use with rows */
     flex-direction: column;
-    /* flex-direction: row; */
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     max-width: 95%;
+    /* more dynamic display */
+    /* flex-direction: row; */
   }
   
   .row{
