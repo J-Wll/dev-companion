@@ -1,4 +1,5 @@
 import { useState} from "react";
+import Draggable, {DraggableCore} from "react-draggable";
 import './css/Module.css'
 
 export default function Module(props) {
@@ -7,16 +8,20 @@ export default function Module(props) {
     function checkStatus() {
         // only returns modules with open === true
         if (open) {
-            return (<div className="module">
-                <div className="menu-bar">
+            return (<Draggable handle=".handle"><div className="module">
+                <div className="menu-bar handle">
                     {/* {console.log(props.title)} */}
                     <p className="module-title">{props.title}</p>
+                    <div className="buttons">
+                    {/* <button className="handle close-module">=</button> */}
                     <button onClick={closeMod} className="close-module">X</button>
+                    </div>
                 </div>
                 <div className="module-body">
                     {componentPurpose(props.purpose)}
                 </div>
-            </div>)
+            </div>
+            </Draggable>)
         }
     }
 

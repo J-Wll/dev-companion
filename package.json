@@ -2,14 +2,15 @@
   "name": "dev-companion",
   "version": "0.1.0",
   "private": true,
-  "main":"main.js",
-  "homepage":"./",
+  "main": "main.js",
+  "homepage": "./",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-draggable": "^4.4.6",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -18,7 +19,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron":  "electron .",
+    "electron": "electron .",
     "electron-dev": "set ELECTRON_START_URL=http://localhost:3000 && electron ."
   },
   "eslintConfig": {

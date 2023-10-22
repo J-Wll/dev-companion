@@ -2,18 +2,18 @@
     margin:auto;
     display: flex;
     /* for use with rows */
-    flex-direction: column;
-    flex-wrap: wrap;
+    /* flex-direction: column; */
     align-items: center;
     justify-content: center;
     max-width: 95%;
     /* more dynamic display */
-    /* flex-direction: row; */
+    flex-direction: row;
+    flex-wrap: wrap;
   }
   
-  .row{
+  /* .row{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     max-width: 100%;
-  }
+  } */
