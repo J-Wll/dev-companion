@@ -1,4 +1,4 @@
-import Module from './Module.js'
+import Module from './Module'
 import './css/App.css';
 import './css/ModuleHandler.css'
 
