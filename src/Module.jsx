@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState } from "react";
 import './css/Module.css'
 
 export default function Module(props) {
@@ -25,14 +25,13 @@ export default function Module(props) {
         updateOpen(open => !open)
     }
 
-    function componentPurpose(purpose){
+    function componentPurpose(purpose) {
         // probably check purpose in a dict, one side component names and one components, each component in its own file
 
-        if (purpose==="notes"){
-            // return(<input type="text" placeholder="Text here">js</input>)
+        if (purpose === "notes") {
             return (<textarea
-            type="text"
-            placeholder="Text here"/>)
+                type="text"
+                placeholder="Text here" />)
         }
     }
 
