@@ -8,13 +8,12 @@
     justify-content: center;
     max-width: 95%;
     /* more dynamic display */
-    /* flex-direction: row; */
+    flex-direction: row;
   }
   
-  .row{
+  /* .row{
     display: flex;
     flex-direction: row;
-    /* flex-wrap: wrap; */
     justify-content: space-around;
     max-width: 100%;
-  }
+  } */

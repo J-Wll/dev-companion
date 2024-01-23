@@ -8,7 +8,6 @@ import { useState } from "react";
 function App() {
   // default config during testing
   // row implementation is temporary, that'll be automatically configured based on module count and or settings
-  let arr = [];
   let startingModules = [
     <div key="row-1" className="row">
       <Module key="-1" purpose="notes" title="Notes" />
