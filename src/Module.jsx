@@ -1,5 +1,6 @@
 import { useState } from "react";
 import './css/Module.css'
+import NoteContent from "./noteContent";
 
 export default function Module(props) {
     // console.log(props);
@@ -8,11 +9,7 @@ export default function Module(props) {
         // probably check purpose in a dict, one side component names and one components, each component in its own file 
         if (purpose === "Notes") {
             // Later this should return NotesContent component
-            return (
-                <textarea
-                    type="text"
-                    placeholder="Text here" />
-            )
+            return <NoteContent />
         }
     }
 
