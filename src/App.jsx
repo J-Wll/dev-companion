@@ -38,7 +38,7 @@ function App() {
       // these buttons could check how many in row, if already 3 create new row, else add to existing row
       // close/open side bar buttons should probablu just be chevrons (<>)
 
-      <div className="Sidebar">
+      <div className="sidebar">
         <button>Close Sidebar</button>
         <button onClick={() => { addModule("Notes") }}>Add Notes</button>
         <button onClick={() => { addModule("Kanban") }}>Add Kanban</button>

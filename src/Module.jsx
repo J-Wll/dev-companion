@@ -7,16 +7,18 @@ export default function Module(props) {
     function checkStatus() {
         // only returns modules with open === true
         if (open) {
-            return (<div className="module">
-                <div className="menu-bar">
-                    {/* {console.log(props.title)} */}
-                    <p className="module-title">{props.purpose}</p>
-                    <button onClick={closeMod} className="close-module">X</button>
+            return (
+                <div className="module">
+                    <div className="menu-bar">
+                        {/* {console.log(props.title)} */}
+                        <p className="module-title">{props.purpose}</p>
+                        <button onClick={closeMod} className="close-module">X</button>
+                    </div>
+                    <div className="module-body">
+                        {componentPurpose(props.purpose)}
+                    </div>
                 </div>
-                <div className="module-body">
-                    {componentPurpose(props.purpose)}
-                </div>
-            </div>)
+            )
         }
     }
 
@@ -30,9 +32,11 @@ export default function Module(props) {
 
         if (purpose === "Notes") {
             // Later returns NotesContent component
-            return (<textarea
-                type="text"
-                placeholder="Text here" />)
+            return (
+                <textarea
+                    type="text"
+                    placeholder="Text here" />
+            )
         }
     }
 
