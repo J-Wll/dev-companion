@@ -10,25 +10,24 @@ function App() {
   // row implementation is temporary, that'll be automatically configured based on module count and or settings
   let startingModules = [
     <div key="row-1" className="row">
-      <Module key="-1" purpose="notes" title="Notes" />
-      <Module key="-2" purpose="kanban" title="Kanban Board" />
-      <Module key="-3" purpose="reflective" title="Reflective Journal" />
+      <Module key="-1" purpose="Notes" title="Notes" />
+      <Module key="-2" purpose="Kanban" title="Kanban Board" />
+      <Module key="-3" purpose="Reflective" title="Reflective Journal" />
     </div>,
     <div key="row-" className="row">
-      <Module key="-4" purpose="wireframe" title="Wireframes" />
-      <Module key="-5" purpose="gitStatus" title="Git Status" />
-      <Module key="-6" purpose="aiChat" title="Chat With AI" />
+      <Module key="-4" purpose="Wireframe" title="Wireframes" />
+      <Module key="-5" purpose="GitStatus" title="Git Status" />
+      <Module key="-6" purpose="AiChat" title="Chat With AI" />
     </div>
   ]
-  // [stateVariable, functionToUpdateState] = useState(defaultValue)
-  let [modulesCreated, updateModulesCreated] = useState(0)
-  let [moduleList, updateModuleList] = useState(startingModules);
+
+  const [moduleList, setModuleList] = useState(startingModules);
+  const [modulesCreated, setModulesCreated] = useState(0);
 
   // Adds a notes module to the array that gets rendered in ModuleHandler
-  function addNotes() {
-    updateModuleList([...moduleList, <Module key={modulesCreated} purpose="notes" title="Notes" />])
-
-    updateModulesCreated((modulesCreated) => modulesCreated += 1)
+  function addModule(moduleType) {
+    setModuleList([...moduleList, <Module key={modulesCreated} purpose={moduleType} />])
+    setModulesCreated(modulesCreated + 1);
     console.log(moduleList);
     console.log(modulesCreated)
   }
@@ -41,8 +40,8 @@ function App() {
 
       <div className="Sidebar">
         <button>Close Sidebar</button>
-        <button onClick={addNotes}>Add Notes</button>
-        <button>Add Kanban</button>
+        <button onClick={() => { addModule("Notes") }}>Add Notes</button>
+        <button onClick={() => { addModule("Kanban") }}>Add Kanban</button>
       </div>
     )
   }
