@@ -5,31 +5,40 @@ import Module from './Module';
 import { useState } from "react";
 
 
-function App() {
+export default function App() {
   // default config during testing
   // row implementation is temporary, that'll be automatically configured based on module count and or settings
   let startingModules = [
-      <Module key="-1" purpose="Notes" title="Notes" />,
-      <Module key="-2" purpose="Kanban" title="Kanban Board" />,
-      <Module key="-3" purpose="Reflective" title="Reflective Journal" />,
-      <Module key="-4" purpose="Wireframe" title="Wireframes" />,
-      <Module key="-5" purpose="GitStatus" title="Git Status" />,
-      <Module key="-6" purpose="AiChat" title="Chat With AI" />,
+    { key: self.crypto.randomUUID(), purpose: "Notes" },
+    { key: self.crypto.randomUUID(), purpose: "Kanban" },
+    { key: self.crypto.randomUUID(), purpose: "Reflective" },
+    { key: self.crypto.randomUUID(), purpose: "Wireframe" },
+    { key: self.crypto.randomUUID(), purpose: "GitStatus" },
+    { key: self.crypto.randomUUID(), purpose: "AiChat" }
   ]
 
   const [moduleList, setModuleList] = useState(startingModules);
-  const [modulesCreated, setModulesCreated] = useState(0);
 
   // Adds a notes module to the array that gets rendered in ModuleHandler
   function addModule(moduleType) {
-    setModuleList([...moduleList, <Module key={modulesCreated} purpose={moduleType} />])
-    setModulesCreated(modulesCreated + 1);
+    setModuleList([...moduleList, { key: self.crypto.randomUUID(), purpose: moduleType }])
     console.log(moduleList);
-    console.log(modulesCreated)
   }
 
-  function deleteModule(key) {
-    // setModuleList
+  function deleteModule(target) {
+    console.log("InDelete");
+    console.log(moduleList);
+    console.log(target);
+    console.log(moduleList[0].key)
+    setModuleList((modList) => modList.filter((module) => module.key !== target))
+    console.log(moduleList);
+
+  }
+
+  function getModuleList() {
+    return moduleList.map((module) =>
+      <Module key={module.key} counter={module.key} purpose={module.purpose} deleteModule={deleteModule} />
+    )
   }
 
   // Sidebar for controlling the main application
@@ -46,11 +55,11 @@ function App() {
     )
   }
 
-  function ModuleHandler({ moduleList }) {
-    console.log(moduleList);
+  function ModuleHandler() {
+    console.log(getModuleList());
     return (
       <div className="module-container">
-        {moduleList}
+        {getModuleList()}
       </div>)
   }
 
@@ -59,7 +68,7 @@ function App() {
     <>
       <main className="container">
         <Sidebar />
-        <ModuleHandler moduleList={moduleList} />
+        <ModuleHandler />
       </main>
       {/* <Timers /> */}
       {/* <Footer /> */}
@@ -67,4 +76,3 @@ function App() {
   );
 }
 
-export default App;
