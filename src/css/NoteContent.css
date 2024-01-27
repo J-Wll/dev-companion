@@ -1,0 +1,10 @@
+/* For the theme of the ReactQuill component see QuillSnow.css, these are tweaks to that theme and other elements of the module */
+
+.quill {
+    background-color: floralwhite;
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    padding-bottom: 20px;
+}
+

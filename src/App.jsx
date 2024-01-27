@@ -3,6 +3,7 @@ import './css/Sidebar.css'
 import './css/ModuleHandler.css'
 import Module from './Module';
 import { useState } from "react";
+import NoteContent from './noteContent';
 
 
 export default function App() {

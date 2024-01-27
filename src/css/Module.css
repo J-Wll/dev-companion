@@ -3,8 +3,8 @@
 .module{
     resize: both;
     overflow: auto;
-    min-width: fit-content;
-    max-width: 90%;
+    /* min-width: fit-content; */
+    /* max-width: 90%; */
     margin: 2px;
     background-color: grey;
     border: 3px solid white;
@@ -61,3 +61,7 @@
     padding: 0;
   }
   
+  /* Specific modules */
+  .Notes-module{
+    overflow: hidden;
+  }
