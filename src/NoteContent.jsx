@@ -6,9 +6,17 @@ import "./css/noteContent.css"
 import "./css/QuillSnow.css"
 
 
-export default function NoteContent() {
-    const [noteContent, setNoteContent] = useState("");
+export default function NoteContent(props) {
+    // const noteContent = data;
+    // const setNoteContent = (arg) => data = arg;
+    // const [noteContent, setNoteContent] = useState("");
+    console.log(props);
+    // () => props.setData(props.setData)
+    function handleChange(val){
+        console.log(val)
+        props.setData(props.counter, val)
+    }
     return (
-        <ReactQuill value={noteContent} onChange={setNoteContent} theme="snow"/>
+        <ReactQuill value={props.data} onChange={handleChange} theme="snow"/>
     )
 }

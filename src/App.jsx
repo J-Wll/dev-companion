@@ -10,19 +10,24 @@ export default function App() {
   // default config during testing
   // row implementation is temporary, that'll be automatically configured based on module count and or settings
   let startingModules = [
-    { key: self.crypto.randomUUID(), purpose: "Notes" },
-    { key: self.crypto.randomUUID(), purpose: "Kanban" },
-    { key: self.crypto.randomUUID(), purpose: "Reflective" },
-    { key: self.crypto.randomUUID(), purpose: "Wireframe" },
-    { key: self.crypto.randomUUID(), purpose: "GitStatus" },
-    { key: self.crypto.randomUUID(), purpose: "AiChat" }
+    { key: self.crypto.randomUUID(), purpose: "Notes", data: undefined },
+    { key: self.crypto.randomUUID(), purpose: "Kanban", data: undefined },
+    { key: self.crypto.randomUUID(), purpose: "Reflective", data: undefined },
+    { key: self.crypto.randomUUID(), purpose: "Wireframe", data: undefined },
+    { key: self.crypto.randomUUID(), purpose: "GitStatus", data: undefined },
+    { key: self.crypto.randomUUID(), purpose: "AiChat", data: undefined }
   ]
 
   const [moduleList, setModuleList] = useState(startingModules);
 
-  // Adds a notes module to the array that gets rendered in ModuleHandler
+  function setModuleData(iKey, iValue) {
+    // For everything in the module list, if the key matches the input update that objects data, otherwise it stays the same
+    setModuleList((prev) =>
+      prev.map((mod) => mod.key === iKey ? {...mod, data:iValue } : mod))
+  }
+
   function addModule(moduleType) {
-    setModuleList([...moduleList, { key: self.crypto.randomUUID(), purpose: moduleType }])
+    setModuleList([...moduleList, { key: self.crypto.randomUUID(), purpose: moduleType, data: "undefinasded" }])
     console.log(moduleList);
   }
 
@@ -37,8 +42,9 @@ export default function App() {
   }
 
   function getModuleList() {
+    console.log(moduleList);
     return moduleList.map((module) =>
-      <Module key={module.key} counter={module.key} purpose={module.purpose} deleteModule={deleteModule} />
+      <Module key={module.key} counter={module.key} purpose={module.purpose} deleteModule={deleteModule} data={module.data} setData={setModuleData} />
     )
   }
 
