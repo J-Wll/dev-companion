@@ -2,36 +2,85 @@ import './css/App.css';
 import './css/Sidebar.css'
 import './css/ModuleHandler.css'
 import Module from './Module';
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import NoteContent from './noteContent';
 
 
 export default function App() {
   // default config during testing
   // row implementation is temporary, that'll be automatically configured based on module count and or settings
-  let startingModules = [
-    { key: self.crypto.randomUUID(), purpose: "Notes", data: undefined },
-    { key: self.crypto.randomUUID(), purpose: "Kanban", data: undefined },
-    { key: self.crypto.randomUUID(), purpose: "Reflective", data: undefined },
-    { key: self.crypto.randomUUID(), purpose: "Wireframe", data: undefined },
-    { key: self.crypto.randomUUID(), purpose: "GitStatus", data: undefined },
-    { key: self.crypto.randomUUID(), purpose: "AiChat", data: undefined }
-  ]
 
-  const [moduleList, setModuleList] = useState(startingModules);
+  const [moduleList, setModuleList] = useState([]);
+  // // Data decoupled from modules at this level because otherwise every component is re-rendered whenever data changes
+  // // This way each component "controls" itself and updates the global data for backup
+  const globalModuleData = useRef([]);
+  // const [globalData, setGlobalData] = useState([]);
+
+  // Empty dependencies, triggers once, when modules are loaded from local storage or elsewhere, before this code, this wont trigger
+  useEffect(() => {
+    if (moduleList.length === 0) {
+      console.log("!!!!!!!!!!!!!!!!!USE EFFECT TRIGGERED!!!!!!!!!!!!!!!!!!!");
+      const defaultModules = ["Notes", "Kanban", "Reflective", "Writeframe", "Gitstatus", "AiChat"];
+
+      const startingModuleList = defaultModules.map((moduleType) => {
+        const moduleKey = self.crypto.randomUUID();
+        return { key: moduleKey, purpose: moduleType }
+      }
+      )
+
+      for (let i of startingModuleList) {
+        globalModuleData.current.push({ key: i.key, purpose: i.purpose, data: undefined });
+      }
+
+      console.log("MODULES", startingModuleList, "GLOBAL DATA", globalModuleData.current);
+      setModuleList(startingModuleList);
+    }
+  }, [])
+
+  console.log(globalModuleData);
+
+  // function setModuleData(iKey, iValue) {
+  //   // For everything in the module list, if the key matches the input update that objects data, otherwise it stays the same
+  //   setModuleList((prev) =>
+  //     prev.map((mod) => mod.key === iKey ? { ...mod, data: iValue } : mod))
+  // }
 
   function setModuleData(iKey, iValue) {
+    console.log("!!!!!!!!!!!!!!!!! setModuleData !!!!!!!!!!!!!!!!!!!");
+    console.log(globalModuleData.current);
+
+
     // For everything in the module list, if the key matches the input update that objects data, otherwise it stays the same
-    setModuleList((prev) =>
-      prev.map((mod) => mod.key === iKey ? {...mod, data:iValue } : mod))
+    // globalModuleData.current  ((prev) =>
+    //   prev.map((mod) => mod.key === iKey ? { ...mod, data: iValue } : mod))
+
+    globalModuleData.current = globalModuleData.current.map((mod) => mod.key === iKey ? { ...mod, data: iValue } : mod)
+    console.log(globalModuleData.current);
+
   }
 
   function addModule(moduleType) {
-    setModuleList([...moduleList, { key: self.crypto.randomUUID(), purpose: moduleType, data: "undefinasded" }])
-    console.log(moduleList);
+    console.log("!!!!!!!!!!!!!!!!!ADD MODULE!!!!!!!!!!!!!!!!!!!");
+    console.log(globalModuleData.current);
+
+    const moduleKey = self.crypto.randomUUID()
+    console.log(globalModuleData.current);
+
+    globalModuleData.current = [...globalModuleData.current, { key: moduleKey, purpose: moduleType, data: undefined }]
+    console.log(globalModuleData.current);
+
+
+    setModuleList(() => [...moduleList, { key: moduleKey, purpose: moduleType }])
+    console.log(globalModuleData.current);
+
+    // console.log(moduleList);
   }
 
   function deleteModule(target) {
+    console.log("!!!!!!!!!!!!!!!!! deleteModule !!!!!!!!!!!!!!!!!!!");
+    console.log(globalModuleData.current);
+
+
     console.log("InDelete");
     console.log(moduleList);
     console.log(target);
@@ -42,9 +91,14 @@ export default function App() {
   }
 
   function getModuleList() {
+    console.log("!!!!!!!!!!!!!!!!! getModuleList !!!!!!!!!!!!!!!!!!!");
+    console.log(globalModuleData.current);
+
+
+
     console.log(moduleList);
     return moduleList.map((module) =>
-      <Module key={module.key} counter={module.key} purpose={module.purpose} deleteModule={deleteModule} data={module.data} setData={setModuleData} />
+      <Module key={module.key} counter={module.key} purpose={module.purpose} data={module.data} setData={setModuleData} deleteModule={deleteModule} globalModuleData={globalModuleData} />
     )
   }
 
