@@ -13,7 +13,7 @@ export default function App() {
   const [moduleList, setModuleList] = useState([]);
   // // Data decoupled from modules at this level because otherwise every component is re-rendered whenever data changes
   // // This way each component "controls" itself and updates the global data for backup
-  const globalModuleData = useRef([]);
+  const globalModuleData = useRef({});
   // const [globalData, setGlobalData] = useState([]);
 
   // Empty dependencies, triggers once, when modules are loaded from local storage or elsewhere, before this code, this wont trigger
@@ -29,7 +29,8 @@ export default function App() {
       )
 
       for (let i of startingModuleList) {
-        globalModuleData.current.push({ key: i.key, purpose: i.purpose, data: undefined });
+        globalModuleData.current[i.key] = { purpose: i.purpose, data: undefined };
+        console.log(globalModuleData);
       }
 
       console.log("MODULES", startingModuleList, "GLOBAL DATA", globalModuleData.current);
@@ -54,7 +55,8 @@ export default function App() {
     // globalModuleData.current  ((prev) =>
     //   prev.map((mod) => mod.key === iKey ? { ...mod, data: iValue } : mod))
 
-    globalModuleData.current = globalModuleData.current.map((mod) => mod.key === iKey ? { ...mod, data: iValue } : mod)
+    // globalModuleData.current = globalModuleData.current.map((mod) => mod.key === iKey ? { ...mod, data: iValue } : mod)
+    globalModuleData.current[iKey].data = iValue;
     console.log(globalModuleData.current);
 
   }
@@ -66,7 +68,8 @@ export default function App() {
     const moduleKey = self.crypto.randomUUID()
     console.log(globalModuleData.current);
 
-    globalModuleData.current = [...globalModuleData.current, { key: moduleKey, purpose: moduleType, data: undefined }]
+    // globalModuleData.current = [...globalModuleData.current, { key: moduleKey, purpose: moduleType, data: undefined }]
+    globalModuleData.current[moduleKey] = { purpose: moduleType, data: undefined }
     console.log(globalModuleData.current);
 
 

@@ -7,7 +7,7 @@ import "./css/QuillSnow.css"
 
 
 export default function NoteContent(props) {
-    const [localData, setLocalData] = useState(props.globalModuleData.current[props.key]);
+    const [localData, setLocalData] = useState(props.globalModuleData.current[props.counter].data);
 
     // const noteContent = data;
     // const setNoteContent = (arg) => data = arg;
@@ -15,7 +15,7 @@ export default function NoteContent(props) {
     // () => props.setData(props.setData)
 
     console.log(props);
-    console.log(props.globalModuleData.current[props.key]);
+    console.log(props.globalModuleData.current[props.counter].data);
 
 
     // useEffect(() => { props.setData(props.counter, localData) }, [localData])
