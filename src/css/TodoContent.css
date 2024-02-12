@@ -7,10 +7,16 @@
 }
 
 .todo-item {
+    display: flex;
+
+    justify-content: space-between;
+
     background-color: white;
+
     border: 1px;
     border-style: solid;
     border-color: black;
+
     margin: 5px;
     margin-bottom: 7px;
     padding: 5px;
@@ -18,8 +24,12 @@
 
 .todo-item input {
     box-sizing: border-box;
-    width: 100%;
+    width: 89%;
     border: none;
     text-align: center;
     /* margin: 5px; */
+}
+
+.todo-item .delete-todo {
+    width: 10%;
 }
