@@ -20,7 +20,7 @@ export default function App() {
   useEffect(() => {
     if (moduleList.length === 0) {
       console.log("!!!!!!!!!!!!!!!!!USE EFFECT TRIGGERED!!!!!!!!!!!!!!!!!!!");
-      const defaultModules = ["Notes", "Kanban", "Reflective", "Writeframe", "Gitstatus", "AiChat"];
+      const defaultModules = ["Notes", "Todo", "Kanban", "Reflective", "Writeframe", "Gitstatus", "AiChat"];
 
       const startingModuleList = defaultModules.map((moduleType) => {
         const moduleKey = self.crypto.randomUUID();

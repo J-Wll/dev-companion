@@ -5,10 +5,19 @@ export default function Module(props) {
     // console.log(props);
 
     function componentContent(purpose) {
-        // probably check purpose in a dict, one side component names and one components, each component in its own file 
-        if (purpose === "Notes") {
-            return <NoteContent data={props.data} setData={props.setData} counter={props.counter} globalModuleData = {props.globalModuleData} />
+        const componentProps = { data: props.data, setData: props.setData, counter: props.counter, globalModuleData: props.globalModuleData }
+        switch (purpose) {
+            case "Notes":
+                return <NoteContent {...componentProps} />
+            case "Todo":
+                // return <NoteContent {...componentProps} />
+                break;
+            default:
+                break;
         }
+        // if (purpose === "Notes") {
+        //     // return <NoteContent data={props.data} setData={props.setData} counter={props.counter} globalModuleData = {props.globalModuleData} />
+        // }
     }
 
     return (
