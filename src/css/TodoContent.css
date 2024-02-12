@@ -1,0 +1,21 @@
+.todo-content {
+    display: flex;
+    flex-direction: column;
+
+    width: 90%;
+    height: fit-content;
+}
+
+.todo-item {
+    background-color: white;
+    border: 1px;
+    border-style: solid;
+    border-color: black;
+    margin: 5px;
+    margin-bottom: 7px;
+}
+
+.todo-item p {
+    text-align: center;
+    margin: 5px;
+}
