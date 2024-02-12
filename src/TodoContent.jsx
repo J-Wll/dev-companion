@@ -5,7 +5,7 @@ export default function TodoContent() {
     const [todoList, setTodoList] = useState([]);
 
     function addTodo() {
-        setTodoList((prev) => [...prev, { key: self.crypto.randomUUID(), data: "-" }]);
+        setTodoList((prev) => [...prev, { key: self.crypto.randomUUID(), data: "" }]);
     }
 
     function updateTodoText(newVal, key) {
@@ -31,7 +31,7 @@ function TodoItem(props) {
 
     return (
         <div className="todo-item">
-            <input type='text' value={props.text} onChange={(e) => props.updateTodoText(e.target.value, props.counter)} />
+            <input type="text" placeholder="What would you like to do?" value={props.text} onChange={(e) => props.updateTodoText(e.target.value, props.counter)} />
         </div>
     )
 }
