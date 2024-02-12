@@ -5,29 +5,32 @@ import TodoContent from "./TodoContent";
 export default function Module(props) {
     // console.log(props);
 
-    function componentContent(purpose) {
-        const componentProps = { data: props.data, setData: props.setData, counter: props.counter, globalModuleData: props.globalModuleData }
-        switch (purpose) {
-            case "Notes":
-                return <NoteContent {...componentProps} />
-            case "Todo":
-                return <TodoContent {...componentProps} />
-            default:
-                break;
-        }
-        // if (purpose === "Notes") {
-        //     // return <NoteContent data={props.data} setData={props.setData} counter={props.counter} globalModuleData = {props.globalModuleData} />
-        // }
+    let component, title;
+    const componentProps = { data: props.data, setData: props.setData, counter: props.counter, globalModuleData: props.globalModuleData }
+    switch (props.purpose) {
+        case "Notes":
+            component = <NoteContent {...componentProps} />;
+            title = "Notes";
+            break;
+        case "Todo":
+            component = <TodoContent {...componentProps} />;
+            title = "To-do List";
+            break;
+        default:
+            component = <></>;
+            title = props.purpose;
+            break;
     }
 
+    console.log(component, title);
     return (
         <div className={`module ${props.purpose}-module`}>
             <div className="menu-bar">
-                <p className="module-title">{props.purpose}</p>
+                <p className="module-title">{title}</p>
                 <button onClick={() => props.deleteModule(props.counter)} className="close-module">X</button>
             </div>
             <div className="module-body">
-                {componentContent(props.purpose)}
+                {component}
             </div>
         </div>
     )

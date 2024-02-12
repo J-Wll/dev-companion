@@ -114,6 +114,7 @@ export default function App() {
       <div className="sidebar">
         <button>Close Sidebar</button>
         <button onClick={() => { addModule("Notes") }}>Add Notes</button>
+        <button onClick={() => { addModule("Todo") }}>Add To-do</button>
         <button onClick={() => { addModule("Kanban") }}>Add Kanban</button>
       </div>
     )
