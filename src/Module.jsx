@@ -6,7 +6,7 @@ export default function Module(props) {
     // console.log(props);
 
     let component, title;
-    const componentProps = { data: props.data, setData: props.setData, counter: props.counter, globalModuleData: props.globalModuleData }
+    const componentProps = { data: props.data, setData: props.setData, counter: props.counter, dataFromGlobal: props.dataFromGlobal }
     switch (props.purpose) {
         case "Notes":
             component = <NoteContent {...componentProps} />;

@@ -1,8 +1,19 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './css/TodoContent.css'
 
-export default function TodoContent() {
-    const [todoList, setTodoList] = useState([]);
+export default function TodoContent(props) {
+    const [todoList, setTodoList] = useState(props.dataFromGlobal);
+
+    // Set initial state to an array
+    if (todoList === undefined) {
+        setTodoList([]);
+    }
+
+    useEffect(() => {
+        if (todoList) {
+            props.setData(props.counter, todoList)
+        }
+    }, [todoList])
 
     function addTodo() {
         setTodoList((prev) => [...prev, { key: self.crypto.randomUUID(), data: "" }]);
@@ -16,7 +27,10 @@ export default function TodoContent() {
     }
 
     function getTodos() {
-        return (todoList.map((todo) => <TodoItem key={todo.key} counter={todo.key} text={todo.data} updateTodoText={updateTodoText} />))
+        // Prevents an error from trying to map todolist when it is still undefined
+        if (todoList) {
+            return (todoList.map((todo) => <TodoItem key={todo.key} counter={todo.key} text={todo.data} updateTodoText={updateTodoText} />))
+        }
     }
 
     return (

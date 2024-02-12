@@ -101,7 +101,7 @@ export default function App() {
 
     console.log(moduleList);
     return moduleList.map((module) =>
-      <Module key={module.key} counter={module.key} purpose={module.purpose} data={module.data} setData={setModuleData} deleteModule={deleteModule} globalModuleData={globalModuleData} />
+      <Module key={module.key} counter={module.key} purpose={module.purpose} data={module.data} setData={setModuleData} deleteModule={deleteModule} dataFromGlobal={globalModuleData.current[module.key].data} />
     )
   }
 
