@@ -13,9 +13,13 @@
     border-color: black;
     margin: 5px;
     margin-bottom: 7px;
+    padding: 5px;
 }
 
-.todo-item p {
+.todo-item input {
+    box-sizing: border-box;
+    width: 100%;
+    border: none;
     text-align: center;
-    margin: 5px;
+    /* margin: 5px; */
 }
