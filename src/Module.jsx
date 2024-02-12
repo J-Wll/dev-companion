@@ -1,5 +1,6 @@
 import './css/Module.css'
 import NoteContent from "./noteContent";
+import TodoContent from "./TodoContent";
 
 export default function Module(props) {
     // console.log(props);
@@ -10,8 +11,7 @@ export default function Module(props) {
             case "Notes":
                 return <NoteContent {...componentProps} />
             case "Todo":
-                // return <NoteContent {...componentProps} />
-                break;
+                return <TodoContent {...componentProps} />
             default:
                 break;
         }
