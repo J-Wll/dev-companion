@@ -60,8 +60,6 @@ export default function App() {
     console.log("!!!!!!!!!!!!!!!!! getModuleList !!!!!!!!!!!!!!!!!!!");
     console.log(globalModuleData.current);
 
-
-
     console.log(moduleList);
     return moduleList.map((module) =>
       <Module key={module.key} counter={module.key} purpose={module.purpose} data={module.data} setData={setModuleData} deleteModule={deleteModule} dataFromGlobal={globalModuleData.current[module.key].data} />
@@ -71,8 +69,8 @@ export default function App() {
   // Sidebar for controlling the main application
   function Sidebar() {
     return (
-      // these buttons could check how many in row, if already 3 create new row, else add to existing row
-      // close/open side bar buttons should probablu just be chevrons (<>)
+      // These buttons could check how many in row, if already 3 create new row, else add to existing row
+      // Close/open side bar buttons should probablu just be chevrons (<>)
 
       <div className="sidebar">
         <button>Close Sidebar</button>
