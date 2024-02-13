@@ -40,7 +40,7 @@ export default function TodoContent(props) {
         if (todoList.length < 2) {
             return;
         }
-        console.log(event, direction)
+
         let moveTo;
         if (direction === "u") {
             moveTo = event.shiftKey ? 0 : currentOrder - 1;
@@ -56,21 +56,49 @@ export default function TodoContent(props) {
         if (moveTo === currentOrder) {
             return;
         }
+
         console.log(todoList);
         console.log(moveTo);
 
         // TODO: handle shift click differently
-        const changedOrder = todoList.map((todo) => {
-            // If it's the target set to moveTo
-            if (todo.key === target) {
-                return { ...todo, order: moveTo };
-            }
-            // If it's the item occupying the postion, set it to the initial order (So they swap)
-            if (todo.order === moveTo) {
-                return { ...todo, order: currentOrder };
-            }
-            return todo;
-        })
+        // If it's more than 1 difference in either direction
+        const shiftBottom = moveTo > currentOrder + 1;
+        const shiftTop = moveTo < currentOrder - 1;
+        let changedOrder;
+        if (shiftBottom || shiftTop) {
+            console.log("-----Shift key-----");
+            changedOrder = todoList.map((todo) => {
+                if (todo.key === target) {
+                    return { ...todo, order: moveTo };
+                }
+                if (todo.key != target) {
+                    if (shiftTop) {
+                        if (todo.order < currentOrder) {
+                            return { ...todo, order: todo.order + 1 };
+                        }
+                    } else {
+                        if (todo.order > currentOrder) {
+                            return { ...todo, order: todo.order - 1 };
+                        }
+                    }
+                }
+                return todo;
+            })
+        }
+        else {
+            changedOrder = todoList.map((todo) => {
+                // If it's the target set to moveTo
+                if (todo.key === target) {
+                    return { ...todo, order: moveTo };
+                }
+                // If it's the item occupying the postion, set it to the initial order (So they swap)
+                if (todo.order === moveTo) {
+                    return { ...todo, order: currentOrder };
+                }
+                return todo;
+            })
+        }
+
 
         // Sorts the todolist by the new orders
         setTodoList(changedOrder.sort((a, b) => a.order - b.order));
