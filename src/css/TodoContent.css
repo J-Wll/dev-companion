@@ -22,14 +22,21 @@
     padding: 5px;
 }
 
-.todo-item input {
+.todo-item textarea {
     box-sizing: border-box;
-    width: 89%;
     border: none;
     text-align: center;
-    /* margin: 5px; */
+
+    height: 50px;
+
+    margin: 4px;
 }
 
-.todo-item .delete-todo {
-    width: 10%;
+.todo-item button,
+.todo-item input {
+    /* height: 25px; */
+    min-width: 15px;
+    width: fit-content;
+
+    box-sizing: border-box;
 }

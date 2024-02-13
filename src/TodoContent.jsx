@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import './css/TodoContent.css'
 
+// Should probably convert todoList to an object mapped into an array at render. Because there are so many Maps going on here
+
 export default function TodoContent(props) {
     const [todoList, setTodoList] = useState(props.dataFromGlobal);
 
@@ -16,7 +18,7 @@ export default function TodoContent(props) {
     }, [todoList])
 
     function addTodo() {
-        setTodoList((prev) => [...prev, { order: todoList.length, key: self.crypto.randomUUID(), data: "" }]);
+        setTodoList((prev) => [...prev, { key: self.crypto.randomUUID(), order: todoList.length, checked: false, data: "" }]);
         console.log(todoList);
     }
 
@@ -28,6 +30,10 @@ export default function TodoContent(props) {
 
     function updateTodoText(newVal, iKey) {
         setTodoList((prev) => prev.map((todo) => todo.key === iKey ? { ...todo, data: newVal } : todo));
+    }
+
+    function checkTodo(iKey, currentVal) {
+        setTodoList((prev) => prev.map((todo) => todo.key === iKey ? { ...todo, checked: !currentVal } : todo));
     }
 
     function changeTodoOrder(event, direction, target, currentOrder) {
@@ -69,18 +75,13 @@ export default function TodoContent(props) {
         // Sorts the todolist by the new orders
         setTodoList(changedOrder.sort((a, b) => a.order - b.order));
         console.log(todoList);
-
-
-        // const updatedOrder = todoList.map()
-        // const sortedTodos = [...updatedOrder].sort();
-
     }
 
     function getTodos() {
         // Prevents an error from trying to map todolist when it is still undefined
         console.log(todoList);
         if (todoList) {
-            return (todoList.map((todo) => <TodoItem key={todo.key} counter={todo.key} text={todo.data} order={todo.order} updateTodoText={updateTodoText} changeTodoOrder={changeTodoOrder} deleteTodo={deleteTodo} />))
+            return (todoList.map((todo) => <TodoItem key={todo.key} counter={todo.key} text={todo.data} order={todo.order} checked={todo.checked} checkTodo={checkTodo} updateTodoText={updateTodoText} changeTodoOrder={changeTodoOrder} deleteTodo={deleteTodo} />))
         }
     }
 
@@ -93,13 +94,15 @@ export default function TodoContent(props) {
 }
 
 function TodoItem(props) {
+    const strikeThrough = props.checked ? { textDecoration: "line-through" } : undefined
     return (
         <div className="todo-item">
+            <input type="checkbox" checked={props.checked} onChange={() => props.checkTodo(props.counter, props.checked)} />
             <div className="reorder-buttons">
                 <button onClick={(e) => props.changeTodoOrder(e, "u", props.counter, props.order)}>^</button>
                 <button onClick={(e) => props.changeTodoOrder(e, "d", props.counter, props.order)}>⌄</button>
             </div>
-            <input type="text" placeholder="What would you like to do?" value={props.text} onChange={(e) => props.updateTodoText(e.target.value, props.counter)} />
+            <textarea type="text" placeholder="What would you like to do?" style={strikeThrough} value={props.text} onChange={(e) => props.updateTodoText(e.target.value, props.counter)} />
             <button className="delete-todo" onClick={() => props.deleteTodo(props.counter)}>X</button>
         </div>
     )
