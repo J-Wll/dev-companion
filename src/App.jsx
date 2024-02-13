@@ -52,16 +52,8 @@ export default function App() {
 
   function deleteModule(target) {
     console.log("!!!!!!!!!!!!!!!!! deleteModule !!!!!!!!!!!!!!!!!!!");
-    console.log(globalModuleData.current);
-
-
-    console.log("InDelete");
-    console.log(moduleList);
-    console.log(target);
-    console.log(moduleList[0].key)
     setModuleList((modList) => modList.filter((module) => module.key !== target))
-    console.log(moduleList);
-
+    delete globalModuleData.current[target];
   }
 
   function getModuleList() {
