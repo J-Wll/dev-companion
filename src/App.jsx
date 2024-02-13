@@ -7,16 +7,15 @@ import NoteContent from './noteContent';
 
 
 export default function App() {
-  // default config during testing
-  // row implementation is temporary, that'll be automatically configured based on module count and or settings
-
   const [moduleList, setModuleList] = useState([]);
-  // // Data decoupled from modules at this level because otherwise every component is re-rendered whenever data changes
-  // // This way each component "controls" itself and updates the global data for backup
-  const globalModuleData = useRef({});
-  // const [globalData, setGlobalData] = useState([]);
 
-  // Empty dependencies, triggers once, when modules are loaded from local storage or elsewhere, before this code, this wont trigger
+  // Data decoupled from modules at this level because otherwise every component is re-rendered whenever data changes
+  // This way each component "controls" itself and updates the global data for saving/loading
+  // This usage isn't pure and causes duplications in strict mode, but it is the only solution that has worked so far
+  // Everything is accessed using unique keys so duplication while in strict mode should not cause issues
+  const globalModuleData = useRef({});
+
+  // Empty dependencies, triggers once, when modules are loaded from storage, before this code, this wont trigger
   useEffect(() => {
     if (moduleList.length === 0) {
       console.log("!!!!!!!!!!!!!!!!!USE EFFECT TRIGGERED!!!!!!!!!!!!!!!!!!!");
@@ -24,38 +23,18 @@ export default function App() {
 
       const startingModuleList = defaultModules.map((moduleType) => {
         const moduleKey = self.crypto.randomUUID();
+        globalModuleData.current[moduleKey] = { purpose: moduleType, data: undefined };
         return { key: moduleKey, purpose: moduleType }
-      }
-      )
-
-      for (let i of startingModuleList) {
-        globalModuleData.current[i.key] = { purpose: i.purpose, data: undefined };
-        console.log(globalModuleData);
-      }
+      })
 
       console.log("MODULES", startingModuleList, "GLOBAL DATA", globalModuleData.current);
       setModuleList(startingModuleList);
     }
   }, [])
 
-  console.log(globalModuleData);
-
-  // function setModuleData(iKey, iValue) {
-  //   // For everything in the module list, if the key matches the input update that objects data, otherwise it stays the same
-  //   setModuleList((prev) =>
-  //     prev.map((mod) => mod.key === iKey ? { ...mod, data: iValue } : mod))
-  // }
-
   function setModuleData(iKey, iValue) {
     console.log("!!!!!!!!!!!!!!!!! setModuleData !!!!!!!!!!!!!!!!!!!");
     console.log(globalModuleData.current);
-
-
-    // For everything in the module list, if the key matches the input update that objects data, otherwise it stays the same
-    // globalModuleData.current  ((prev) =>
-    //   prev.map((mod) => mod.key === iKey ? { ...mod, data: iValue } : mod))
-
-    // globalModuleData.current = globalModuleData.current.map((mod) => mod.key === iKey ? { ...mod, data: iValue } : mod)
     globalModuleData.current[iKey].data = iValue;
     console.log(globalModuleData.current);
 
@@ -66,17 +45,9 @@ export default function App() {
     console.log(globalModuleData.current);
 
     const moduleKey = self.crypto.randomUUID()
-    console.log(globalModuleData.current);
 
-    // globalModuleData.current = [...globalModuleData.current, { key: moduleKey, purpose: moduleType, data: undefined }]
     globalModuleData.current[moduleKey] = { purpose: moduleType, data: undefined }
-    console.log(globalModuleData.current);
-
-
     setModuleList(() => [...moduleList, { key: moduleKey, purpose: moduleType }])
-    console.log(globalModuleData.current);
-
-    // console.log(moduleList);
   }
 
   function deleteModule(target) {
