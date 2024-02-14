@@ -6,20 +6,23 @@ import './css/TodoContent.css'
 export default function TodoContent(props) {
     const [todoList, setTodoList] = useState(props.dataFromGlobal);
 
-    // Set initial state to an array
+    // Set initial state to an array to prevent errors
     if (todoList === undefined) {
         setTodoList([]);
+        // Add an item by default
+        addTodo(null, []);
     }
 
     useEffect(() => {
+        // Updating data in the global state when state changes
         if (todoList) {
             props.setData(props.counter, todoList)
         }
     }, [todoList])
 
-    function addTodo() {
-        setTodoList((prev) => [...prev, { key: self.crypto.randomUUID(), order: todoList.length, checked: false, data: "" }]);
-        console.log(todoList);
+    function addTodo(e, targetArray = todoList) {
+        // Arguments are used to avoid an issue with out of sync state when trying to add an item by default
+        setTodoList((prev) => [...targetArray, { key: self.crypto.randomUUID(), order: targetArray.length, checked: false, data: "" }]);
     }
 
     function deleteTodo(iKey) {
@@ -60,7 +63,6 @@ export default function TodoContent(props) {
         console.log(todoList);
         console.log(moveTo);
 
-        // TODO: handle shift click differently
         // If it's more than 1 difference in either direction
         const shiftBottom = moveTo > currentOrder + 1;
         const shiftTop = moveTo < currentOrder - 1;
@@ -71,6 +73,7 @@ export default function TodoContent(props) {
                 if (todo.key === target) {
                     return { ...todo, order: moveTo };
                 }
+                // Increases/Decreases the order of those in between current order and the top/bottom
                 if (todo.key != target) {
                     if (shiftTop) {
                         if (todo.order < currentOrder) {
@@ -107,7 +110,6 @@ export default function TodoContent(props) {
 
     function getTodos() {
         // Prevents an error from trying to map todolist when it is still undefined
-        console.log(todoList);
         if (todoList) {
             return (todoList.map((todo) => <TodoItem key={todo.key} counter={todo.key} text={todo.data} order={todo.order} checked={todo.checked} checkTodo={checkTodo} updateTodoText={updateTodoText} changeTodoOrder={changeTodoOrder} deleteTodo={deleteTodo} />))
         }
