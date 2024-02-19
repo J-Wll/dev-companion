@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import ReactQuill from "react-quill";
-import "./css/noteContent.css"
-import "./css/QuillSnow.css"
+import "../css/noteContent.css"
+import "../css/QuillSnow.css"
 
 
 export default function NoteContent(props) {

@@ -1,6 +1,7 @@
 import './css/Module.css'
-import NoteContent from "./noteContent";
-import TodoContent from "./TodoContent";
+
+import NoteContent from "./module-contents/NoteContent";
+import TodoContent from "./module-contents/TodoContent";
 
 export default function Module(props) {
     // console.log(props);
@@ -16,6 +17,9 @@ export default function Module(props) {
             component = <TodoContent {...componentProps} />;
             title = "To-do List";
             break;
+        case "Timers":
+            component = <></>;
+            title = "Timers";
         default:
             component = <></>;
             title = props.purpose;

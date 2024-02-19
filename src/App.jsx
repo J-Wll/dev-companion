@@ -1,10 +1,9 @@
 import './css/App.css';
 import './css/Sidebar.css'
 import './css/ModuleHandler.css'
+
 import Module from './Module';
 import { useState, useEffect, useRef } from "react";
-import NoteContent from './noteContent';
-
 
 export default function App() {
   const [moduleList, setModuleList] = useState([]);
@@ -77,6 +76,7 @@ export default function App() {
         <button onClick={() => { addModule("Notes") }}>Add Notes</button>
         <button onClick={() => { addModule("Todo") }}>Add To-do</button>
         <button onClick={() => { addModule("Kanban") }}>Add Kanban</button>
+        <button onClick={() => { addModule("Timers") }}>Add Timers</button>
       </div>
     )
   }

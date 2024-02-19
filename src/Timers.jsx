@@ -1,1 +1,0 @@
-// Bar along the bottom with current time, stopwatch, timer and pomodoro

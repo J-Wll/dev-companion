@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import './css/TodoContent.css'
+import '../css/TodoContent.css'
 
 // Should probably convert todoList to an object mapped into an array at render. Because there are so many Maps going on here
 
