@@ -17,13 +17,15 @@ export default function TimerContent(props) {
     }, [localData])
 
     useEffect(() => {
-        setInterval(() => {
+        const timer = setInterval(() => {
             console.log(props.counter, " interval");
             setLocalData((prev) => ({ ...prev, time: prev.time + 1 }))
             if (localData.time === localData.interval * 60) {
                 console.log("TIMER DONE")
             }
-        }, 1000)
+        }, 1000);
+
+        return () => clearInterval(timer);
     }, [])
 
     return (
