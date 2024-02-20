@@ -6,6 +6,8 @@
     max-width: 98%;
 }
 
-.timer-content button {
-    width: 20px;
+.timer-content div input,
+.timer-content div button {
+    /* min-width: fit-content; */
+    width: 40px;
 }

@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 
 import '../css/css-module-content/TimerContent.css'
 
 export default function TimerContent(props) {
     // time is seconds, intervals are minutes
     const [localData, setLocalData] = useState(props.dataFromGlobal);
+    const numInpRef = useRef(1);
 
     if (localData === undefined) {
         setLocalData(() => ({ time: 0, pomodoro: { on: false, workInterval: 45, restInterval: 15 }, interval: 1 }));
@@ -32,15 +33,27 @@ export default function TimerContent(props) {
         return () => clearInterval(timer);
     }, [localData])
 
+    function setTimerInterval(e, i) {
+        console.log(i);
+        setLocalData(prev => ({ ...prev, interval: Number(i.current.value) }));
+    }
+
     if (localData) {
         const percentComplete = (localData.time / (localData.interval * 60)) * 100;
         return (
-            <section div="timer-content">
+            <section className="timer-content">
                 <div style={{ height: "30px", width: `${(localData.time / (localData.interval * 60)) * 100}%`, backgroundColor: "red" }}></div>
                 <p>{localData.time >= localData.interval * 60 ? "Time reached" : "Not yet"}</p>
                 <p>Percent complete: {percentComplete.toFixed(2)}%</p>
                 <p>{localData.time}</p>
                 <p>{JSON.stringify(localData)}</p>
+
+                <div>
+                    <span><label htmlFor="timerNumInp">Time (m):</label></span>
+                    <input id="timerNumInp" type="number" ref={numInpRef} />
+                    <button onClick={(e) => setTimerInterval(e, numInpRef)}> Set</button>
+                </div>
+
             </section>
         )
     }
