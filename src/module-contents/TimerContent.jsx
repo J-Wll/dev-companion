@@ -35,7 +35,7 @@ export default function TimerContent(props) {
     if (localData) {
         const percentComplete = (localData.time / (localData.interval * 60)) * 100;
         return (
-            <section>
+            <section div="timer-content">
                 <div style={{ height: "30px", width: `${(localData.time / (localData.interval * 60)) * 100}%`, backgroundColor: "red" }}></div>
                 <p>{localData.time >= localData.interval * 60 ? "Time reached" : "Not yet"}</p>
                 <p>Percent complete: {percentComplete.toFixed(2)}%</p>

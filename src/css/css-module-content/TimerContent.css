@@ -5,3 +5,7 @@
 .module-body section {
     max-width: 98%;
 }
+
+.timer-content button {
+    width: 20px;
+}
