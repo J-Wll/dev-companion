@@ -18,7 +18,7 @@ export default function App() {
   useEffect(() => {
     if (moduleList.length === 0) {
       console.log("!!!!!!!!!!!!!!!!!USE EFFECT TRIGGERED!!!!!!!!!!!!!!!!!!!");
-      const defaultModules = ["Notes", "Todo", "Kanban", "Reflective", "Writeframe", "Gitstatus", "AiChat"];
+      const defaultModules = ["Timers", "Notes", "Todo", "Kanban", "Reflective", "Writeframe", "Gitstatus", "AiChat"];
 
       const startingModuleList = defaultModules.map((moduleType) => {
         const moduleKey = self.crypto.randomUUID();
@@ -32,10 +32,10 @@ export default function App() {
   }, [])
 
   function setModuleData(iKey, iValue) {
-    console.log("!!!!!!!!!!!!!!!!! setModuleData !!!!!!!!!!!!!!!!!!!");
-    console.log(globalModuleData.current);
+    // console.log("!!!!!!!!!!!!!!!!! setModuleData !!!!!!!!!!!!!!!!!!!");
+    // console.log(globalModuleData.current);
     globalModuleData.current[iKey].data = iValue;
-    console.log(globalModuleData.current);
+    // console.log(globalModuleData.current);
 
   }
 
@@ -69,7 +69,7 @@ export default function App() {
   function Sidebar() {
     return (
       // These buttons could check how many in row, if already 3 create new row, else add to existing row
-      // Close/open side bar buttons should probablu just be chevrons (<>)
+      // TODO: Close/open side bar buttons should probablu just be chevrons (<>)
 
       <div className="sidebar">
         <button>Close Sidebar</button>

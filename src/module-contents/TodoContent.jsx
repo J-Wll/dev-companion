@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import '../css/TodoContent.css'
+import '../css/css-module-content/TodoContent.css'
 
-// Should probably convert todoList to an object mapped into an array at render. Because there are so many Maps going on here
+// TODO: Should probably convert todoList to an object mapped into an array at render. Because there are so many Maps going on here
 
 export default function TodoContent(props) {
     const [todoList, setTodoList] = useState(props.dataFromGlobal);
