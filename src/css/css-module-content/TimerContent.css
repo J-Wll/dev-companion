@@ -1,0 +1,7 @@
+.module-body {
+    overflow-x: hidden;
+}
+
+.module-body section {
+    max-width: 98%;
+}

@@ -1,67 +1,65 @@
 /* Reformat later to have seperate CSS files for the components within modules */
 
-.module{
-    resize: both;
-    overflow: auto;
-    /* min-width: fit-content; */
-    /* max-width: 90%; */
-    margin: 2px;
-    background-color: grey;
-    border: 3px solid white;
-    min-height: 100px;
-    width: 22vw;
-    height: 45vh;
-  }
-  
-  .module-title{
-    padding: 0;
-    margin: 0;
-    margin-right: 2px;
-    margin-left: 2px;
-    text-decoration: underline;
-    text-wrap: nowrap;
-    width: max-content;
-  }
-  
-  .close-module{
-    background-color: aquamarine;
-    width: 20px;
-    height: 20px;
-    font-size: 16px;
-    padding: 0;
-    margin-right: 2px;
-    margin-left: 2px;
-    cursor: pointer;
-  }
-  
-  .menu-bar{
-    display: flex;
-    flex-direction: row;
-    background-color: white;
-    justify-content: space-between;
-    padding-bottom: 3px;
-    min-width: fit-content;
-    width: 100%;
-    height: 20px;
-  }
-  
-  .module-body{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height:calc(100% - 25px);
-    padding: 0;
-    margin: 0;
-  }
-  
-  textarea{
-    width: 100%;
-    height: 100%;
-    resize: none;
-    padding: 0;
-  }
-  
-  /* Specific modules */
-  .Notes-module{
-    overflow: hidden;
-  }
+.module {
+  resize: both;
+  overflow: auto;
+
+  /* max-width: 90%; */
+  margin: 2px;
+  background-color: grey;
+  border: 3px solid white;
+  min-height: 100px;
+  width: 22vw;
+  height: 45vh;
+}
+
+.module-title {
+  padding: 0;
+  margin: 0;
+  margin-right: 2px;
+  margin-left: 2px;
+  text-decoration: underline;
+  text-wrap: nowrap;
+  width: max-content;
+}
+
+.close-module {
+  background-color: aquamarine;
+  width: 20px;
+  height: 20px;
+  font-size: 16px;
+  padding: 0;
+  margin-right: 2px;
+  margin-left: 2px;
+  cursor: pointer;
+}
+
+.menu-bar {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  justify-content: space-between;
+  padding-bottom: 3px;
+  min-width: fit-content;
+  width: 100%;
+  height: 20px;
+}
+
+.module-body {
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+  height: calc(100% - 25px);
+
+  padding: 0;
+  margin: 0;
+}
+
+textarea {
+  width: 100%;
+  height: 100%;
+
+  resize: none;
+  padding: 0;
+}
