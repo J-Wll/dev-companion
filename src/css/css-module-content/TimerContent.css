@@ -6,10 +6,10 @@
     max-width: 98%;
 }
 
-.timer-content #interval-set input,
+/* .timer-content #interval-set input,
 .timer-content #interval-set button {
     width: 40px;
-}
+} */
 
 .timer-bar {
     height: 40px;
