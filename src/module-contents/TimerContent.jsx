@@ -8,27 +8,53 @@ export default function TimerContent(props) {
     const [timeInput, setTimeInput] = useState(10);
     const [pomoWorkInput, setPomoWorkInput] = useState(45)
     const [pomoRestInput, setPomoRestInput] = useState(15)
+    const [targetInterval, setTargetInterval] = useState(timeInput);
 
     if (localData === undefined) {
-        setLocalData(() => ({ timerActive: true, time: 0, interval: 1, pomodoro: { on: false, workInterval: 45, restInterval: 15 } }));
+        setLocalData(() => ({ timerActive: true, time: 0, interval: 10, pomodoro: { on: false, workMode: true, workInterval: 45, restInterval: 15 } }));
     }
 
+    function timerZero() {
+        setLocalData((prev) => ({ ...prev, time: 0 }))
+    }
+
+    // autosave
     useEffect(() => {
         if (localData) {
             props.setData(props.counter, localData)
         }
     }, [localData])
 
+    // timer
     useEffect(() => {
         const timer = setInterval(() => {
-            console.log(props.counter, " interval");
+            console.log(props.counter, " interval", targetInterval);
+            if (localData.pomodoro.on) {
+                setTargetInterval(() => localData.pomodoro.workMode ? localData.pomodoro.workInterval : localData.pomodoro.restInterval)
+                // if timer is done swap pomodoro modes
+                if (localData.time >= targetInterval * 60) {
+                    timerZero();
+                    if (localData.pomodoro.workMode) {
+                        setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, workMode: false } }));
+                        setTargetInterval(() => localData.pomodoro.restInterval);
+                    } else {
+                        setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, workMode: true } }));
+                        setTargetInterval(() => localData.pomodoro.workInterval);
+                    }
+                }
+            }
+            // if not pomodoro
+            else {
+                setTargetInterval(() => localData.interval);
+            }
+
             if (localData.timerActive) {
-                if (localData.time < localData.interval * 60) {
-                    console.log(localData.time < localData.interval * 60, localData.time, localData.interval * 60)
+                if (localData.time < targetInterval * 60) {
+                    console.log(localData.time < targetInterval * 60, localData.time, targetInterval * 60)
                     setLocalData((prev) => ({ ...prev, time: prev.time + 1 }))
                 }
 
-                if (localData.time >= localData.interval * 60) {
+                if (localData.time >= targetInterval * 60) {
                     console.log("TIMER DONE")
                 }
             }
@@ -52,9 +78,6 @@ export default function TimerContent(props) {
         )
     }
 
-    // <span><label htmlFor="pomodoroCheckbox">Pomodoro mode?</label><input id="pomodoroCheckbox" type="checkbox" onChange={(e) => setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, on: !localData.pomodoro.on } }))} /></span>
-
-
     function PomodoroIntervalControl() {
         return (
             <>
@@ -73,13 +96,13 @@ export default function TimerContent(props) {
     }
 
     if (localData) {
-        const percentComplete = (localData.time / (localData.interval * 60)) * 100;
+        const percentComplete = (localData.time / (targetInterval * 60)) * 100;
         return (
             <section className="timer-content">
-                <div className="timer-bar" style={{ width: `${(localData.time / (localData.interval * 60)) * 100}%` }}>
-                    <p>{localData.time} / {localData.interval * 60} ({percentComplete.toFixed(2)}%)</p>
+                <div className="timer-bar" style={{ width: `${(localData.time / (targetInterval * 60)) * 100}%` }}>
+                    <p>{localData.time} / {targetInterval * 60} ({percentComplete.toFixed(2)}%) {!localData.pomodoro.on ? "Regular" : localData.pomodoro.workMode ? "Work - pomodoro" : "Rest - pomodoro"}</p>
                 </div>
-                <p>{localData.time >= localData.interval * 60 ? "Time reached" : "Not yet"}</p>
+                <p>{localData.time >= targetInterval * 60 ? "Time reached" : "Not yet"}</p>
                 <p>Percent complete: {percentComplete.toFixed(2)}%</p>
                 <p>{localData.time}</p>
                 <p>{JSON.stringify(localData)}</p>
