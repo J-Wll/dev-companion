@@ -10,3 +10,19 @@
 .timer-content #interval-set button {
     width: 40px;
 }
+
+.timer-bar {
+    height: 40px;
+    line-height: 30px;
+    background-color: rgb(255, 100, 100);
+    border: 1px solid black;
+    box-sizing: border-box;
+    margin-top: 5px;
+    padding: 5px;
+}
+
+.timer-bar p {
+    text-wrap: nowrap;
+    font-weight: bolder;
+    margin: 0px;
+}
