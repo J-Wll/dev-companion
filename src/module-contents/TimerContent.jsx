@@ -54,6 +54,8 @@ export default function TimerContent(props) {
                 <p>{localData.time}</p>
                 <p>{JSON.stringify(localData)}</p>
 
+                <span><label htmlFor="pomodoroCheckbox">Pomodoro mode?</label><input id="pomodoroCheckbox" type="checkbox" onChange={(e) => setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, on: !localData.pomodoro.on } }))} /></span>
+
                 <div id="interval-set">
                     <span><label htmlFor="timerNumInp">Time (m):</label></span>
                     <input id="timerNumInp" type="number" value={timeInput} onChange={e => setTimeInput(e.target.value)} />
@@ -62,7 +64,7 @@ export default function TimerContent(props) {
 
                 <div>
                     <button onClick={() => setLocalData((prev) => ({ ...prev, timerActive: true }))} > Resume </button>
-                    <button onClick={() => setLocalData((prev) => ({ ...prev, timerActive: false }))}>Pause</button>
+                    <button onClick={() => setLocalData((prev) => ({ ...prev, timerActive: false }))} > Pause </button>
                 </div>
 
             </section >
