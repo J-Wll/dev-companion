@@ -6,8 +6,7 @@
     max-width: 98%;
 }
 
-.timer-content div input,
-.timer-content div button {
-    /* min-width: fit-content; */
+.timer-content #interval-set input,
+.timer-content #interval-set button {
     width: 40px;
 }

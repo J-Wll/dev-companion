@@ -8,7 +8,7 @@ export default function TimerContent(props) {
     const [timeInput, setTimeInput] = useState(1);
 
     if (localData === undefined) {
-        setLocalData(() => ({ time: 0, pomodoro: { on: false, workInterval: 45, restInterval: 15 }, interval: 1 }));
+        setLocalData(() => ({ timerActive: true, time: 0, interval: 1, pomodoro: { on: false, workInterval: 45, restInterval: 15 } }));
     }
 
     useEffect(() => {
@@ -20,14 +20,20 @@ export default function TimerContent(props) {
     useEffect(() => {
         const timer = setInterval(() => {
             console.log(props.counter, " interval");
-            if (localData.time < localData.interval * 60) {
-                console.log(localData.time < localData.interval * 60, localData.time, localData.interval * 60)
-                setLocalData((prev) => ({ ...prev, time: prev.time + 1 }))
+            if (localData.timerActive) {
+                if (localData.time < localData.interval * 60) {
+                    console.log(localData.time < localData.interval * 60, localData.time, localData.interval * 60)
+                    setLocalData((prev) => ({ ...prev, time: prev.time + 1 }))
+                }
+
+                if (localData.time >= localData.interval * 60) {
+                    console.log("TIMER DONE")
+                }
+            }
+            else {
+                console.log("paused");
             }
 
-            if (localData.time >= localData.interval * 60) {
-                console.log("TIMER DONE")
-            }
         }, 1000);
 
         return () => clearInterval(timer);
@@ -48,13 +54,18 @@ export default function TimerContent(props) {
                 <p>{localData.time}</p>
                 <p>{JSON.stringify(localData)}</p>
 
-                <div>
+                <div id="interval-set">
                     <span><label htmlFor="timerNumInp">Time (m):</label></span>
                     <input id="timerNumInp" type="number" value={timeInput} onChange={e => setTimeInput(e.target.value)} />
                     <button onClick={(e) => setTimerInterval(e, timeInput)}> Set</button>
                 </div>
 
-            </section>
+                <div>
+                    <button onClick={() => setLocalData((prev) => ({ ...prev, timerActive: true }))} > Resume </button>
+                    <button onClick={() => setLocalData((prev) => ({ ...prev, timerActive: false }))}>Pause</button>
+                </div>
+
+            </section >
         )
     }
 }
