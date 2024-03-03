@@ -5,7 +5,9 @@ import '../css/css-module-content/TimerContent.css'
 export default function TimerContent(props) {
     // time is seconds, intervals are minutes
     const [localData, setLocalData] = useState(props.dataFromGlobal);
-    const [timeInput, setTimeInput] = useState(1);
+    const [timeInput, setTimeInput] = useState(10);
+    const [pomoWorkInput, setPomoWorkInput] = useState(45)
+    const [pomoRestInput, setPomoRestInput] = useState(15)
 
     if (localData === undefined) {
         setLocalData(() => ({ timerActive: true, time: 0, interval: 1, pomodoro: { on: false, workInterval: 45, restInterval: 15 } }));
@@ -39,9 +41,35 @@ export default function TimerContent(props) {
         return () => clearInterval(timer);
     }, [localData])
 
-    function setTimerInterval(e, i) {
-        console.log(i);
-        setLocalData(prev => ({ ...prev, interval: Number(i) }));
+
+    function IntervalControl() {
+        return (
+            <div id="interval-set">
+                <span><label htmlFor="timerNumInp">Time (m):</label></span>
+                <input className="Px40W" id="timerNumInp" type="number" value={timeInput} onChange={e => setTimeInput(e.target.value)} />
+                <button onClick={(e) => setLocalData((prev) => ({ ...prev, interval: Number(timeInput) }))}> Set</button>
+            </div >
+        )
+    }
+
+    // <span><label htmlFor="pomodoroCheckbox">Pomodoro mode?</label><input id="pomodoroCheckbox" type="checkbox" onChange={(e) => setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, on: !localData.pomodoro.on } }))} /></span>
+
+
+    function PomodoroIntervalControl() {
+        return (
+            <>
+                <div id="work-interval-set">
+                    <span><label htmlFor="timerNumInp">Work Time (m):</label></span>
+                    <input className="Px40W" id="timerNumInp" type="number" value={pomoWorkInput} onChange={e => setPomoWorkInput(e.target.value)} />
+                    <button onClick={(e) => setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, workInterval: Number(pomoWorkInput) } }))}> Set</button>
+                </div>
+                <div id="rest-interval-set">
+                    <span><label htmlFor="timerNumInp">Rest Time (m):</label></span>
+                    <input className="Px40W" id="timerNumInp" type="number" value={pomoRestInput} onChange={e => setPomoRestInput(e.target.value)} />
+                    <button onClick={(e) => setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, restInterval: Number(pomoRestInput) } }))}> Set</button>
+                </div>
+            </>
+        )
     }
 
     if (localData) {
@@ -58,11 +86,7 @@ export default function TimerContent(props) {
 
                 <span><label htmlFor="pomodoroCheckbox">Pomodoro mode?</label><input id="pomodoroCheckbox" type="checkbox" onChange={(e) => setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, on: !localData.pomodoro.on } }))} /></span>
 
-                <div id="interval-set">
-                    <span><label htmlFor="timerNumInp">Time (m):</label></span>
-                    <input id="timerNumInp" type="number" value={timeInput} onChange={e => setTimeInput(e.target.value)} />
-                    <button onClick={(e) => setTimerInterval(e, timeInput)}> Set</button>
-                </div>
+                {localData.pomodoro.on ? <PomodoroIntervalControl /> : <IntervalControl />}
 
                 <div>
                     <button onClick={() => setLocalData((prev) => ({ ...prev, timerActive: true }))} > Resume </button>
