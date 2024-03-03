@@ -10,13 +10,12 @@ export default function TimerContent(props) {
     const [pomoRestInput, setPomoRestInput] = useState(15)
     const [targetInterval, setTargetInterval] = useState(timeInput);
 
-    if (localData === undefined) {
-        setLocalData(() => ({ timerActive: true, time: 0, interval: 10, pomodoro: { on: false, workMode: true, workInterval: 45, restInterval: 15 } }));
-    }
-
-    function timerZero() {
-        setLocalData((prev) => ({ ...prev, time: 0 }))
-    }
+    // default values if no global data
+    useEffect(() => {
+        if (localData === undefined) {
+            setLocalData(() => ({ timerActive: true, time: 0, interval: 10, pomodoro: { on: false, workMode: true, workInterval: 45, restInterval: 15 } }));
+        }
+    }, [])
 
     // autosave
     useEffect(() => {
@@ -25,28 +24,38 @@ export default function TimerContent(props) {
         }
     }, [localData])
 
+
+    function timerMode() {
+        if (localData.pomodoro.on) {
+            setTargetInterval(() => localData.pomodoro.workMode ? localData.pomodoro.workInterval : localData.pomodoro.restInterval)
+            // if timer is done swap pomodoro modes
+            if (localData.time >= targetInterval * 60) {
+                timerZero();
+                if (localData.pomodoro.workMode) {
+                    setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, workMode: false } }));
+                    setTargetInterval(() => localData.pomodoro.restInterval);
+                } else {
+                    setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, workMode: true } }));
+                    setTargetInterval(() => localData.pomodoro.workInterval);
+                }
+            }
+        }
+        // if not pomodoro
+        else {
+            setTargetInterval(() => localData.interval);
+        }
+    }
+
+    function timerZero() {
+        setLocalData((prev) => ({ ...prev, time: 0 }))
+    }
+
     // timer
     useEffect(() => {
         const timer = setInterval(() => {
             console.log(props.counter, " interval", targetInterval);
-            if (localData.pomodoro.on) {
-                setTargetInterval(() => localData.pomodoro.workMode ? localData.pomodoro.workInterval : localData.pomodoro.restInterval)
-                // if timer is done swap pomodoro modes
-                if (localData.time >= targetInterval * 60) {
-                    timerZero();
-                    if (localData.pomodoro.workMode) {
-                        setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, workMode: false } }));
-                        setTargetInterval(() => localData.pomodoro.restInterval);
-                    } else {
-                        setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, workMode: true } }));
-                        setTargetInterval(() => localData.pomodoro.workInterval);
-                    }
-                }
-            }
-            // if not pomodoro
-            else {
-                setTargetInterval(() => localData.interval);
-            }
+
+            timerMode();
 
             if (localData.timerActive) {
                 if (localData.time < targetInterval * 60) {
@@ -73,7 +82,7 @@ export default function TimerContent(props) {
             <div id="interval-set">
                 <span><label htmlFor="timerNumInp">Time (m):</label></span>
                 <input className="Px40W" id="timerNumInp" type="number" value={timeInput} onChange={e => setTimeInput(e.target.value)} />
-                <button onClick={(e) => setLocalData((prev) => ({ ...prev, interval: Number(timeInput) }))}> Set</button>
+                <button onClick={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, interval: Number(timeInput) })) }}> Set</button>
             </div >
         )
     }
@@ -84,12 +93,12 @@ export default function TimerContent(props) {
                 <div id="work-interval-set">
                     <span><label htmlFor="timerNumInp">Work Time (m):</label></span>
                     <input className="Px40W" id="timerNumInp" type="number" value={pomoWorkInput} onChange={e => setPomoWorkInput(e.target.value)} />
-                    <button onClick={(e) => setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, workInterval: Number(pomoWorkInput) } }))}> Set</button>
+                    <button onClick={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, workInterval: Number(pomoWorkInput) } })) }}> Set</button>
                 </div>
                 <div id="rest-interval-set">
                     <span><label htmlFor="timerNumInp">Rest Time (m):</label></span>
                     <input className="Px40W" id="timerNumInp" type="number" value={pomoRestInput} onChange={e => setPomoRestInput(e.target.value)} />
-                    <button onClick={(e) => setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, restInterval: Number(pomoRestInput) } }))}> Set</button>
+                    <button onClick={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, restInterval: Number(pomoRestInput) } })) }}> Set</button>
                 </div>
             </>
         )
@@ -107,7 +116,7 @@ export default function TimerContent(props) {
                 <p>{localData.time}</p>
                 <p>{JSON.stringify(localData)}</p>
 
-                <span><label htmlFor="pomodoroCheckbox">Pomodoro mode?</label><input id="pomodoroCheckbox" type="checkbox" onChange={(e) => setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, on: !localData.pomodoro.on } }))} /></span>
+                <span><label htmlFor="pomodoroCheckbox">Pomodoro mode?</label><input id="pomodoroCheckbox" type="checkbox" onChange={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, on: !localData.pomodoro.on } })) }} /></span>
 
                 {localData.pomodoro.on ? <PomodoroIntervalControl /> : <IntervalControl />}
 
