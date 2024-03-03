@@ -5,7 +5,7 @@ import '../css/css-module-content/TimerContent.css'
 export default function TimerContent(props) {
     // time is seconds, intervals are minutes
     const [localData, setLocalData] = useState(props.dataFromGlobal);
-    const numInpRef = useRef(1);
+    const [timeInput, setTimeInput] = useState(1);
 
     if (localData === undefined) {
         setLocalData(() => ({ time: 0, pomodoro: { on: false, workInterval: 45, restInterval: 15 }, interval: 1 }));
@@ -35,7 +35,7 @@ export default function TimerContent(props) {
 
     function setTimerInterval(e, i) {
         console.log(i);
-        setLocalData(prev => ({ ...prev, interval: Number(i.current.value) }));
+        setLocalData(prev => ({ ...prev, interval: Number(i) }));
     }
 
     if (localData) {
@@ -50,8 +50,8 @@ export default function TimerContent(props) {
 
                 <div>
                     <span><label htmlFor="timerNumInp">Time (m):</label></span>
-                    <input id="timerNumInp" type="number" ref={numInpRef} />
-                    <button onClick={(e) => setTimerInterval(e, numInpRef)}> Set</button>
+                    <input id="timerNumInp" type="number" value={timeInput} onChange={e => setTimeInput(e.target.value)} />
+                    <button onClick={(e) => setTimerInterval(e, timeInput)}> Set</button>
                 </div>
 
             </section>
