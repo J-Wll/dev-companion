@@ -4,6 +4,8 @@ import NoteContent from "./module-contents/NoteContent";
 import TodoContent from "./module-contents/TodoContent";
 import TimerContent from "./module-contents/TimerContent";
 
+import Draggable from 'react-draggable';
+
 export default function Module(props) {
     // console.log(props);
 
@@ -32,14 +34,16 @@ export default function Module(props) {
 
     console.log(component, title);
     return (
-        <div className={`module ${props.purpose}-module`}>
-            <div className="menu-bar">
-                <p className="module-title">{title}</p>
-                <button onClick={() => props.deleteModule(props.counter)} className="close-module">X</button>
+        <Draggable handle=".menu-bar">
+            <div className={`module ${props.purpose}-module`}>
+                <div className="menu-bar">
+                    <p className="module-title">{title}</p>
+                    <button onClick={() => props.deleteModule(props.counter)} className="close-module">X</button>
+                </div>
+                <div className="module-body">
+                    {component}
+                </div>
             </div>
-            <div className="module-body">
-                {component}
-            </div>
-        </div>
+        </Draggable>
     )
 }

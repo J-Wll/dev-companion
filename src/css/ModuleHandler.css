@@ -1,4 +1,8 @@
 .module-container {
+  width: 100%;
+}
+
+.module-container-old {
   margin: auto;
   display: flex;
   /* for use with rows */
