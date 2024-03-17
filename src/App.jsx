@@ -18,11 +18,11 @@ export default function App() {
   useEffect(() => {
     if (moduleList.length === 0) {
       console.log("!!!!!!!!!!!!!!!!!USE EFFECT TRIGGERED!!!!!!!!!!!!!!!!!!!");
-      const defaultModules = ["Timers", "Notes", "Todo", "Kanban", "Reflective", "Writeframe", "Gitstatus", "AiChat"];
+      const defaultModules = ["Timers", "Notes", "Todo", "Kanban", "Reflective", "Wireframe", "Gitstatus", "AiChat"];
 
       const startingModuleList = defaultModules.map((moduleType) => {
         const moduleKey = self.crypto.randomUUID();
-        globalModuleData.current[moduleKey] = { purpose: moduleType, data: undefined };
+        globalModuleData.current[moduleKey] = { purpose: moduleType, data: undefined, layout: undefined };
         return { key: moduleKey, purpose: moduleType }
       })
 
@@ -31,12 +31,16 @@ export default function App() {
     }
   }, [])
 
-  function setModuleData(iKey, iValue) {
+  function setModuleData(iKey, iValue, layout = false) {
     // console.log("!!!!!!!!!!!!!!!!! setModuleData !!!!!!!!!!!!!!!!!!!");
     // console.log(globalModuleData.current);
-    globalModuleData.current[iKey].data = iValue;
+    if (layout) {
+      globalModuleData.current[iKey].layout = iValue;
+    }
+    else {
+      globalModuleData.current[iKey].data = iValue;
+    }
     // console.log(globalModuleData.current);
-
   }
 
   function addModule(moduleType) {
@@ -61,7 +65,7 @@ export default function App() {
 
     console.log(moduleList);
     return moduleList.map((module) =>
-      <Module key={module.key} counter={module.key} purpose={module.purpose} data={module.data} setData={setModuleData} deleteModule={deleteModule} dataFromGlobal={globalModuleData.current[module.key].data} />
+      <Module key={module.key} counter={module.key} purpose={module.purpose} data={module.data} setData={setModuleData} deleteModule={deleteModule} dataFromGlobal={globalModuleData.current[module.key]} />
     )
   }
 

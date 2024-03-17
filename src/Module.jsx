@@ -10,7 +10,7 @@ export default function Module(props) {
     // console.log(props);
 
     let component, title;
-    const componentProps = { data: props.data, setData: props.setData, counter: props.counter, dataFromGlobal: props.dataFromGlobal }
+    const componentProps = { data: props.data, setData: props.setData, counter: props.counter, dataFromGlobal: props.dataFromGlobal.data }
     // TODO: every possible purpose, make sure each one has the break
     switch (props.purpose) {
         case "Notes":
@@ -34,13 +34,17 @@ export default function Module(props) {
 
     // on stop assign the update global data ref for this module, that will be used as the default position if it is loaded again
     // similar mechanism for size
+    // misallignment problem is probably due to using cursor position, which can grab any point along the bar
     function handleStop(e) {
         console.log(e)
+        props.setData(props.counter, { x: e.layerX, y: e.layerY }, true)
     }
 
+    const defaultPos = props.dataFromGlobal.layout ? props.dataFromGlobal.layout : { x: 10, y: 10 }
     console.log(component, title);
+
     return (
-        <Draggable handle=".menu-bar" defaultPosition={{ x: 100, y: 100 }} onStop={handleStop}>
+        <Draggable handle=".menu-bar" defaultPosition={defaultPos} onStop={handleStop}>
             <div className={`module ${props.purpose}-module`}>
                 <div className="menu-bar">
                     <p className="module-title">{title}</p>
