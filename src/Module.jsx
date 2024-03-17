@@ -32,9 +32,15 @@ export default function Module(props) {
             break;
     }
 
+    // on stop assign the update global data ref for this module, that will be used as the default position if it is loaded again
+    // similar mechanism for size
+    function handleStop(e) {
+        console.log(e)
+    }
+
     console.log(component, title);
     return (
-        <Draggable handle=".menu-bar">
+        <Draggable handle=".menu-bar" defaultPosition={{ x: 100, y: 100 }} onStop={handleStop}>
             <div className={`module ${props.purpose}-module`}>
                 <div className="menu-bar">
                     <p className="module-title">{title}</p>
