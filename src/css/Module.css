@@ -4,6 +4,8 @@
   resize: both;
   overflow: auto;
 
+  position: absolute;
+
   /* max-width: 90%; */
   margin: 2px;
   background-color: grey;
