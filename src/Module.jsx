@@ -35,9 +35,8 @@ export default function Module(props) {
     // on stop assign the update global data ref for this module, that will be used as the default position if it is loaded again
     // similar mechanism for size
     // misallignment problem is probably due to using cursor position, which can grab any point along the bar
-    function handleStop(e) {
-        console.log(e)
-        props.setData(props.counter, { x: e.layerX, y: e.layerY }, true)
+    function handleStop(mouseEvent, draggableProps) {
+        props.setData(props.counter, { x: draggableProps.x, y: draggableProps.y }, true)
     }
 
     const defaultPos = props.dataFromGlobal.layout ? props.dataFromGlobal.layout : { x: 10, y: 10 }
