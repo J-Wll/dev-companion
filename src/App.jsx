@@ -76,11 +76,27 @@ export default function App() {
       // TODO: Close/open side bar buttons should probablu just be chevrons (<>)
 
       <div className="sidebar">
+        <WorkspaceSelector />
         <button>Close Sidebar</button>
         <button onClick={() => { addModule("Notes") }}>Add Notes</button>
         <button onClick={() => { addModule("Todo") }}>Add To-do</button>
         <button onClick={() => { addModule("Kanban") }}>Add Kanban</button>
         <button onClick={() => { addModule("Timers") }}>Add Timers</button>
+      </div>
+    )
+  }
+
+  function WorkspaceSelector() {
+    return (
+      <div className="workspace-selector">
+        <label htmlFor="workspace-input">Select workspace:</label>
+        {/* TODO: populate with data from data folder, unique name by default and can be renamed */}
+        <select name="workspace-input" id="workspace-input" >
+          <option value="workspace-1">workspace-1</option>
+          <option value="workspace-2">workspace-2</option>
+          <option value="workspace-3">workspace-3</option>
+          <option value="workspace-4">workspace-4</option>
+        </select>
       </div>
     )
   }

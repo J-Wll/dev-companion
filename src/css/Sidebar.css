@@ -1,16 +1,35 @@
-.sidebar{
+.sidebar {
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 98vh;
     width: fit-content;
     background-color: #474747;
+    padding: 5px;
 }
 
-.sidebar button{
+.sidebar button {
     font-size: 1em;
     text-wrap: nowrap;
     width: 100%;
     padding: 1px;
-    margin:1px
+    margin: 1px
+}
+
+.workspace-selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 150px;
+    margin-bottom: 5px;
+}
+
+.workspace-selector label {
+    color: white;
+    font-size: 1em;
+}
+
+.workspace-selector select {
+    font-size: 1em;
 }
