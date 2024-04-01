@@ -25,6 +25,14 @@
     margin-bottom: 5px;
 }
 
+.workspace-selector button {
+    font-size: 1em;
+    text-wrap: nowrap;
+    width: fit-content;
+    padding: 1px;
+    margin: 1px
+}
+
 .workspace-selector label {
     color: white;
     font-size: 1em;

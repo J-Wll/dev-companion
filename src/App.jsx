@@ -97,6 +97,10 @@ export default function App() {
           <option value="workspace-3">workspace-3</option>
           <option value="workspace-4">workspace-4</option>
         </select>
+        <div>
+          <button>Add</button>
+          <button>Rename</button>
+        </div>
       </div>
     )
   }
