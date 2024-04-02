@@ -16,6 +16,15 @@ export default function App() {
 
   // Empty dependencies, triggers once, when modules are loaded from storage, before this code, this wont trigger
   useEffect(() => {
+    const createFolder = async (folderName) => {
+      // Creates a folder at __dirname + arg. Uses code in preload.js and main.js (inside electron folder)
+      await window.electron.createFolder(folderName);
+    }
+
+    createFolder("data");
+    createFolder("data/workspaces");
+    createFolder("data/text");
+
     if (moduleList.length === 0) {
       console.log("!!!!!!!!!!!!!!!!!USE EFFECT TRIGGERED!!!!!!!!!!!!!!!!!!!");
       const defaultModules = ["Timers", "Notes", "Todo", "Kanban", "Reflective", "Wireframe", "Gitstatus", "AiChat"];

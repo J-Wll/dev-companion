@@ -1,5 +1,6 @@
-import { app, BrowserWindow } from 'electron'
-import path from 'node:path'
+import { app, BrowserWindow, ipcMain } from "electron";
+import path from "node:path";
+import fs from "node:fs";
 
 // The built directory structure
 //
@@ -13,6 +14,13 @@ import path from 'node:path'
 process.env.DIST = path.join(__dirname, '../dist')
 process.env.VITE_PUBLIC = app.isPackaged ? process.env.DIST : path.join(process.env.DIST, '../public')
 
+// event handling to use node js
+ipcMain.handle("createFolder", async (_, args) => {
+  console.log("running cli", _, args);
+  if (args) {
+    fs.mkdirSync(path.join(__dirname, args));
+  }
+});
 
 let win
 // 🚧 Use ['ENV_NAME'] avoid vite:define plugin - Vite@2.x
