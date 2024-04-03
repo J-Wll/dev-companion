@@ -39,8 +39,10 @@ function domReady(condition = ['complete', 'interactive']) {
 
 // connects react code with node js
 contextBridge.exposeInMainWorld('electron', {
-  createFolder: async (filePath) =>
-    ipcRenderer.invoke('createFolder', filePath),
+  createFolder: async (filePath) => {
+    console.log("AAA", filePath);
+    ipcRenderer.invoke('createFolder', filePath);
+  },
 },);
 
 const safeDOM = {

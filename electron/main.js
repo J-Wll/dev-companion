@@ -14,11 +14,19 @@ import fs from "node:fs";
 process.env.DIST = path.join(__dirname, '../dist')
 process.env.VITE_PUBLIC = app.isPackaged ? process.env.DIST : path.join(process.env.DIST, '../public')
 
+// Fix for __dirname issues after building
+const appPath =
+  app.isPackaged
+    ? `${process.resourcesPath}`
+    : __dirname;
+
 // event handling to use node js
 ipcMain.handle("createFolder", async (_, args) => {
   console.log("running cli", _, args);
   if (args) {
-    fs.mkdirSync(path.join(__dirname, args));
+    console.log(app.isPackaged, process.env.NODE_ENV);
+    console.log(appPath, args, path.join(appPath, args))
+    fs.mkdirSync(path.join(appPath, args));
   }
 });
 
