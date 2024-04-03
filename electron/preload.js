@@ -43,6 +43,15 @@ contextBridge.exposeInMainWorld('electron', {
     console.log("AAA", filePath);
     ipcRenderer.invoke('createFolder', filePath);
   },
+  readFile: async (filePath) => {
+    return await ipcRenderer.invoke('readFile', filePath);
+  },
+  writeFile: async (filePath, content) => {
+    ipcRenderer.invoke('writeFile', filePath, content);
+  },
+  amendFile: async (filePath, content) => {
+    ipcRenderer.invoke('amendFile', filePath, content);
+  },
 },);
 
 const safeDOM = {

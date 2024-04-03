@@ -21,14 +21,27 @@ const appPath =
     : __dirname;
 
 // event handling to use node js
-ipcMain.handle("createFolder", async (_, args) => {
-  console.log("running cli", _, args);
-  if (args) {
+ipcMain.handle("createFolder", async (_, fileName) => {
+  console.log("Creating file", _, fileName);
+  if (fileName) {
     console.log(app.isPackaged, process.env.NODE_ENV);
-    console.log(appPath, args, path.join(appPath, args))
-    fs.mkdirSync(path.join(appPath, args));
+    console.log(appPath, fileName, path.join(appPath, fileName))
+    fs.mkdirSync(path.join(appPath, fileName));
   }
 });
+
+ipcMain.handle("readFile", async (_, fileName) => {
+  if (fileName) {
+    try {
+      const data = fs.readFileSync(path.join(appPath, fileName), 'utf8');
+      console.log(data);
+      return data;
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+})
 
 let win
 // 🚧 Use ['ENV_NAME'] avoid vite:define plugin - Vite@2.x

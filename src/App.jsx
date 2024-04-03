@@ -21,9 +21,23 @@ export default function App() {
       await window.electron.createFolder(folderName);
     }
 
+    const readFile = async (filePath) => {
+      const data = await window.electron.readFile(filePath);
+      console.log(data);
+      return data;
+    }
+
     createFolder("data");
     createFolder("data/workspaces");
     createFolder("data/text");
+
+    const res = readFile("data/workspaces/test.txt");
+    console.log(res);
+    res.then((resolvedData) => {
+      console.log("Resolved data:", resolvedData);
+    }).catch((error) => {
+      console.error("Error reading file:", error);
+    });
 
     if (moduleList.length === 0) {
       console.log("!!!!!!!!!!!!!!!!!USE EFFECT TRIGGERED!!!!!!!!!!!!!!!!!!!");
