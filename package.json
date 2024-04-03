@@ -1,7 +1,8 @@
 {
-  "name": "y",
+  "name": "DevCompanion",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "author": "Joe Westwell",
   "scripts": {
     "dev": "vite",
     "build": "vite build && electron-builder",
