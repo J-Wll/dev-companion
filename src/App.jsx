@@ -14,30 +14,34 @@ export default function App() {
   // Everything is accessed using unique keys so duplication while in strict mode should not cause issues
   const globalModuleData = useRef({});
 
+  async function createFolder(folderName) {
+    // Creates a folder at __dirname + arg. Uses code in preload.js and main.js (inside electron folder)
+    await window.electron.createFolder(folderName);
+  }
+
+  async function nodeReadFileSync(filePath) {
+    return await window.electron.readFile(filePath);
+  }
+
+  async function nodeWriteFile(filePath, content) {
+    window.electron.writeFile(filePath, content);
+  }
+
   // Empty dependencies, triggers once, when modules are loaded from storage, before this code, this wont trigger
   useEffect(() => {
-    const createFolder = async (folderName) => {
-      // Creates a folder at __dirname + arg. Uses code in preload.js and main.js (inside electron folder)
-      await window.electron.createFolder(folderName);
-    }
-
-    const readFile = async (filePath) => {
-      const data = await window.electron.readFile(filePath);
-      console.log(data);
-      return data;
-    }
-
     createFolder("data");
     createFolder("data/workspaces");
     createFolder("data/text");
 
-    const res = readFile("data/workspaces/test.txt");
+    const res = nodeReadFileSync("data/workspaces/test.txt");
     console.log(res);
     res.then((resolvedData) => {
       console.log("Resolved data:", resolvedData);
     }).catch((error) => {
       console.error("Error reading file:", error);
     });
+
+    nodeWriteFile("data/text/writeTest.txt", "CONTENT WRITE TEST");
 
     if (moduleList.length === 0) {
       console.log("!!!!!!!!!!!!!!!!!USE EFFECT TRIGGERED!!!!!!!!!!!!!!!!!!!");

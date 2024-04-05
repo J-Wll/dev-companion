@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, contentTracing, ipcMain } from "electron";
 import path from "node:path";
 import fs from "node:fs";
 
@@ -41,6 +41,10 @@ ipcMain.handle("readFile", async (_, fileName) => {
       console.log(err);
     }
   }
+})
+
+ipcMain.handle("writeFile", async (_, fileName, content) => {
+  fs.writeFileSync(path.join(appPath, fileName), content);
 })
 
 let win
