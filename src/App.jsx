@@ -67,6 +67,9 @@ export default function App() {
     else {
       globalModuleData.current[iKey].data = iValue;
     }
+
+    let workspaceName = "workspace1";
+    nodeWriteFile(`data/workspaces/${workspaceName}.json`, JSON.stringify(globalModuleData.current));
     // console.log(globalModuleData.current);
   }
 
