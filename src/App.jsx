@@ -43,6 +43,12 @@ export default function App() {
 
     nodeWriteFile("data/text/writeTest.txt", "CONTENT WRITE TEST");
 
+    // TODO: CHECK FOR EXISTING WORKSPACE HERE, LOAD INTO GLOBAL MODULE DATA AND MODULELIST, PLACE INTO A REUSUABLE FUNCTION FOR LOADING OTHER WORKSPACES TOO
+
+    if (!globalModuleData.current.name) {
+      globalModuleData.current.name = `default-name-${self.crypto.randomUUID()}`
+    }
+
     if (moduleList.length === 0) {
       console.log("!!!!!!!!!!!!!!!!!USE EFFECT TRIGGERED!!!!!!!!!!!!!!!!!!!");
       const defaultModules = ["Timers", "Notes", "Todo", "Kanban", "Reflective", "Wireframe", "Gitstatus", "AiChat"];
@@ -130,6 +136,10 @@ export default function App() {
         <div>
           <button>Add</button>
           <button>Rename</button>
+        </div>
+        <div>
+          <button>Load</button>
+          <button>Clear</button>
         </div>
       </div>
     )
