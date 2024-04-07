@@ -48,11 +48,9 @@ ipcMain.handle("writeFile", async (_, fileName, content) => {
 })
 
 ipcMain.handle("countWorkspaces", async (_) => {
-  const workspaces = fs.readdirSync(path.join(appPath, "data/workspaces")).filter(file => {
+  return fs.readdirSync(path.join(appPath, "data/workspaces")).filter(file => {
     return path.extname(file).toLowerCase() === ".json";
   })
-  console.log(workspaces);
-  return workspaces;
 })
 
 let win
