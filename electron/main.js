@@ -47,6 +47,14 @@ ipcMain.handle("writeFile", async (_, fileName, content) => {
   fs.writeFileSync(path.join(appPath, fileName), content);
 })
 
+ipcMain.handle("countWorkspaces", async (_) => {
+  const workspaces = fs.readdirSync(path.join(appPath, "data/workspaces")).filter(file => {
+    return path.extname(file).toLowerCase() === ".json";
+  })
+  console.log(workspaces);
+  return workspaces;
+})
+
 let win
 // 🚧 Use ['ENV_NAME'] avoid vite:define plugin - Vite@2.x
 const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL']

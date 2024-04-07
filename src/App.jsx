@@ -14,7 +14,7 @@ export default function App() {
   // Everything is accessed using unique keys so duplication while in strict mode should not cause issues
   const globalModuleData = useRef({});
 
-  async function createFolder(folderName) {
+  async function nodeCreateFolderSync(folderName) {
     // Creates a folder at __dirname + arg. Uses code in preload.js and main.js (inside electron folder)
     await window.electron.createFolder(folderName);
   }
@@ -23,15 +23,19 @@ export default function App() {
     return await window.electron.readFile(filePath);
   }
 
-  async function nodeWriteFile(filePath, content) {
+  async function nodeWriteFileSync(filePath, content) {
     window.electron.writeFile(filePath, content);
+  }
+
+  async function nodeCountWorkspaces() {
+    return await window.electron.countWorkspaces();
   }
 
   // Empty dependencies, triggers once, when modules are loaded from storage, before this code, this wont trigger
   useEffect(() => {
-    createFolder("data");
-    createFolder("data/workspaces");
-    createFolder("data/text");
+    nodeCreateFolderSync("data");
+    nodeCreateFolderSync("data/workspaces");
+    nodeCreateFolderSync("data/text");
 
     const res = nodeReadFileSync("data/workspaces/test.txt");
     console.log(res);
@@ -41,7 +45,11 @@ export default function App() {
       console.error("Error reading file:", error);
     });
 
-    nodeWriteFile("data/text/writeTest.txt", "CONTENT WRITE TEST");
+    nodeWriteFileSync("data/text/writeTest.txt", "CONTENT WRITE TEST");
+
+    nodeCountWorkspaces().then((res) => {
+      console.log(res);
+    })
 
     // TODO: CHECK FOR EXISTING WORKSPACE HERE, LOAD INTO GLOBAL MODULE DATA AND MODULELIST, PLACE INTO A REUSUABLE FUNCTION FOR LOADING OTHER WORKSPACES TOO
 
@@ -75,7 +83,7 @@ export default function App() {
     }
 
     let workspaceName = "workspace1";
-    nodeWriteFile(`data/workspaces/${workspaceName}.json`, JSON.stringify(globalModuleData.current));
+    nodeWriteFileSync(`data/workspaces/${workspaceName}.json`, JSON.stringify(globalModuleData.current));
     // console.log(globalModuleData.current);
   }
 

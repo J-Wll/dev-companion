@@ -52,6 +52,9 @@ contextBridge.exposeInMainWorld('electron', {
   amendFile: async (filePath, content) => {
     ipcRenderer.invoke('amendFile', filePath, content);
   },
+  countWorkspaces: async () => {
+    return await ipcRenderer.invoke("countWorkspaces");
+  }
 },);
 
 const safeDOM = {
