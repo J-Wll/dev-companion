@@ -47,34 +47,45 @@ export default function App() {
 
     nodeWriteFileSync("data/text/writeTest.txt", "CONTENT WRITE TEST");
 
-    nodeCountWorkspaces().then((res) => {
-      console.log(res);
-    })
+
 
     // TODO: CHECK FOR EXISTING WORKSPACE HERE, LOAD INTO GLOBAL MODULE DATA AND MODULELIST, PLACE INTO A REUSUABLE FUNCTION FOR LOADING OTHER WORKSPACES TOO
 
+    // essentially checks if there's a workspace loaded
     if (!globalModuleData.current.name) {
-      globalModuleData.current.name = `default-name-${self.crypto.randomUUID()}`
-    }
+      nodeGetWorkspaces().then((workspaces) => {
+        console.log(workspaces);
+        if (workspaces.find((workspace) => workspace === "defaultWorkspace.json")) {
+          nodeReadFileSync("data/workspaces/defaultWorkspace.json").then((resolvedData) => {
+            globalModuleData.current = JSON.parse(resolvedData);
+            console.log(globalModuleData, JSON.parse(resolvedData));
 
-    if (moduleList.length === 0) {
-      console.log("!!!!!!!!!!!!!!!!!USE EFFECT TRIGGERED!!!!!!!!!!!!!!!!!!!");
-      const defaultModules = ["Timers", "Notes", "Todo", "Kanban", "Reflective", "Wireframe", "Gitstatus", "AiChat"];
 
-      const startingModuleList = defaultModules.map((moduleType) => {
-        const moduleKey = self.crypto.randomUUID();
-        globalModuleData.current[moduleKey] = { purpose: moduleType, data: undefined, layout: undefined };
-        return { key: moduleKey, purpose: moduleType }
+            let newModuleList = [];
+            console.log("ggg");
+            console.log(globalModuleData.current, Object.keys(globalModuleData.current));
+            for (const mod of Object.keys(globalModuleData.current)) {
+              console.log(globalModuleData.current);
+              console.log(mod);
+              console.log(globalModuleData.current[mod]);
+              if (globalModuleData.current[mod].purpose) {
+                newModuleList.push({ key: mod, purpose: globalModuleData.current[mod].purpose })
+              }
+              console.log(newModuleList);
+            }
+            setModuleList(newModuleList);
+          })
+        }
       })
 
-      console.log("MODULES", startingModuleList, "GLOBAL DATA", globalModuleData.current);
-      setModuleList(startingModuleList);
+      globalModuleData.current.name = `default-name-${self.crypto.randomUUID()}`
     }
   }, [])
 
   function setModuleData(iKey, iValue, layout = false) {
-    // console.log("!!!!!!!!!!!!!!!!! setModuleData !!!!!!!!!!!!!!!!!!!");
-    // console.log(globalModuleData.current);
+    console.log("!!!!!!!!!!!!!!!!! setModuleData !!!!!!!!!!!!!!!!!!!");
+    console.log(globalModuleData.current);
+    console.log(moduleList);
     if (layout) {
       globalModuleData.current[iKey].layout = iValue;
     }
@@ -82,7 +93,7 @@ export default function App() {
       globalModuleData.current[iKey].data = iValue;
     }
 
-    let workspaceName = "workspace1";
+    let workspaceName = globalModuleData.current.name;
     nodeWriteFileSync(`data/workspaces/${workspaceName}.json`, JSON.stringify(globalModuleData.current));
     // console.log(globalModuleData.current);
   }
