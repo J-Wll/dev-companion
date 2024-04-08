@@ -48,7 +48,7 @@ export default function Module(props) {
 
     return (
         <Draggable handle=".menu-bar" defaultPosition={defaultPos} onStop={handleStop}>
-            <div className={`module ${props.purpose}-module`}>
+            <div className={`module ${props.purpose.toLowerCase()}-module`}>
                 <div className="menu-bar">
                     <p className="module-title">{title}</p>
                     <button onClick={() => props.deleteModule(props.counter)} className="close-module">X</button>
