@@ -6,32 +6,32 @@ import "../css/css-module-content/noteContent.css"
 import "../css/css-module-content/QuillSnow.css"
 
 
+function getTemplate() {
+    const dateTime = new Date().toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    // Basic borton model
+    // TODO: Option to change between borton/boud/maybe custom template
+    return `<p>${dateTime}</p><p><br></p><p><strong><u>What</u></strong></p><p>What happened?</p><p><br></p><p><br></p><p><strong><u>So what</u></strong></p><p>What does it mean?</p><p><br></p><p><br></p><p><strong><u>Now what</u></strong></p><p>What will you do now?<br></p><p><br></p>`
+};
+
 export default function NoteContent(props) {
-    // const [localData, setLocalData] = useState(props.globalModuleData.current[props.counter].data);
     const [localData, setLocalData] = useState(props.dataFromGlobal);
-
-    // const noteContent = data;
-    // const setNoteContent = (arg) => data = arg;
-    // const [noteContent, setNoteContent] = useState("");
-    // () => props.setData(props.setData)
-
     console.log(props);
-    // console.log(props.globalModuleData.current[props.counter].data);
 
+    if (props.reflective && !localData) {
+        setLocalData(() => getTemplate());
+    }
 
-    // useEffect(() => { props.setData(props.counter, localData) }, [localData])
     useEffect(() => {
         if (localData) {
             props.setData(props.counter, localData)
         }
     }, [localData])
 
-
     function handleChange(val) {
         console.log(val)
         setLocalData(() => val);
-        // props.setData(props.counter, val)
     }
+
     return (
         <ReactQuill value={localData} onChange={handleChange} theme="snow" />
         // <textarea value={localData} onChange={e=>setLocalData(e.target.value)}/>

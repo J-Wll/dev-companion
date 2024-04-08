@@ -17,6 +17,10 @@ export default function Module(props) {
             component = <NoteContent {...componentProps} />;
             title = "Notes";
             break;
+        case "Reflective":
+            component = <NoteContent {...componentProps} reflective={true} />;
+            title = "Reflective Journal";
+            break;
         case "Todo":
             component = <TodoContent {...componentProps} />;
             title = "To-do List";
