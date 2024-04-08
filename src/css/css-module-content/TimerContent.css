@@ -3,6 +3,7 @@
 }
 
 .module-body section {
+    width: 95%;
     max-width: 98%;
 }
 
@@ -15,10 +16,11 @@
     height: 40px;
     line-height: 30px;
     background-color: rgb(255, 100, 100);
-    border: 1px solid black;
     box-sizing: border-box;
-    margin-top: 5px;
-    padding: 5px;
+
+    border: 1px solid black;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .timer-bar p {
