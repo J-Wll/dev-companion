@@ -27,8 +27,8 @@ export default function App() {
     window.electron.writeFile(filePath, content);
   }
 
-  async function nodeCountWorkspaces() {
-    return await window.electron.countWorkspaces();
+  async function nodeGetWorkspaces() {
+    return await window.electron.getWorkspaces();
   }
 
   // Empty dependencies, triggers once, when modules are loaded from storage, before this code, this wont trigger
