@@ -25,10 +25,10 @@ export default function Module(props) {
             component = <TodoContent {...componentProps} />;
             title = "To-do List";
             break;
-        case "Timers":
+        case "Timer":
             console.log("IIIIIIIIIIIIIIIII")
             component = <TimerContent {...componentProps} />;
-            title = "Timers";
+            title = "Timer";
             break;
         default:
             component = <></>;
@@ -46,9 +46,11 @@ export default function Module(props) {
     const defaultPos = props.dataFromGlobal.layout ? props.dataFromGlobal.layout : { x: 10, y: 10 }
     console.log(component, title);
 
+
+
     return (
         <Draggable handle=".menu-bar" defaultPosition={defaultPos} onStop={handleStop}>
-            <div className={`module ${props.purpose.toLowerCase()}-module`}>
+            <div className={`module ${props.purpose.toLowerCase()}-module`} style={{ height: "200px", width: "200px" }}>
                 <div className="menu-bar">
                     <p className="module-title">{title}</p>
                     <button onClick={() => props.deleteModule(props.counter)} className="close-module">X</button>

@@ -127,7 +127,7 @@ export default function App() {
         <button onClick={() => { addModule("Reflective") }}>Add Reflective</button>
         <button onClick={() => { addModule("Todo") }}>Add To-do</button>
         <button onClick={() => { addModule("Kanban") }}>Add Kanban</button>
-        <button onClick={() => { addModule("Timers") }}>Add Timers</button>
+        <button onClick={() => { addModule("Timer") }}>Add Timer</button>
       </div>
     )
   }
@@ -170,8 +170,6 @@ export default function App() {
         <Sidebar />
         <ModuleHandler />
       </main>
-      {/* <Timers /> */}
-      {/* <Footer /> */}
     </>
   );
 }
