@@ -31,6 +31,24 @@ export default function App() {
     return await window.electron.getWorkspaces();
   }
 
+  function loadWorkspace(name) {
+    nodeGetWorkspaces().then((workspaces) => {
+      // if that workspace exists
+      if (workspaces.find((workspace) => workspace === name)) {
+        nodeReadFileSync(`data/workspaces/${name}`).then((resolvedData) => {
+          globalModuleData.current = JSON.parse(resolvedData);
+          let newModuleList = [];
+          for (const mod of Object.keys(globalModuleData.current)) {
+            if (globalModuleData.current[mod].purpose) {
+              newModuleList.push({ key: mod, purpose: globalModuleData.current[mod].purpose })
+            }
+          }
+          setModuleList(newModuleList);
+        })
+      }
+    })
+  }
+
   // Empty dependencies, triggers once, when modules are loaded from storage, before this code, this wont trigger
   useEffect(() => {
     nodeCreateFolderSync("data");
@@ -47,37 +65,8 @@ export default function App() {
 
     nodeWriteFileSync("data/text/writeTest.txt", "CONTENT WRITE TEST");
 
-
-
-    // TODO: CHECK FOR EXISTING WORKSPACE HERE, LOAD INTO GLOBAL MODULE DATA AND MODULELIST, PLACE INTO A REUSUABLE FUNCTION FOR LOADING OTHER WORKSPACES TOO
-
-    // essentially checks if there's a workspace loaded
     if (!globalModuleData.current.name) {
-      nodeGetWorkspaces().then((workspaces) => {
-        console.log(workspaces);
-        if (workspaces.find((workspace) => workspace === "defaultWorkspace.json")) {
-          nodeReadFileSync("data/workspaces/defaultWorkspace.json").then((resolvedData) => {
-            globalModuleData.current = JSON.parse(resolvedData);
-            console.log(globalModuleData, JSON.parse(resolvedData));
-
-
-            let newModuleList = [];
-            console.log("ggg");
-            console.log(globalModuleData.current, Object.keys(globalModuleData.current));
-            for (const mod of Object.keys(globalModuleData.current)) {
-              console.log(globalModuleData.current);
-              console.log(mod);
-              console.log(globalModuleData.current[mod]);
-              if (globalModuleData.current[mod].purpose) {
-                newModuleList.push({ key: mod, purpose: globalModuleData.current[mod].purpose })
-              }
-              console.log(newModuleList);
-            }
-            setModuleList(newModuleList);
-          })
-        }
-      })
-
+      loadWorkspace("defaultWorkspace.json");
       globalModuleData.current.name = `default-name-${self.crypto.randomUUID()}`
     }
   }, [])
@@ -94,6 +83,7 @@ export default function App() {
     }
 
     let workspaceName = globalModuleData.current.name;
+    // TODO: Write file optimisation, some kind of batch updating
     nodeWriteFileSync(`data/workspaces/${workspaceName}.json`, JSON.stringify(globalModuleData.current));
     // console.log(globalModuleData.current);
   }
