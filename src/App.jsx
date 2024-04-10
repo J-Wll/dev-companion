@@ -72,9 +72,9 @@ export default function App() {
   }, [])
 
   function setModuleData(iKey, iValue, layout = false) {
-    console.log("!!!!!!!!!!!!!!!!! setModuleData !!!!!!!!!!!!!!!!!!!");
-    console.log(globalModuleData.current);
-    console.log(moduleList);
+    // console.log("!!!!!!!!!!!!!!!!! setModuleData !!!!!!!!!!!!!!!!!!!");
+    // console.log(globalModuleData.current);
+    // console.log(moduleList);
     if (layout === "pos") {
       globalModuleData.current[iKey].layout = iValue;
     }
@@ -85,7 +85,7 @@ export default function App() {
       globalModuleData.current[iKey].data = iValue;
     }
 
-    console.log(globalModuleData.current);
+    // console.log(globalModuleData.current);
     let workspaceName = globalModuleData.current.name;
     // TODO: Write file optimisation, some kind of batch updating
     nodeWriteFileSync(`data/workspaces/${workspaceName}.json`, JSON.stringify(globalModuleData.current));
@@ -136,18 +136,28 @@ export default function App() {
   }
 
   function WorkspaceSelector() {
+    const [options, setOptions] = useState([<option>loading</option>]);
+
+    useEffect((() => {
+      nodeGetWorkspaces().then((val) => {
+        setOptions(val.map((option) => {
+          return <option value={option}>{option}</option>
+        }))
+      });
+    }), [])
+
+    console.log(options, "ff");
+    console.log(nodeGetWorkspaces(), typeof nodeGetWorkspaces(), "ff");
+
     return (
       <div className="workspace-selector">
         <label htmlFor="workspace-input">Select workspace:</label>
         {/* TODO: populate with data from data folder, unique name by default and can be renamed */}
         <select name="workspace-input" id="workspace-input" >
-          <option value="workspace-1">workspace-1</option>
-          <option value="workspace-2">workspace-2</option>
-          <option value="workspace-3">workspace-3</option>
-          <option value="workspace-4">workspace-4</option>
+          {options}
         </select>
         <div>
-          <button>Add</button>
+          <button>Create</button>
           <button>Rename</button>
         </div>
         <div>
