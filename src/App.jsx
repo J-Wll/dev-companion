@@ -188,6 +188,11 @@ export default function App() {
       loadWorkspace(`${name}.json`);
     }
 
+    function clearWorkspace() {
+      setModuleList([]);
+      globalModuleData.current = { "name": globalModuleData.current.name }
+    }
+
     function renameWorkspace(name) {
       console.log(`${name}.json`);
       nodeRenameFileSync(`data/workspaces/${globalModuleData.current.name}.json`, `data/workspaces/${name}.json`);
@@ -208,12 +213,12 @@ export default function App() {
           {options}
         </select>
         <div>
-          <button onClick={() => createWorkspaceHandler()}>Create</button>
+          <button onClick={createWorkspaceHandler}>Create</button>
           <button onClick={() => setRenameMode(!renameMode)}>Rename</button>
         </div>
         <div>
           <button onClick={() => loadWorkspaceHandler(selectRef.current.selectedOptions[0].innerText)}>Load</button>
-          <button>Clear</button>
+          <button onClick={clearWorkspace}>Clear</button>
         </div>
       </div>
     )
