@@ -124,7 +124,7 @@ export default function App() {
       // TODO: Close/open side bar buttons should probablu just be chevrons (<>)
 
       <div className="sidebar">
-        <WorkspaceSelector />
+        <WorkspaceController />
         <button>Close Sidebar</button>
         <button onClick={() => { addModule("Notes") }}>Add Notes</button>
         <button onClick={() => { addModule("Reflective") }}>Add Reflective</button>
@@ -135,8 +135,9 @@ export default function App() {
     )
   }
 
-  function WorkspaceSelector() {
+  function WorkspaceController() {
     const [options, setOptions] = useState([<option>loading</option>]);
+    const selectRef = useRef();
 
     useEffect((() => {
       nodeGetWorkspaces().then((val) => {
@@ -144,6 +145,9 @@ export default function App() {
           return <option value={option}>{option}</option>
         }))
       });
+
+      console.log(selectRef.current.selectedOptions[0].innerText)
+
     }), [])
 
     console.log(options, "ff");
@@ -153,7 +157,7 @@ export default function App() {
       <div className="workspace-selector">
         <label htmlFor="workspace-input">Select workspace:</label>
         {/* TODO: populate with data from data folder, unique name by default and can be renamed */}
-        <select name="workspace-input" id="workspace-input" >
+        <select ref={selectRef} name="workspace-input" id="workspace-input" >
           {options}
         </select>
         <div>
@@ -161,7 +165,7 @@ export default function App() {
           <button>Rename</button>
         </div>
         <div>
-          <button>Load</button>
+          <button onClick={() => loadWorkspace(selectRef.current.selectedOptions[0].innerText)}>Load</button>
           <button>Clear</button>
         </div>
       </div>
