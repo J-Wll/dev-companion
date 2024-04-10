@@ -53,13 +53,13 @@ export default function TimerContent(props) {
     // TIMER
     useEffect(() => {
         const timer = setInterval(() => {
-            console.log(props.counter, " interval", targetInterval);
+            // console.log(props.counter, " interval", targetInterval);
 
             timerMode();
 
             if (localData.timerActive) {
                 if (localData.time < targetInterval * 60) {
-                    console.log(localData.time < targetInterval * 60, localData.time, targetInterval * 60)
+                    // console.log(localData.time < targetInterval * 60, localData.time, targetInterval * 60)
                     setLocalData((prev) => ({ ...prev, time: prev.time + 1 }))
                 }
 
@@ -108,7 +108,7 @@ export default function TimerContent(props) {
     }
 
     if (localData) {
-        console.log(targetInterval, localData.interval);
+        // console.log(targetInterval, localData.interval);
         let currentInterval;
         if (localData.pomodoro.on) {
             if (localData.pomodoro.workMode) {
