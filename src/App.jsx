@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from "react";
 
 export default function App() {
   const [moduleList, setModuleList] = useState([]);
+  const [currentWorkspace, setCurrentWorkspace] = useState("defaultWorkspace.json");
 
   // Data decoupled from modules at this level because otherwise every component is re-rendered whenever data changes
   // This way each component "controls" itself and updates the global data for saving/loading
@@ -44,6 +45,7 @@ export default function App() {
             }
           }
           setModuleList(newModuleList);
+          setCurrentWorkspace(name);
         })
       }
     })
@@ -142,13 +144,22 @@ export default function App() {
     useEffect((() => {
       nodeGetWorkspaces().then((val) => {
         setOptions(val.map((option) => {
-          return <option value={option}>{option}</option>
+          let selected;
+          if (option === currentWorkspace) {
+            selected = "selected"
+          }
+          return <option selected={selected} value={option}>{option}</option>
         }))
       });
 
       console.log(selectRef.current.selectedOptions[0].innerText)
 
     }), [])
+
+    function loadWorkspaceBut(name) {
+      loadWorkspace(name);
+      console.log(currentWorkspace);
+    }
 
     console.log(options, "ff");
     console.log(nodeGetWorkspaces(), typeof nodeGetWorkspaces(), "ff");
@@ -157,7 +168,7 @@ export default function App() {
       <div className="workspace-selector">
         <label htmlFor="workspace-input">Select workspace:</label>
         {/* TODO: populate with data from data folder, unique name by default and can be renamed */}
-        <select ref={selectRef} name="workspace-input" id="workspace-input" >
+        <select ref={selectRef} defaultValue={currentWorkspace} name="workspace-input" id="workspace-input" >
           {options}
         </select>
         <div>
@@ -165,7 +176,7 @@ export default function App() {
           <button>Rename</button>
         </div>
         <div>
-          <button onClick={() => loadWorkspace(selectRef.current.selectedOptions[0].innerText)}>Load</button>
+          <button onClick={() => loadWorkspaceBut(selectRef.current.selectedOptions[0].innerText)}>Load</button>
           <button>Clear</button>
         </div>
       </div>
