@@ -49,8 +49,8 @@ contextBridge.exposeInMainWorld('electron', {
   writeFile: async (filePath, content) => {
     ipcRenderer.invoke('writeFile', filePath, content);
   },
-  amendFile: async (filePath, content) => {
-    ipcRenderer.invoke('amendFile', filePath, content);
+  renameFile: async (filePath, content) => {
+    ipcRenderer.invoke('renameFile', filePath, content);
   },
   getWorkspaces: async () => {
     return await ipcRenderer.invoke("getWorkspaces");

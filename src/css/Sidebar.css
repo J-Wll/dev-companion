@@ -10,6 +10,7 @@
 
 .sidebar * {
     max-width: 150px;
+    box-sizing: border-box;
 }
 
 .sidebar button {

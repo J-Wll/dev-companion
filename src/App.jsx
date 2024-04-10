@@ -8,6 +8,7 @@ import { useState, useEffect, useRef } from "react";
 export default function App() {
   const [moduleList, setModuleList] = useState([]);
   const [currentWorkspace, setCurrentWorkspace] = useState("defaultWorkspace.json");
+  const [refresh, triggerRefresh] = useState(false);
 
   // Data decoupled from modules at this level because otherwise every component is re-rendered whenever data changes
   // This way each component "controls" itself and updates the global data for saving/loading
@@ -26,6 +27,10 @@ export default function App() {
 
   async function nodeWriteFileSync(filePath, content) {
     window.electron.writeFile(filePath, content);
+  }
+
+  async function nodeRenameFileSync(filePath, newFilePath) {
+    window.electron.renameFile(filePath, newFilePath);
   }
 
   async function nodeGetWorkspaces() {
@@ -145,7 +150,19 @@ export default function App() {
 
   function WorkspaceController() {
     const [options, setOptions] = useState([<option>loading</option>]);
+    const [renameMode, setRenameMode] = useState(false);
+    const renameRef = useRef();
     const selectRef = useRef();
+
+    let renameControls;
+    if (renameMode) {
+      renameControls =
+        <div className='workspace-selector'>
+          <label>New name:</label>
+          <input ref={renameRef}></input>
+          <button onClick={() => renameWorkspace(renameRef.current.value)}>Apply</button>
+        </div>
+    }
 
     useEffect((() => {
       nodeGetWorkspaces().then((val) => {
@@ -157,9 +174,7 @@ export default function App() {
           return <option selected={selected} value={option}>{option}</option>
         }))
       });
-
       console.log(selectRef.current.selectedOptions[0].innerText)
-
     }), [])
 
     function loadWorkspaceHandler(name) {
@@ -173,6 +188,14 @@ export default function App() {
       loadWorkspace(`${name}.json`);
     }
 
+    function renameWorkspace(name) {
+      console.log(`${name}.json`);
+      nodeRenameFileSync(`data/workspaces/${globalModuleData.current.name}.json`, `data/workspaces/${name}.json`);
+      globalModuleData.current.name = name;
+      setRenameMode(false);
+      triggerRefresh(!refresh);
+    }
+
     console.log(options, "ff");
     console.log(nodeGetWorkspaces(), typeof nodeGetWorkspaces(), "ff");
 
@@ -180,12 +203,13 @@ export default function App() {
       <div className="workspace-selector">
         <label htmlFor="workspace-input">Select workspace:</label>
         {/* TODO: populate with data from data folder, unique name by default and can be renamed */}
+        {renameControls}
         <select ref={selectRef} name="workspace-input" id="workspace-input" >
           {options}
         </select>
         <div>
           <button onClick={() => createWorkspaceHandler()}>Create</button>
-          <button>Rename</button>
+          <button onClick={() => setRenameMode(!renameMode)}>Rename</button>
         </div>
         <div>
           <button onClick={() => loadWorkspaceHandler(selectRef.current.selectedOptions[0].innerText)}>Load</button>

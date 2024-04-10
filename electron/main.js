@@ -43,6 +43,11 @@ ipcMain.handle("readFile", async (_, fileName) => {
   }
 })
 
+ipcMain.handle("renameFile", async (_, fileName, newFileName) => {
+  fs.renameSync(path.join(appPath, fileName), path.join(appPath, newFileName));
+});
+
+
 ipcMain.handle("writeFile", async (_, fileName, content) => {
   fs.writeFileSync(path.join(appPath, fileName), content);
 })
