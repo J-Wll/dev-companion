@@ -32,6 +32,10 @@ export default function App() {
     window.electron.renameFile(filePath, newFilePath);
   }
 
+  async function nodeDeleteFileSync(filePath) {
+    window.electron.deleteFile(filePath);
+  }
+
   async function nodeGetWorkspaces() {
     return await window.electron.getWorkspaces();
   }
@@ -184,12 +188,9 @@ export default function App() {
       console.log(selectRef.current.selectedOptions[0].innerText)
     }), [])
 
-    function loadWorkspaceHandler(name) {
-      loadWorkspace(name);
-      console.log(globalModuleData.current.name);
-    }
+    // Load workspace defined higher up
 
-    function createWorkspaceHandler() {
+    function createWorkspace() {
       const name = `new-workspace-${crypto.randomUUID()}`
       nodeWriteFileSync(`data/workspaces/${name}.json`, JSON.stringify({ "name": name }))
       loadWorkspace(`${name}.json`);
@@ -209,6 +210,11 @@ export default function App() {
       triggerRefresh(!refresh);
     }
 
+    function deleteWorkspace(name) {
+      nodeDeleteFileSync(`data/workspaces/${name}`);
+      clearWorkspace();
+    }
+
     console.log(options, "ff");
     console.log(nodeGetWorkspaces(), typeof nodeGetWorkspaces(), "ff");
 
@@ -221,12 +227,13 @@ export default function App() {
           {options}
         </select>
         <div>
-          <button onClick={createWorkspaceHandler}>Create</button>
+          <button onClick={createWorkspace}>Create</button>
           <button onClick={() => setRenameMode(!renameMode)}>Rename</button>
         </div>
         <div>
-          <button onClick={() => loadWorkspaceHandler(selectRef.current.selectedOptions[0].innerText)}>Load</button>
+          <button onClick={() => loadWorkspace(selectRef.current.selectedOptions[0].innerText)}>Load</button>
           <button onClick={clearWorkspace}>Clear</button>
+          <button onClick={() => deleteWorkspace(selectRef.current.selectedOptions[0].innerText)}>Delete</button>
         </div>
       </div>
     )
