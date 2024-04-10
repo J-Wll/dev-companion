@@ -7,7 +7,6 @@ import { useState, useEffect, useRef } from "react";
 
 export default function App() {
   const [moduleList, setModuleList] = useState([]);
-  const [currentWorkspace, setCurrentWorkspace] = useState("defaultWorkspace.json");
   const [refresh, triggerRefresh] = useState(false);
 
   // Data decoupled from modules at this level because otherwise every component is re-rendered whenever data changes
@@ -54,7 +53,6 @@ export default function App() {
             }
           }
           setModuleList(newModuleList);
-          setCurrentWorkspace(name);
 
           if (!globalModuleData.current.name) {
             console.log(globalModuleData.current.name);
@@ -62,7 +60,10 @@ export default function App() {
             console.log(globalModuleData.current.name);
           }
 
+          nodeWriteFileSync(`data/workspaces/${globalModuleData.current.name}.json`, JSON.stringify(globalModuleData.current));
+
           updateLatestWorkspace(globalModuleData.current.name);
+          triggerRefresh(!refresh);
         })
       }
     })
@@ -85,7 +86,7 @@ export default function App() {
     nodeWriteFileSync("data/text/writeTest.txt", "CONTENT WRITE TEST");
 
     if (!globalModuleData.current.name) {
-      loadWorkspace("defaultWorkspace.json");
+      loadWorkspace("!defaultWorkspace.json");
     }
   }, [])
 
