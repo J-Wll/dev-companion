@@ -80,14 +80,22 @@ export default function App() {
     nodeCreateFolderSync("data/text");
 
     const res = nodeReadFileSync("data/workspaces/test.txt");
-    console.log(res);
-    res.then((resolvedData) => {
-      console.log("Resolved data:", resolvedData);
-    }).catch((error) => {
-      console.error("Error reading file:", error);
-    });
 
     nodeWriteFileSync("data/text/writeTest.txt", "CONTENT WRITE TEST");
+
+    const config = nodeReadFileSync("data/config.json");
+    console.log(config);
+    config.then((res) => {
+      const parsed = JSON.parse(res);
+      console.log(parsed);
+      if (parsed.latestWorkspace) {
+        console.log(parsed);
+        loadWorkspace(`${parsed.latestWorkspace}`);
+      }
+
+    }).catch((err) => {
+      console.error(err);
+    })
 
     if (!globalModuleData.current.name) {
       loadWorkspace("!defaultWorkspace.json");
