@@ -4,13 +4,30 @@ import NoteContent from "./module-contents/NoteContent";
 import TodoContent from "./module-contents/TodoContent";
 import TimerContent from "./module-contents/TimerContent";
 
+import { useRef, useEffect } from "react";
 import Draggable from 'react-draggable';
 
 export default function Module(props) {
     // console.log(props);
 
+    const moduleRef = useRef();
+
+    const myObserver = new ResizeObserver(() => {
+        props.setData(props.counter, { sizeX: moduleRef.current.style.width, sizeY: moduleRef.current.style.height }, "size")
+    })
+
+    // Triggers after the first render when the ref is defined
+    useEffect(() => {
+        if (moduleRef.current) {
+            console.log(moduleRef.current.style.height, moduleRef.current.style.width);
+            myObserver.observe(moduleRef.current);
+        }
+    }, [])
+
     let component, title;
+    let defaultSize = ["400px", "450px"]
     const componentProps = { data: props.data, setData: props.setData, counter: props.counter, dataFromGlobal: props.dataFromGlobal.data }
+
     // TODO: every possible purpose, make sure each one has the break
     switch (props.purpose) {
         case "Notes":
@@ -29,6 +46,7 @@ export default function Module(props) {
             console.log("IIIIIIIIIIIIIIIII")
             component = <TimerContent {...componentProps} />;
             title = "Timer";
+            defaultSize = ["320px", "220px"];
             break;
         default:
             component = <></>;
@@ -40,17 +58,19 @@ export default function Module(props) {
     // similar mechanism for size
     // misallignment problem is probably due to using cursor position, which can grab any point along the bar
     function handleStop(mouseEvent, draggableProps) {
-        props.setData(props.counter, { x: draggableProps.x, y: draggableProps.y }, true)
+        props.setData(props.counter, { x: draggableProps.x, y: draggableProps.y }, "pos")
     }
 
     const defaultPos = props.dataFromGlobal.layout ? props.dataFromGlobal.layout : { x: 10, y: 10 }
+    console.log(props.dataFromGlobal);
+    console.log(props.dataFromGlobal.size);
+    console.log(props.dataFromGlobal.size ? [props.dataFromGlobal.size.sizeX, props.dataFromGlobal.size.sizeY] : defaultSize)
+    const [sizeX, sizeY] = props.dataFromGlobal.size ? [props.dataFromGlobal.size.sizeX, props.dataFromGlobal.size.sizeY] : defaultSize;
     console.log(component, title);
-
-
 
     return (
         <Draggable handle=".menu-bar" defaultPosition={defaultPos} onStop={handleStop}>
-            <div className={`module ${props.purpose.toLowerCase()}-module`} style={{ height: "200px", width: "200px" }}>
+            <div ref={moduleRef} className={`module ${props.purpose.toLowerCase()}-module`} style={{ height: sizeY, width: sizeX }}>
                 <div className="menu-bar">
                     <p className="module-title">{title}</p>
                     <button onClick={() => props.deleteModule(props.counter)} className="close-module">X</button>

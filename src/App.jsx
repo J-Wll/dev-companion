@@ -75,17 +75,20 @@ export default function App() {
     console.log("!!!!!!!!!!!!!!!!! setModuleData !!!!!!!!!!!!!!!!!!!");
     console.log(globalModuleData.current);
     console.log(moduleList);
-    if (layout) {
+    if (layout === "pos") {
       globalModuleData.current[iKey].layout = iValue;
+    }
+    else if (layout === "size") {
+      globalModuleData.current[iKey].size = iValue;
     }
     else {
       globalModuleData.current[iKey].data = iValue;
     }
 
+    console.log(globalModuleData.current);
     let workspaceName = globalModuleData.current.name;
     // TODO: Write file optimisation, some kind of batch updating
     nodeWriteFileSync(`data/workspaces/${workspaceName}.json`, JSON.stringify(globalModuleData.current));
-    // console.log(globalModuleData.current);
   }
 
   function addModule(moduleType) {
