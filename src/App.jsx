@@ -37,6 +37,10 @@ export default function App() {
     return await window.electron.getWorkspaces();
   }
 
+  function updateLatestWorkspace(newest) {
+    nodeWriteFileSync("data/config.json", JSON.stringify({ "latestWorkspace": newest }));
+  }
+
   function loadWorkspace(name) {
     nodeGetWorkspaces().then((workspaces) => {
       // if that workspace exists
@@ -57,6 +61,8 @@ export default function App() {
             globalModuleData.current.name = `default-name-${self.crypto.randomUUID()}`
             console.log(globalModuleData.current.name);
           }
+
+          updateLatestWorkspace(globalModuleData.current.name);
         })
       }
     })
@@ -197,6 +203,7 @@ export default function App() {
       console.log(`${name}.json`);
       nodeRenameFileSync(`data/workspaces/${globalModuleData.current.name}.json`, `data/workspaces/${name}.json`);
       globalModuleData.current.name = name;
+      updateLatestWorkspace(globalModuleData.current.name);
       setRenameMode(false);
       triggerRefresh(!refresh);
     }
