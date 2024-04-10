@@ -46,6 +46,12 @@ export default function App() {
           }
           setModuleList(newModuleList);
           setCurrentWorkspace(name);
+
+          if (!globalModuleData.current.name) {
+            console.log(globalModuleData.current.name);
+            globalModuleData.current.name = `default-name-${self.crypto.randomUUID()}`
+            console.log(globalModuleData.current.name);
+          }
         })
       }
     })
@@ -69,7 +75,6 @@ export default function App() {
 
     if (!globalModuleData.current.name) {
       loadWorkspace("defaultWorkspace.json");
-      globalModuleData.current.name = `default-name-${self.crypto.randomUUID()}`
     }
   }, [])
 
@@ -87,10 +92,11 @@ export default function App() {
       globalModuleData.current[iKey].data = iValue;
     }
 
-    // console.log(globalModuleData.current);
-    let workspaceName = globalModuleData.current.name;
+    // console.log(globalModuleData.current.name);
     // TODO: Write file optimisation, some kind of batch updating
-    nodeWriteFileSync(`data/workspaces/${workspaceName}.json`, JSON.stringify(globalModuleData.current));
+    nodeWriteFileSync(`data/workspaces/${globalModuleData.current.name}.json`, JSON.stringify(globalModuleData.current));
+    // console.log(globalModuleData.current.name);
+
   }
 
   function addModule(moduleType) {
@@ -145,7 +151,7 @@ export default function App() {
       nodeGetWorkspaces().then((val) => {
         setOptions(val.map((option) => {
           let selected;
-          if (option === currentWorkspace) {
+          if (option === `${globalModuleData.current.name}.json`) {
             selected = "selected"
           }
           return <option selected={selected} value={option}>{option}</option>
@@ -156,9 +162,15 @@ export default function App() {
 
     }), [])
 
-    function loadWorkspaceBut(name) {
+    function loadWorkspaceHandler(name) {
       loadWorkspace(name);
-      console.log(currentWorkspace);
+      console.log(globalModuleData.current.name);
+    }
+
+    function createWorkspaceHandler() {
+      const name = `new-workspace-${crypto.randomUUID()}`
+      nodeWriteFileSync(`data/workspaces/${name}.json`, JSON.stringify({ "name": name }))
+      loadWorkspace(`${name}.json`);
     }
 
     console.log(options, "ff");
@@ -168,15 +180,15 @@ export default function App() {
       <div className="workspace-selector">
         <label htmlFor="workspace-input">Select workspace:</label>
         {/* TODO: populate with data from data folder, unique name by default and can be renamed */}
-        <select ref={selectRef} defaultValue={currentWorkspace} name="workspace-input" id="workspace-input" >
+        <select ref={selectRef} name="workspace-input" id="workspace-input" >
           {options}
         </select>
         <div>
-          <button>Create</button>
+          <button onClick={() => createWorkspaceHandler()}>Create</button>
           <button>Rename</button>
         </div>
         <div>
-          <button onClick={() => loadWorkspaceBut(selectRef.current.selectedOptions[0].innerText)}>Load</button>
+          <button onClick={() => loadWorkspaceHandler(selectRef.current.selectedOptions[0].innerText)}>Load</button>
           <button>Clear</button>
         </div>
       </div>
