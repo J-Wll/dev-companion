@@ -68,7 +68,7 @@ export default function TimerContent(props) {
                 }
             }
             else {
-                console.log("paused");
+                console.log("Paused");
             }
 
         }, 1000);
@@ -77,35 +77,33 @@ export default function TimerContent(props) {
     }, [localData])
 
 
-    function IntervalControl() {
-        return (
-            <div id="interval-set">
-                <span><label htmlFor="timerNumInp">Time (m):</label></span>
-                <input className="Px40W" id="timerNumInp" type="number" value={timeInput} onChange={e => setTimeInput(e.target.value)} />
-                <button onClick={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, interval: Number(timeInput) })) }}> Set</button>
-            </div >
-        )
-    }
+    const intervalControl =
 
-    function PomodoroIntervalControl() {
-        return (
-            <>
-                <div>
-                    <button onClick={(e) => { timerMode(true); }}>{`Swap to ${localData.pomodoro.workMode ? "Rest" : "Work"} mode`}</button>
-                </div>
-                <div id="work-interval-set">
-                    <span><label htmlFor="timerNumInp">Work Time (m):</label></span>
-                    <input className="Px40W" id="timerNumInp" type="number" value={pomoWorkInput} onChange={e => setPomoWorkInput(e.target.value)} />
-                    <button onClick={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, workInterval: Number(pomoWorkInput) } })) }}> Set</button>
-                </div>
-                <div id="rest-interval-set">
-                    <span><label htmlFor="timerNumInp">Rest Time (m):</label></span>
-                    <input className="Px40W" id="timerNumInp" type="number" value={pomoRestInput} onChange={e => setPomoRestInput(e.target.value)} />
-                    <button onClick={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, restInterval: Number(pomoRestInput) } })) }}> Set</button>
-                </div>
-            </>
-        )
-    }
+        <div id="interval-set">
+            <span><label htmlFor="timerNumInp">Time (m):</label></span>
+            <input className="Px40W" id="timerNumInp" type="number" value={timeInput} onChange={e => setTimeInput(e.target.value)} />
+            <button onClick={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, interval: Number(timeInput) })) }}> Set</button>
+        </div >
+
+
+    const pomodoroIntervalControl =
+        <>
+            <div>
+                <button onClick={(e) => { timerMode(true); }}>{`Swap to ${localData.pomodoro.workMode ? "Rest" : "Work"} mode`}</button>
+            </div>
+            <div id="work-interval-set">
+                <span><label htmlFor="timerNumInp">Work Time (m):</label></span>
+                <input className="Px40W" id="timerNumInp" type="number" value={pomoWorkInput} onChange={e => setPomoWorkInput(e.target.value)} />
+                <button onClick={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, workInterval: Number(pomoWorkInput) } })) }}> Set</button>
+            </div>
+            <div id="rest-interval-set">
+                <span><label htmlFor="timerNumInp">Rest Time (m):</label></span>
+                <input className="Px40W" id="timerNumInp" type="number" value={pomoRestInput} onChange={e => setPomoRestInput(e.target.value)} />
+                <button onClick={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, restInterval: Number(pomoRestInput) } })) }}> Set</button>
+            </div>
+        </>
+
+
 
     if (localData) {
         // console.log(targetInterval, localData.interval);
@@ -121,7 +119,8 @@ export default function TimerContent(props) {
         else {
             currentInterval = localData.interval;
         }
-        const percentComplete = (localData.time / (localData.interval * 60)) * 100;
+
+        const percentComplete = (localData.time / (currentInterval * 60)) * 100;
         return (
             <section className="timer-content">
                 <div className="timer-bar" style={{ width: `${(localData.time / (currentInterval * 60)) * 100}%` }}>
@@ -130,13 +129,12 @@ export default function TimerContent(props) {
 
                 <span><label htmlFor="pomodoroCheckbox">Pomodoro mode?</label><input id="pomodoroCheckbox" type="checkbox" onChange={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, on: !localData.pomodoro.on } })) }} /></span>
 
-                {localData.pomodoro.on ? <PomodoroIntervalControl /> : <IntervalControl />}
+                {localData.pomodoro.on ? pomodoroIntervalControl : intervalControl}
 
                 <div>
                     <button onClick={() => setLocalData((prev) => ({ ...prev, timerActive: true }))} > Resume </button>
                     <button onClick={() => setLocalData((prev) => ({ ...prev, timerActive: false }))} > Pause </button>
                 </div>
-
             </section >
         )
     }
