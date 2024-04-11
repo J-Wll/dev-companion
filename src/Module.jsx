@@ -12,6 +12,7 @@ export default function Module(props) {
 
     const moduleRef = useRef();
     const [minimised, setMinimised] = useState(false);
+    const [refresh, triggerRefresh] = useState(false);
 
     const myObserver = new ResizeObserver(() => {
         props.setData(props.counter, { sizeX: moduleRef.current.style.width, sizeY: moduleRef.current.style.height }, "size")
@@ -66,11 +67,15 @@ export default function Module(props) {
         props.setData(props.counter, { x: draggableProps.x, y: draggableProps.y }, "pos")
     }
 
+    function handleStart() {
+        props.setData(props.counter, props.dataFromGlobal.zIndex ? props.dataFromGlobal.zIndex + 10 : 1, "zIndex")
+        triggerRefresh(!refresh);
+    }
+
     const defaultPos = props.dataFromGlobal.pos ? props.dataFromGlobal.pos : { x: 10, y: 10 }
-    console.log(props.dataFromGlobal);
-    console.log(props.dataFromGlobal.size);
     console.log(props.dataFromGlobal.size ? [props.dataFromGlobal.size.sizeX, props.dataFromGlobal.size.sizeY] : defaultSize)
     let [sizeX, sizeY] = props.dataFromGlobal.size ? [props.dataFromGlobal.size.sizeX, props.dataFromGlobal.size.sizeY] : defaultSize;
+    let zIndexVal = props.dataFromGlobal.zIndex ? props.dataFromGlobal.zIndex : 1;
     console.log(component, title);
 
 
@@ -90,8 +95,8 @@ export default function Module(props) {
 
 
     return (
-        <Draggable handle=".menu-bar" defaultPosition={defaultPos} onStop={handleStop}>
-            <div ref={moduleRef} className={`module ${props.purpose.toLowerCase()}-module`} style={{ height: sizeY, width: sizeX, resize: resizeVal, pointerEvents: pointerVal }} >
+        <Draggable handle=".menu-bar" defaultPosition={defaultPos} onStop={handleStop} onStart={handleStart}>
+            <div ref={moduleRef} className={`module ${props.purpose.toLowerCase()}-module`} style={{ height: sizeY, width: sizeX, zIndex: zIndexVal, resize: resizeVal, pointerEvents: pointerVal }} >
                 <div className="menu-bar" style={{ pointerEvents: "all" }}>
                     <p className="module-title">{title}</p>
                     <div>
