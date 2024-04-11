@@ -34,7 +34,7 @@ export default function NoteContent(props) {
     }
 
     return (
-        <ReactQuill value={localData} onChange={handleChange} theme="snow" />
+        <ReactQuill value={localData} onChange={handleChange} theme="snow" modules={{ clipboard: { matchVisual: false } }} />
         // <textarea value={localData} onChange={e=>setLocalData(e.target.value)}/>
     )
 }
