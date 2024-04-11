@@ -1,6 +1,7 @@
 Windows installer is available under releases
 
 In theory, as an Electron program it should work on Linux and MacOS
+
 To build for another platform (Requires NodeJS):
 
 - Download/clone the directory
