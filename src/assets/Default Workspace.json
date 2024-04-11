@@ -1,7 +1,7 @@
 {
   "16f058f3-8691-40a2-9bce-9d78b1e51b93": {
     "purpose": "Notes",
-    "layout": { "x": 23, "y": -1 },
+    "pos": { "x": 23, "y": -1 },
     "size": { "sizeX": "391px", "sizeY": "441px" }
   },
   "0bd52b97-33f6-40f0-8110-2ce1de07f318": {
@@ -14,17 +14,17 @@
         "data": ""
       }
     ],
-    "layout": { "x": 21, "y": 689 },
+    "pos": { "x": 21, "y": 689 },
     "size": { "sizeX": "323px", "sizeY": "262px" }
   },
   "3be09f30-ca74-490f-a64b-f1754300b4cc": {
     "purpose": "Kanban",
-    "layout": { "x": 349, "y": 457 },
+    "pos": { "x": 349, "y": 457 },
     "size": { "sizeX": "472px", "sizeY": "493px" }
   },
   "0f02c175-61fe-4714-b371-8f733fa01c1c": {
     "purpose": "Reflective",
-    "layout": { "x": 420, "y": -3 },
+    "pos": { "x": 420, "y": -3 },
     "size": { "sizeX": "391px", "sizeY": "443px" }
   },
   "85b15df3-8f7f-4e5e-af56-6119114534a3": {
@@ -40,7 +40,7 @@
         "restInterval": 15
       }
     },
-    "layout": { "x": 20, "y": 459 },
+    "pos": { "x": 20, "y": 459 },
     "size": { "sizeX": "320px", "sizeY": "220px" }
   }
 }

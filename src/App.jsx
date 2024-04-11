@@ -103,19 +103,9 @@ export default function App() {
     })
   }, [])
 
-  function setModuleData(iKey, iValue, layout = false) {
-    // console.log("!!!!!!!!!!!!!!!!! setModuleData !!!!!!!!!!!!!!!!!!!");
-    // console.log(globalModuleData.current);
-    // console.log(moduleList);
-    if (layout === "pos") {
-      globalModuleData.current[iKey].layout = iValue;
-    }
-    else if (layout === "size") {
-      globalModuleData.current[iKey].size = iValue;
-    }
-    else {
-      globalModuleData.current[iKey].data = iValue;
-    }
+  function setModuleData(iKey, iValue, subset = "data") {
+    globalModuleData.current[iKey][subset] = iValue;
+    
 
     // console.log(globalModuleData.current.name);
     // TODO: Write file optimisation, some kind of batch updating

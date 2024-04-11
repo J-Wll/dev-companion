@@ -23,6 +23,10 @@ export default function Module(props) {
             console.log(moduleRef.current.style.height, moduleRef.current.style.width);
             myObserver.observe(moduleRef.current);
         }
+
+        if (props.dataFromGlobal.minimised) {
+            setMinimised(props.dataFromGlobal.minimised);
+        }
     }, [])
 
     let component, title;
@@ -62,7 +66,7 @@ export default function Module(props) {
         props.setData(props.counter, { x: draggableProps.x, y: draggableProps.y }, "pos")
     }
 
-    const defaultPos = props.dataFromGlobal.layout ? props.dataFromGlobal.layout : { x: 10, y: 10 }
+    const defaultPos = props.dataFromGlobal.pos ? props.dataFromGlobal.pos : { x: 10, y: 10 }
     console.log(props.dataFromGlobal);
     console.log(props.dataFromGlobal.size);
     console.log(props.dataFromGlobal.size ? [props.dataFromGlobal.size.sizeX, props.dataFromGlobal.size.sizeY] : defaultSize)
@@ -91,7 +95,7 @@ export default function Module(props) {
                 <div className="menu-bar" style={{ pointerEvents: "all" }}>
                     <p className="module-title">{title}</p>
                     <div>
-                        <button onClick={() => setMinimised(!minimised)} className="close-module">{char}</button>
+                        <button onClick={() => { setMinimised(!minimised); props.setData(props.counter, !minimised, "minimised"); }} className="close-module">{char}</button>
                         <button onClick={() => props.deleteModule(props.counter)} className="close-module">X</button>
                     </div>
                 </div>
