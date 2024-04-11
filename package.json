@@ -1,7 +1,7 @@
 {
   "name": "DevCompanion",
   "private": true,
-  "version": "0.2.5",
+  "version": "0.2.6",
   "author": "Joe Westwell",
   "scripts": {
     "dev": "vite",
