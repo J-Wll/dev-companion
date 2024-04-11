@@ -143,10 +143,10 @@ export default function App() {
     console.log("!!!!!!!!!!!!!!!!!ADD MODULE!!!!!!!!!!!!!!!!!!!");
     console.log(globalModuleData.current);
 
-    const moduleKey = self.crypto.randomUUID()
+    const moduleKey = self.crypto.randomUUID();
 
-    globalModuleData.current[moduleKey] = { purpose: moduleType, data: undefined }
-    setModuleList(() => [...moduleList, { key: moduleKey, purpose: moduleType }])
+    globalModuleData.current[moduleKey] = { purpose: moduleType, data: undefined, zIndex: 1001 };
+    setModuleList(() => [...moduleList, { key: moduleKey, purpose: moduleType }]);
   }
 
   function deleteModule(target) {
