@@ -17,6 +17,6 @@
 .notes-module,
 .reflective-module,
 .resources-module {
-    background-color: floralwhite;
+    /* background-color: floralwhite; */
     overflow: hidden;
 }

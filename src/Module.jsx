@@ -4,13 +4,14 @@ import NoteContent from "./module-contents/NoteContent";
 import TodoContent from "./module-contents/TodoContent";
 import TimerContent from "./module-contents/TimerContent";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import Draggable from 'react-draggable';
 
 export default function Module(props) {
     // console.log(props);
 
     const moduleRef = useRef();
+    const [minimised, setMinimised] = useState(false);
 
     const myObserver = new ResizeObserver(() => {
         props.setData(props.counter, { sizeX: moduleRef.current.style.width, sizeY: moduleRef.current.style.height }, "size")
@@ -65,17 +66,32 @@ export default function Module(props) {
     console.log(props.dataFromGlobal);
     console.log(props.dataFromGlobal.size);
     console.log(props.dataFromGlobal.size ? [props.dataFromGlobal.size.sizeX, props.dataFromGlobal.size.sizeY] : defaultSize)
-    const [sizeX, sizeY] = props.dataFromGlobal.size ? [props.dataFromGlobal.size.sizeX, props.dataFromGlobal.size.sizeY] : defaultSize;
+    let [sizeX, sizeY] = props.dataFromGlobal.size ? [props.dataFromGlobal.size.sizeX, props.dataFromGlobal.size.sizeY] : defaultSize;
     console.log(component, title);
+
+
+
+    let hide;
+    let resizeVal = "both"
+    let char = "-"
+    if (minimised) {
+        hide = { display: "none" };
+        resizeVal = "none"
+        char = "◻"
+    };
+
 
     return (
         <Draggable handle=".menu-bar" defaultPosition={defaultPos} onStop={handleStop}>
-            <div ref={moduleRef} className={`module ${props.purpose.toLowerCase()}-module`} style={{ height: sizeY, width: sizeX }}>
+            <div ref={moduleRef} className={`module ${props.purpose.toLowerCase()}-module`} style={{ height: sizeY, width: sizeX, resize: resizeVal }} >
                 <div className="menu-bar">
                     <p className="module-title">{title}</p>
-                    <button onClick={() => props.deleteModule(props.counter)} className="close-module">X</button>
+                    <div>
+                        <button onClick={() => setMinimised(!minimised)} className="close-module">{char}</button>
+                        <button onClick={() => props.deleteModule(props.counter)} className="close-module">X</button>
+                    </div>
                 </div>
-                <div className="module-body">
+                <div className="module-body" style={hide} >
                     {component}
                 </div>
             </div>
