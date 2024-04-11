@@ -28,19 +28,25 @@
 
   cursor: pointer;
 
-  width: 100%;
+  width: 80%;
 }
 
 .module-bar-buttons {
-  width: 60px;
+  /* align-items: end; */
+  display: flex;
+  justify-content: end;
+  min-width: 60px;
 }
 
 .close-module {
   background-color: aquamarine;
   width: 20px;
   height: 20px;
+
   font-size: 16px;
   padding: 0;
+
+  box-sizing: border-box;
   margin-right: 2px;
   margin-left: 2px;
   cursor: pointer;

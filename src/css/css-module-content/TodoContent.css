@@ -4,6 +4,8 @@
 
     width: 90%;
     height: fit-content;
+
+    font-family: inherit;
 }
 
 .todo-item {
@@ -26,7 +28,7 @@
     box-sizing: border-box;
     border: none;
     text-align: center;
-    
+    font-size: 15px !important;
 
     height: 50px;
 
@@ -36,8 +38,14 @@
 .todo-item button,
 .todo-item input {
     min-height: fit-content;
-    width: 22px;
     min-width: fit-content;
+    width: 24px;
 
     box-sizing: border-box;
+}
+
+.reorder-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
