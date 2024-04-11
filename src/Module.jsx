@@ -72,19 +72,23 @@ export default function Module(props) {
 
 
     let hide;
-    let resizeVal = "both"
-    let char = "-"
+    let resizeVal = "both";
+    let char = "-";
+    let pointerVal = "all";
     if (minimised) {
-        hide = { display: "none" };
-        resizeVal = "none"
-        char = "◻"
+        hide = {
+            display: "none", zIndex: "-1"
+        };
+        resizeVal = "none";
+        pointerVal = "none";
+        char = "◻";
     };
 
 
     return (
         <Draggable handle=".menu-bar" defaultPosition={defaultPos} onStop={handleStop}>
-            <div ref={moduleRef} className={`module ${props.purpose.toLowerCase()}-module`} style={{ height: sizeY, width: sizeX, resize: resizeVal }} >
-                <div className="menu-bar">
+            <div ref={moduleRef} className={`module ${props.purpose.toLowerCase()}-module`} style={{ height: sizeY, width: sizeX, resize: resizeVal, pointerEvents: pointerVal }} >
+                <div className="menu-bar" style={{ pointerEvents: "all" }}>
                     <p className="module-title">{title}</p>
                     <div>
                         <button onClick={() => setMinimised(!minimised)} className="close-module">{char}</button>
