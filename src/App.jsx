@@ -3,6 +3,7 @@ import './css/Sidebar.css'
 import './css/ModuleHandler.css'
 
 import Module from './Module';
+import defaultWorkspace from "./assets/Default Workspace.json";
 import { useState, useEffect, useRef } from "react";
 
 export default function App() {
@@ -56,7 +57,6 @@ export default function App() {
               newModuleList.push({ key: mod, purpose: globalModuleData.current[mod].purpose })
             }
           }
-          setModuleList(newModuleList);
 
           if (!globalModuleData.current.name) {
             console.log(globalModuleData.current.name);
@@ -64,9 +64,9 @@ export default function App() {
             console.log(globalModuleData.current.name);
           }
 
-          nodeWriteFileSync(`data/workspaces/${globalModuleData.current.name}.json`, JSON.stringify(globalModuleData.current));
-
+          setModuleList(newModuleList);
           updateLatestWorkspace(globalModuleData.current.name);
+          nodeWriteFileSync(`data/workspaces/${globalModuleData.current.name}.json`, JSON.stringify(globalModuleData.current));
           triggerRefresh(!refresh);
         })
       }
@@ -79,9 +79,7 @@ export default function App() {
     nodeCreateFolderSync("data/workspaces");
     nodeCreateFolderSync("data/text");
 
-    const res = nodeReadFileSync("data/workspaces/test.txt");
-
-    nodeWriteFileSync("data/text/writeTest.txt", "CONTENT WRITE TEST");
+    nodeWriteFileSync("data/workspaces/!defaultWorkspace.json", JSON.stringify(defaultWorkspace));
 
     const config = nodeReadFileSync("data/config.json");
     console.log(config);
@@ -90,16 +88,19 @@ export default function App() {
       console.log(parsed);
       if (parsed.latestWorkspace) {
         console.log(parsed);
-        loadWorkspace(`${parsed.latestWorkspace}`);
+        loadWorkspace(`${parsed.latestWorkspace}.json`);
       }
-
+      else if (!globalModuleData.current.name) {
+        console.log("Inside then")
+        loadWorkspace("!defaultWorkspace.json");
+      }
     }).catch((err) => {
       console.error(err);
+      if (!globalModuleData.current.name) {
+        console.log("Inside catch")
+        loadWorkspace("!defaultWorkspace.json");
+      }
     })
-
-    if (!globalModuleData.current.name) {
-      loadWorkspace("!defaultWorkspace.json");
-    }
   }, [])
 
   function setModuleData(iKey, iValue, layout = false) {
