@@ -19,11 +19,20 @@
 .module-title {
   padding: 0;
   margin: 0;
+
   margin-right: 2px;
   margin-left: 2px;
+
   text-decoration: underline;
   text-wrap: nowrap;
-  width: max-content;
+
+  cursor: pointer;
+
+  width: 100%;
+}
+
+.module-bar-buttons {
+  width: 60px;
 }
 
 .close-module {
@@ -46,7 +55,6 @@
   height: 25px;
   box-sizing: border-box;
 
-  cursor: pointer;
 
   background-color: white;
   padding: 3px;

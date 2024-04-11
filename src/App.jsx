@@ -105,7 +105,7 @@ export default function App() {
 
   function setModuleData(iKey, iValue, subset = "data") {
     globalModuleData.current[iKey][subset] = iValue;
-    
+
 
     // console.log(globalModuleData.current.name);
     // TODO: Write file optimisation, some kind of batch updating
@@ -113,6 +113,31 @@ export default function App() {
     // console.log(globalModuleData.current.name);
 
   }
+
+  function topZIndex() {
+    let mods = Object.keys(globalModuleData.current)
+    mods = mods.filter((mod) => globalModuleData.current[mod].zIndex)
+    mods = mods.sort((a, b) => {
+      if (globalModuleData.current[a].zIndex && globalModuleData.current[b].zIndex) {
+        if (globalModuleData.current[a].zIndex > globalModuleData.current[b].zIndex) {
+          return 1
+        };
+        if (globalModuleData.current[a].zIndex < globalModuleData.current[b].zIndex) {
+          return -1
+        };
+      }
+      return 0
+    });
+
+    mods.forEach((val, ind) => {
+      console.log(val, ind + 1, globalModuleData.current[val].zIndex, globalModuleData.current[val].purpose)
+      globalModuleData.current[val].zIndex = ind + 1;
+      // console.log(val, ind, globalModuleData.current[val].zIndex)
+    })
+
+    triggerRefresh(!refresh);
+  }
+
 
   function addModule(moduleType) {
     console.log("!!!!!!!!!!!!!!!!!ADD MODULE!!!!!!!!!!!!!!!!!!!");
@@ -136,7 +161,7 @@ export default function App() {
 
     console.log(moduleList);
     return moduleList.map((module) =>
-      <Module key={module.key} counter={module.key} purpose={module.purpose} data={module.data} setData={setModuleData} deleteModule={deleteModule} dataFromGlobal={globalModuleData.current[module.key]} />
+      <Module key={module.key} counter={module.key} purpose={module.purpose} data={module.data} setData={setModuleData} deleteModule={deleteModule} dataFromGlobal={globalModuleData.current[module.key]} topZIndex={topZIndex} />
     )
   }
 

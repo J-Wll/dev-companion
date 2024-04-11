@@ -65,10 +65,12 @@ export default function Module(props) {
     // misallignment problem is probably due to using cursor position, which can grab any point along the bar
     function handleStop(mouseEvent, draggableProps) {
         props.setData(props.counter, { x: draggableProps.x, y: draggableProps.y }, "pos")
+        props.topZIndex();
+        triggerRefresh(!refresh);
     }
 
     function handleStart() {
-        props.setData(props.counter, props.dataFromGlobal.zIndex ? props.dataFromGlobal.zIndex + 10 : 1, "zIndex")
+        props.setData(props.counter, 1000, "zIndex")
         triggerRefresh(!refresh);
     }
 
@@ -95,12 +97,12 @@ export default function Module(props) {
 
 
     return (
-        <Draggable handle=".menu-bar" defaultPosition={defaultPos} onStop={handleStop} onStart={handleStart}>
+        <Draggable handle=".module-title" defaultPosition={defaultPos} onStop={handleStop} onStart={handleStart}>
             <div ref={moduleRef} className={`module ${props.purpose.toLowerCase()}-module`} style={{ height: sizeY, width: sizeX, zIndex: zIndexVal, resize: resizeVal, pointerEvents: pointerVal }} >
                 <div className="menu-bar" style={{ pointerEvents: "all" }}>
                     <p className="module-title">{title}</p>
-                    <div>
-                        <button onClick={() => { setMinimised(!minimised); props.setData(props.counter, !minimised, "minimised"); }} className="close-module">{char}</button>
+                    <div className="module-bar-buttons">
+                        <button onClick={() => { setMinimised(!minimised); console.log("CLICKED"); props.setData(props.counter, !minimised, "minimised"); }} className="close-module">{char}</button>
                         <button onClick={() => props.deleteModule(props.counter)} className="close-module">X</button>
                     </div>
                 </div>
