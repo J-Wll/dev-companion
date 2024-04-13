@@ -131,7 +131,7 @@ export default function TimerContent(props) {
 
                 <div><input type="text" placeholder="Label" ref={labelRef} className="timer-label" onChange={(v) => { setLocalData((prev) => ({ ...prev, label: v.target.value })) }} /></div>
 
-                <span><label htmlFor="pomodoroCheckbox">Pomodoro mode?</label><input id="pomodoroCheckbox" type="checkbox" onChange={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, on: !localData.pomodoro.on } })) }} /></span>
+                <span><label htmlFor="pomodoroCheckbox">Pomodoro mode?</label><input id="pomodoroCheckbox" type="checkbox" defaultChecked={localData.pomodoro.on} onChange={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, on: !localData.pomodoro.on } })) }} /></span>
 
                 {localData.pomodoro.on ? pomodoroIntervalControl : intervalControl}
 
