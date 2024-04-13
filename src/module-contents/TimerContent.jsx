@@ -9,11 +9,15 @@ export default function TimerContent(props) {
     const [pomoWorkInput, setPomoWorkInput] = useState(45)
     const [pomoRestInput, setPomoRestInput] = useState(15)
     const [targetInterval, setTargetInterval] = useState(timeInput);
+    const labelRef = useRef();
 
     // default values if no global data
     useEffect(() => {
         if (localData === undefined) {
             setLocalData(() => ({ timerActive: true, time: 0, interval: 10, pomodoro: { on: false, workMode: true, workInterval: 45, restInterval: 15 } }));
+        }
+        if (localData.label) {
+            labelRef.current.value = localData.label;
         }
     }, [])
 
@@ -81,6 +85,7 @@ export default function TimerContent(props) {
         // console.log(targetInterval, localData.interval);
         let currentInterval;
         let intervalControl, pomodoroIntervalControl;
+
         if (!localData.pomodoro.on) {
             intervalControl =
                 <div id="interval-set">
@@ -123,6 +128,8 @@ export default function TimerContent(props) {
                 <div className="timer-bar" style={{ width: `${(localData.time / (currentInterval * 60)) * 100}%` }}>
                     <p>{localData.time} / {currentInterval * 60} ({percentComplete.toFixed(2)}%) {!localData.pomodoro.on ? "Regular" : localData.pomodoro.workMode ? "Work - pomodoro" : "Rest - pomodoro"}</p>
                 </div>
+
+                <div><input type="text" placeholder="Label" ref={labelRef} className="timer-label" onChange={(v) => { setLocalData((prev) => ({ ...prev, label: v.target.value })) }} /></div>
 
                 <span><label htmlFor="pomodoroCheckbox">Pomodoro mode?</label><input id="pomodoroCheckbox" type="checkbox" onChange={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, on: !localData.pomodoro.on } })) }} /></span>
 
