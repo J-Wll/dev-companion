@@ -77,37 +77,18 @@ export default function TimerContent(props) {
     }, [localData])
 
 
-    const intervalControl =
-
-        <div id="interval-set">
-            <span><label htmlFor="timerNumInp">Time (m):</label></span>
-            <input className="Px40W" id="timerNumInp" type="number" value={timeInput} onChange={e => setTimeInput(e.target.value)} />
-            <button onClick={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, interval: Number(timeInput) })) }}> Set</button>
-        </div >
-
-
-    const pomodoroIntervalControl =
-        <>
-            <div>
-                <button onClick={(e) => { timerMode(true); }}>{`Swap to ${localData.pomodoro.workMode ? "Rest" : "Work"} mode`}</button>
-            </div>
-            <div id="work-interval-set">
-                <span><label htmlFor="timerNumInp">Work Time (m):</label></span>
-                <input className="Px40W" id="timerNumInp" type="number" value={pomoWorkInput} onChange={e => setPomoWorkInput(e.target.value)} />
-                <button onClick={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, workInterval: Number(pomoWorkInput) } })) }}> Set</button>
-            </div>
-            <div id="rest-interval-set">
-                <span><label htmlFor="timerNumInp">Rest Time (m):</label></span>
-                <input className="Px40W" id="timerNumInp" type="number" value={pomoRestInput} onChange={e => setPomoRestInput(e.target.value)} />
-                <button onClick={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, restInterval: Number(pomoRestInput) } })) }}> Set</button>
-            </div>
-        </>
-
-
-
     if (localData) {
         // console.log(targetInterval, localData.interval);
         let currentInterval;
+        let intervalControl, pomodoroIntervalControl;
+        if (!localData.pomodoro.on) {
+            intervalControl =
+                <div id="interval-set">
+                    <span><label htmlFor="timerNumInp">Time (m):</label></span>
+                    <input className="Px40W" id="timerNumInp" type="number" value={timeInput} onChange={e => setTimeInput(e.target.value)} />
+                    <button onClick={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, interval: Number(timeInput) })) }}> Set</button>
+                </div >
+        }
         if (localData.pomodoro.on) {
             if (localData.pomodoro.workMode) {
                 currentInterval = localData.pomodoro.workInterval;
@@ -115,6 +96,22 @@ export default function TimerContent(props) {
             else {
                 currentInterval = localData.pomodoro.restInterval;
             }
+            pomodoroIntervalControl =
+                <>
+                    <div>
+                        <button onClick={(e) => { timerMode(true); }}>{`Swap to ${localData.pomodoro.workMode ? "Rest" : "Work"} mode`}</button>
+                    </div>
+                    <div id="work-interval-set">
+                        <span><label htmlFor="timerNumInp">Work Time (m):</label></span>
+                        <input className="Px40W" id="timerNumInp" type="number" value={pomoWorkInput} onChange={e => setPomoWorkInput(e.target.value)} />
+                        <button onClick={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, workInterval: Number(pomoWorkInput) } })) }}> Set</button>
+                    </div>
+                    <div id="rest-interval-set">
+                        <span><label htmlFor="timerNumInp">Rest Time (m):</label></span>
+                        <input className="Px40W" id="timerNumInp" type="number" value={pomoRestInput} onChange={e => setPomoRestInput(e.target.value)} />
+                        <button onClick={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, restInterval: Number(pomoRestInput) } })) }}> Set</button>
+                    </div>
+                </>
         }
         else {
             currentInterval = localData.interval;

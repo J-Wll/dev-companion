@@ -3,6 +3,7 @@ import "./css/Module.css"
 import NoteContent from "./module-contents/NoteContent";
 import TodoContent from "./module-contents/TodoContent";
 import TimerContent from "./module-contents/TimerContent";
+import KanbanContent from "./module-contents/KanbanContent";
 
 import { useRef, useEffect, useState } from "react";
 import Draggable from 'react-draggable';
@@ -53,6 +54,11 @@ export default function Module(props) {
             component = <TimerContent {...componentProps} />;
             title = "Timer";
             defaultSize = ["320px", "220px"];
+            break;
+        case "Kanban":
+            component = <KanbanContent {...componentProps} />;
+            title = "Kanban Board";
+            defaultSize = ["600px", "500px"];
             break;
         default:
             component = <></>;
