@@ -14,10 +14,7 @@ export default function TimerContent(props) {
     // default values if no global data
     useEffect(() => {
         if (localData === undefined) {
-            setLocalData(() => ({ timerActive: true, time: 0, interval: 10, pomodoro: { on: false, workMode: true, workInterval: 45, restInterval: 15 } }));
-        }
-        if (localData.label) {
-            labelRef.current.value = localData.label;
+            setLocalData(() => ({ timerActive: true, time: 0, interval: 10, notifies: false, repeats: false, pomodoro: { on: false, workMode: true, workInterval: 45, restInterval: 15 } }));
         }
     }, [])
 
@@ -51,6 +48,7 @@ export default function TimerContent(props) {
     }
 
     function timerZero() {
+        setLocalData((prev) => ({ ...prev, alreadyNotified: false }));
         setLocalData((prev) => ({ ...prev, time: 0 }))
     }
 
@@ -67,13 +65,27 @@ export default function TimerContent(props) {
                     setLocalData((prev) => ({ ...prev, time: prev.time + 1 }))
                 }
 
+                if ((localData.time === targetInterval * 60) && localData.notifies && !localData.alreadyNotified) {
+                    let pMsg = "";
+                    if (localData.pomodoro.on) {
+                        pMsg = ` ${localData.pomodoro.workMode ? "Rest" : "Work"} mode starting`;
+                    }
+                    alert(`Timer -${labelRef.current.value} complete.${pMsg}`);
+                    setLocalData((prev => ({ ...prev, alreadyNotified: true })));
+                }
+
                 if (localData.time >= targetInterval * 60) {
                     console.log("TIMER DONE")
+                    if (localData.repeats && !localData.pomodoro.on) {
+                        timerZero();
+                    }
                 }
             }
             else {
                 console.log("Paused");
             }
+
+            timerMode();
 
         }, 1000);
 
@@ -88,11 +100,14 @@ export default function TimerContent(props) {
 
         if (!localData.pomodoro.on) {
             intervalControl =
-                <div id="interval-set">
-                    <span><label htmlFor="timerNumInp">Time (m):</label></span>
-                    <input className="Px40W" id="timerNumInp" type="number" value={timeInput} onChange={e => setTimeInput(e.target.value)} />
-                    <button onClick={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, interval: Number(timeInput) })) }}> Set</button>
-                </div >
+                <>
+                    <div><label htmlFor="repeatsCheckbox">Timer repeats?</label><input id="repeatsCheckbox" type="checkbox" defaultChecked={localData.repeats} onChange={(e) => { setLocalData((prev) => ({ ...prev, repeats: !localData.repeats })) }} /></div>
+                    <div id="interval-set">
+                        <span><label htmlFor="timerNumInp">Time (m):</label></span>
+                        <input className="Px40W" id="timerNumInp" type="number" value={timeInput} onChange={e => setTimeInput(e.target.value)} />
+                        <button onClick={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, interval: Number(timeInput) })) }}> Set</button>
+                    </div >
+                </>
         }
         if (localData.pomodoro.on) {
             if (localData.pomodoro.workMode) {
@@ -131,7 +146,8 @@ export default function TimerContent(props) {
 
                 <div><input type="text" placeholder="Label" ref={labelRef} className="timer-label" onChange={(v) => { setLocalData((prev) => ({ ...prev, label: v.target.value })) }} /></div>
 
-                <span><label htmlFor="pomodoroCheckbox">Pomodoro mode?</label><input id="pomodoroCheckbox" type="checkbox" defaultChecked={localData.pomodoro.on} onChange={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, on: !localData.pomodoro.on } })) }} /></span>
+                <div><label htmlFor="pomodoroCheckbox">Pomodoro mode?</label><input id="pomodoroCheckbox" type="checkbox" defaultChecked={localData.pomodoro.on} onChange={(e) => { timerZero(); timerMode(); setLocalData((prev) => ({ ...prev, pomodoro: { ...localData.pomodoro, on: !localData.pomodoro.on } })) }} /></div>
+                <div><label htmlFor="notifyCheckbox">Notify on completion?</label><input id="notifyCheckbox" type="checkbox" defaultChecked={localData.notifies} onChange={(e) => { setLocalData((prev) => ({ ...prev, notifies: !localData.notifies })) }} /></div>
 
                 {localData.pomodoro.on ? pomodoroIntervalControl : intervalControl}
 

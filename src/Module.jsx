@@ -53,7 +53,7 @@ export default function Module(props) {
             console.log("IIIIIIIIIIIIIIIII")
             component = <TimerContent {...componentProps} />;
             title = "Timer";
-            defaultSize = ["320px", "220px"];
+            defaultSize = ["325px", "275px"];
             break;
         case "Kanban":
             component = <KanbanContent {...componentProps} />;
