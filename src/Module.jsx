@@ -58,7 +58,7 @@ export default function Module(props) {
         case "Kanban":
             component = <KanbanContent {...componentProps} />;
             title = "Kanban Board";
-            defaultSize = ["600px", "500px"];
+            defaultSize = ["610px", "500px"];
             break;
         default:
             component = <></>;

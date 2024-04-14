@@ -29,7 +29,11 @@
     border: none;
     text-align: center;
     font-size: 15px !important;
+    width: 100%;
 
+    resize: none;
+    resize:vertical;
+    padding: 0;
     height: 50px;
 
     margin: 4px;
