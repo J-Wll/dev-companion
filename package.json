@@ -1,8 +1,9 @@
 {
-  "name": "DevCompanion",
+  "name": "dev-companion",
   "private": true,
   "version": "0.3.0",
   "author": "Joe Westwell",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build && electron-builder",
