@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Draggable from 'react-draggable';
+import dndKit from 'dnd-kit/core'
 
 import "../css/css-module-content/kanbanContent.css"
 
