@@ -1,4 +1,5 @@
 // TODO: Use DND-KIT with draggable and droppable for a better implementation https://dndkit.com
+// TODO: Tidy this up and add some comments
 
 import { useState, useEffect, useRef } from "react";
 import Draggable from 'react-draggable';
@@ -29,11 +30,18 @@ function ContentEditableDiv(props) {
 
 function KanbanColumn(props) {
 
+    function deleteColumn() {
+        props.setLocalData((prev) => { return { items: prev.items, columns: prev.columns.filter((column) => column.key !== props.id) } })
+    }
+
+    function updateColumn(prop, val) {
+        props.setLocalData((prev) => { return { items: prev.items, columns: prev.columns.map((column) => column.key === props.id ? { ...column, [prop]: val } : column) } })
+    }
+
     function addItem() {
         const itemKey = self.crypto.randomUUID();
         console.log(props.position * 200);
 
-        // const inColumn = props.localData.items.filter((item) => item.location.x === props.position * 200)
         let lowestItem = 0;
         props.localData.items.filter((item) => item.location.x === props.position * 200).forEach(item => {
             if (item.location.y > lowestItem) {
@@ -41,7 +49,6 @@ function KanbanColumn(props) {
             }
         });
         const spawnY = lowestItem + 40
-        props.setLocalData((prev) => { return { columns: prev.columns, items: prev.items.filter((item) => item.key !== props.id) } })
 
         props.setLocalData(
             { ...props.localData, items: [...props.localData.items, { key: itemKey, text: "", location: { x: props.position * 200, y: spawnY } }] }
@@ -51,11 +58,10 @@ function KanbanColumn(props) {
     return (
         <div className='kanban-column'>
             <div className="kanban-header">
-                {/* <div className="kanban-column-name" contentEditable="true" defaultValue={props.name}></div> */}
-                <ContentEditableDiv class='kanban-column-name' onChange={(f) => console.log(f)} Placeholder="Name" value={props.text} />
+                <ContentEditableDiv class='kanban-column-name' onChange={(textChange) => updateColumn("text", textChange)} Placeholder="Name" value={props.text} />
                 <div>
                     <button onClick={addItem}>+</button>
-                    <button>x</button>
+                    <button onClick={deleteColumn}>x</button>
                 </div>
             </div>
 
@@ -109,6 +115,11 @@ export default function KanbanContent(props) {
         }
     }, [localData])
 
+    function createColumn() {
+        const columnKey = self.crypto.randomUUID();
+        setLocalData((prev) => { return { items: prev.items, columns: [...prev.columns, { key: columnKey, text: "" }] } })
+    }
+
     function getColumns() {
         try {
             return localData.columns.map((column, index) =>
@@ -131,7 +142,7 @@ export default function KanbanContent(props) {
         <>
             {getColumns()}
             {getItems()}
-            <button className="add-kanban-column-button">+</button>
+            <button className="add-kanban-column-button" onClick={createColumn}>+</button>
         </>
     )
 }
