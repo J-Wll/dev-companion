@@ -173,7 +173,6 @@ export default function App() {
 
       <div className="sidebar">
         <WorkspaceController />
-        <button>Close Sidebar</button>
         <button onClick={() => { addModule("Notes") }}>Add Notes</button>
         <button onClick={() => { addModule("Reflective") }}>Add Reflective</button>
         <button onClick={() => { addModule("Todo") }}>Add To-do</button>

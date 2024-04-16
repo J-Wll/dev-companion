@@ -1,17 +1,60 @@
 // TODO: Use DND-KIT with draggable and droppable for a better implementation https://dndkit.com
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Draggable from 'react-draggable';
 
 import "../css/css-module-content/kanbanContent.css"
 
+// This might be against how react is supposed to work but it seemed the easiest way have automatically resizing inputs
+function ContentEditableDiv(props) {
+    const contentEditableRef = useRef();
+    useEffect(() => {
+        if (contentEditableRef.current.textContent !== props.value) {
+            contentEditableRef.current.textContent = props.value;
+        }
+    });
+
+    return (
+        <div
+            contentEditable="true"
+            className={props.class}
+            ref={contentEditableRef}
+            Placeholder={props.Placeholder}
+            onInput={event => {
+                props.onChange(event.target.textContent);
+            }}
+        />
+    );
+}
+
 function KanbanColumn(props) {
+
+    function addItem() {
+        const itemKey = self.crypto.randomUUID();
+        console.log(props.position * 200);
+
+        // const inColumn = props.localData.items.filter((item) => item.location.x === props.position * 200)
+        let lowestItem = 0;
+        props.localData.items.filter((item) => item.location.x === props.position * 200).forEach(item => {
+            if (item.location.y > lowestItem) {
+                lowestItem = item.location.y;
+            }
+        });
+        const spawnY = lowestItem + 40
+        props.setLocalData((prev) => { return { columns: prev.columns, items: prev.items.filter((item) => item.key !== props.id) } })
+
+        props.setLocalData(
+            { ...props.localData, items: [...props.localData.items, { key: itemKey, text: "", location: { x: props.position * 200, y: spawnY } }] }
+        )
+    }
+
     return (
         <div className='kanban-column'>
             <div className="kanban-header">
-                <span className="kanban-column-name" contentEditable="true">{props.name}</span>
+                {/* <div className="kanban-column-name" contentEditable="true" defaultValue={props.name}></div> */}
+                <ContentEditableDiv class='kanban-column-name' onChange={(f) => console.log(f)} Placeholder="Name" value={props.text} />
                 <div>
-                    <button>+</button>
+                    <button onClick={addItem}>+</button>
                     <button>x</button>
                 </div>
             </div>
@@ -21,19 +64,44 @@ function KanbanColumn(props) {
 }
 
 function KanbanItem(props) {
+    function updateItem(prop, val) {
+        props.setLocalData((prev) => { return { columns: prev.columns, items: prev.items.map((item) => item.key === props.id ? { ...item, [prop]: val } : item) } })
+    }
+    function deleteItem() {
+        props.setLocalData((prev) => { return { columns: prev.columns, items: prev.items.filter((item) => item.key !== props.id) } })
+    }
+
+    function handleStop(mouseEvent, draggableProps) {
+        // props.setLocalData((prev) => { return { columns: prev.columns, items: prev.items.map((item) => item.key === props.id ? { ...item, location: { x: draggableProps.x, y: draggableProps.y } } : item) } })
+        updateItem("location", { x: draggableProps.x, y: draggableProps.y })
+    }
+
 
     return (
-        <Draggable bounds={"parent"} axis={"both"} grid={[200, 5]} defaultPosition={{ x: 0, y: 40 }}>
+
+        <Draggable bounds={"parent"} axis={"both"} grid={[200, 5]} defaultPosition={props.location} onStop={handleStop}>
             {/* Uses placeholder styling in KanbanContent.css */}
-            <span className='kanban-item' contentEditable="true" Placeholder="Task">
-                {props.text}
-            </span>
+            {/* <div className='kanban-item' ref={valueRef} onChange={console.log(valueRef)} contentEditable="true" Placeholder="Task"></div> */}
+            <div className="draggable-wrapper">
+                <ContentEditableDiv class='kanban-item' onChange={(textChange) => updateItem("text", textChange)} Placeholder="Task" value={props.text} />
+                <button onClick={deleteItem} className="delete-kanban-item">x</button>
+            </div>
         </Draggable>
     )
 }
 
 export default function KanbanContent(props) {
     const [localData, setLocalData] = useState(props.dataFromGlobal);
+    const [refresh, triggerRefresh] = useState(false);
+
+    useEffect(() => {
+        if (!localData) {
+            setLocalData({ columns: [{ key: "default-do", text: "Do" }, { key: "default-doing", text: "Doing" }, { key: "default-done", text: "Done" }], items: [{ key: "default-item", text: "Do this", location: { x: 0, y: 40 } }] })
+        }
+        triggerRefresh(!refresh);
+    }, [])
+
+    console.log(localData)
 
     useEffect(() => {
         if (localData) {
@@ -41,15 +109,29 @@ export default function KanbanContent(props) {
         }
     }, [localData])
 
+    function getColumns() {
+        try {
+            return localData.columns.map((column, index) =>
+                <KanbanColumn key={column.key} id={column.key} text={column.text} position={index} localData={localData} setLocalData={setLocalData} />)
+        } catch (error) {
+            return <></>
+        }
+    };
+
+    function getItems() {
+        try {
+            return localData.items.map((item) =>
+                <KanbanItem key={item.key} id={item.key} text={item.text} location={item.location} localData={localData} setLocalData={setLocalData} />)
+        } catch (error) {
+            return <></>
+        }
+    };
+
     return (
         <>
-            <KanbanColumn name="do" />
-            <KanbanColumn name="doing" />
-            <KanbanColumn name="done" />
+            {getColumns()}
+            {getItems()}
             <button className="add-kanban-column-button">+</button>
-
-            <KanbanItem text="Do this" />
-
         </>
     )
 }
