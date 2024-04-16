@@ -8,11 +8,12 @@ import KanbanContent from "./module-contents/KanbanContent";
 import { useRef, useEffect, useState } from "react";
 import Draggable from 'react-draggable';
 
+// TODO: Optimise resize observers (Only one)
+
 export default function Module(props) {
     // console.log(props);
 
     const moduleRef = useRef();
-    const [minimised, setMinimised] = useState(false);
     const [refresh, triggerRefresh] = useState(false);
 
     const myObserver = new ResizeObserver(() => {
@@ -26,9 +27,7 @@ export default function Module(props) {
             myObserver.observe(moduleRef.current);
         }
 
-        if (props.dataFromGlobal.minimised) {
-            setMinimised(props.dataFromGlobal.minimised);
-        }
+
     }, [])
 
     let component, title;
@@ -58,7 +57,7 @@ export default function Module(props) {
         case "Kanban":
             component = <KanbanContent {...componentProps} />;
             title = "Kanban Board";
-            defaultSize = ["610px", "500px"];
+            defaultSize = ["650px", "500px"];
             break;
         default:
             component = <></>;
@@ -92,7 +91,8 @@ export default function Module(props) {
     let resizeVal = "both";
     let char = "-";
     let pointerVal = "all";
-    if (minimised) {
+    console.log(props.dataFromGlobal.minimised || undefined);
+    if (props.dataFromGlobal.minimised || undefined) {
         hide = {
             display: "none", zIndex: "-1"
         };
@@ -108,7 +108,7 @@ export default function Module(props) {
                 <div className="menu-bar" style={{ pointerEvents: "all" }}>
                     <p className="module-title">{title}</p>
                     <div className="module-bar-buttons">
-                        <button onClick={() => { setMinimised(!minimised); console.log("CLICKED"); props.setData(props.counter, !minimised, "minimised"); }} className="close-module">{char}</button>
+                        <button onClick={() => { props.setData(props.counter, !props.dataFromGlobal.minimised, "minimised"); triggerRefresh(!refresh) }} className="close-module">{char}</button>
                         <button onClick={() => props.deleteModule(props.counter)} className="close-module">X</button>
                     </div>
                 </div>

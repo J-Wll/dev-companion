@@ -23,21 +23,34 @@
     word-break: break-all;
     text-align: center;
 
-    max-width: 180px;
-    height: fit-content;
+    width: 180px;
+    /* height: 60px; */
+}
+
+[contenteditable=true]:empty:not(:focus):before {
+    content: attr(placeholder);
+    color: grey;
+    font-style: italic;
 }
 
 .kanban-item textarea {
     resize: none;
+    box-sizing: border-box;
+    height: 48px;
 }
 
 .kanban-column {
     height: 100%;
-    width: 200px;
+    min-width: 200px;
     border: solid white;
     border-width: 1px;
 
     box-sizing: border-box;
+}
+
+.add-kanban-column-button {
+    box-sizing: border-box;
+    margin-left: 5px;
 }
 
 .kanban-header {
@@ -49,6 +62,15 @@
     margin: 2px;
     box-sizing: border-box;
 
+    background-color: rgb(240, 240, 240);
     border: solid white;
     border-width: 1px;
+}
+
+.kanban-column-name {
+    box-sizing: border-box;
+    padding: 4px;
+    border: solid rgb(153, 153, 153);
+    border-width: 1px;
+    border-radius: 5px;
 }
