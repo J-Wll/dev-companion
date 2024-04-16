@@ -18,6 +18,7 @@ function ContentEditableDiv(props) {
     return (
         <div
             contentEditable="true"
+            role="textbox"
             className={props.class}
             ref={contentEditableRef}
             Placeholder={props.Placeholder}
