@@ -3,15 +3,26 @@
     flex-direction: column;
     align-items: center;
 
-    width: fit-content;
+    /* Center taking up height of workspace
     height: 97vh;
-    box-sizing: border-box;
-    padding: 5px;
     margin-top: auto;
-    margin-bottom: auto;
+    margin-bottom: auto; 
+    padding: 5px;
+    */
+
+    height: fit-content;
+    margin-top: 20px;
+    margin-bottom: auto; 
+    padding: 12px;
+    padding-right: 16px;
+    padding-bottom: 30px;
+
+    width: fit-content;
+    box-sizing: border-box;
+
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
-    
+
     background-color: #474747;
 }
 
