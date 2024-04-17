@@ -88,7 +88,6 @@ function KanbanItem(props) {
 
         <Draggable bounds={"parent"} axis={"both"} grid={[200, 5]} defaultPosition={props.location} onStop={handleStop}>
             {/* Uses placeholder styling in KanbanContent.css */}
-            {/* <div className='kanban-item' ref={valueRef} onChange={console.log(valueRef)} contentEditable="true" Placeholder="Task"></div> */}
             <div className="draggable-wrapper">
                 <ContentEditableDiv class='kanban-item' onChange={(textChange) => updateItem("text", textChange)} Placeholder="Task" value={props.text} />
                 <button onClick={deleteItem} className="delete-kanban-item">x</button>

@@ -1,8 +1,8 @@
-.module-body {
+/* .module-body {
     overflow-x: hidden;
-}
+} */
 
-.module-body section {
+.timer-module .module-body section {
     width: 95%;
     max-width: 98%;
 }
@@ -21,6 +21,7 @@
     border: 1px solid black;
     margin-top: 10px;
     margin-bottom: 10px;
+    border-radius: 3px;
 }
 
 .timer-bar p {
@@ -34,6 +35,7 @@
     padding: 2px;
     box-sizing: border-box;
     border: 1px solid black;
+    border-radius: 3px;
 
     width: 100%;
 }

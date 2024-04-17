@@ -147,6 +147,7 @@ export default function App() {
 
     globalModuleData.current[moduleKey] = { purpose: moduleType, data: undefined, zIndex: 1001 };
     setModuleList(() => [...moduleList, { key: moduleKey, purpose: moduleType }]);
+    topZIndex();
   }
 
   function deleteModule(target) {
