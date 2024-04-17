@@ -16,39 +16,45 @@ export default function App() {
   // Everything is accessed using unique keys so duplication while in strict mode should not cause issues
   const globalModuleData = useRef({});
 
-  async function nodeCreateFolderSync(folderName) {
+  function nodeCreateFolderSync(folderName) {
     // Creates a folder at __dirname + arg. Uses code in preload.js and main.js (inside electron folder)
-    await window.electron.createFolder(folderName);
+    window.electron.createFolder(folderName);
   }
 
-  async function nodeReadFileSync(filePath) {
-    return await window.electron.readFile(filePath);
+
+  function nodeReadFileSync(filePath) {
+    return window.electron.readFile(filePath);
   }
 
-  async function nodeWriteFileSync(filePath, content) {
+  function nodeWriteFileSync(filePath, content) {
     window.electron.writeFile(filePath, content);
   }
 
-  async function nodeRenameFileSync(filePath, newFilePath) {
+  function nodeRenameFileSync(filePath, newFilePath) {
     window.electron.renameFile(filePath, newFilePath);
   }
 
-  async function nodeDeleteFileSync(filePath) {
+  function nodeDeleteFileSync(filePath) {
     window.electron.deleteFile(filePath);
   }
 
-  async function nodeGetWorkspaces() {
-    return await window.electron.getWorkspaces();
+  function nodeGetWorkspaces() {
+    return window.electron.getWorkspaces();
   }
-
-  function getFilepath() {
+  function nodeGetFilepath() {
     return window.electron.getFilepath();
   }
+
+  const nodeFunctions = {
+    nodeGetFilepath, nodeGetWorkspaces
+  }
+
 
   function updateLatestWorkspace(newest) {
     nodeWriteFileSync("data/config.json", JSON.stringify({ "latestWorkspace": newest }));
   }
 
+  console.log(nodeFunctions.nodeGetFilepath());
   function loadWorkspace(name) {
     nodeGetWorkspaces().then((workspaces) => {
       // if that workspace exists
