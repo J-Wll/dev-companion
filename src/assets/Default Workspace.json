@@ -14,18 +14,35 @@
         "data": ""
       }
     ],
-    "pos": { "x": 21, "y": 689 },
-    "size": { "sizeX": "323px", "sizeY": "262px" }
+    "pos": { "x": 813, "y": 265 },
+    "size": { "sizeX": "320px", "sizeY": "671px" },
+    "zIndex": 1
   },
   "3be09f30-ca74-490f-a64b-f1754300b4cc": {
     "purpose": "Kanban",
-    "pos": { "x": 349, "y": 457 },
-    "size": { "sizeX": "650px", "sizeY": "493px" }
+    "pos": { "x": 23, "y": 444 },
+    "size": { "sizeX": "781px", "sizeY": "493px" },
+    "data": {
+      "columns": [
+        { "key": "default-do", "text": "Do" },
+        { "key": "default-doing", "text": "Doing" },
+        { "key": "default-done", "text": "Done" }
+      ],
+      "items": [
+        {
+          "key": "default-item",
+          "text": "Do this",
+          "location": { "x": 0, "y": 40 }
+        }
+      ]
+    },
+    "zIndex": 3
   },
   "0f02c175-61fe-4714-b371-8f733fa01c1c": {
     "purpose": "Reflective",
     "pos": { "x": 420, "y": -3 },
-    "size": { "sizeX": "391px", "sizeY": "443px" }
+    "size": { "sizeX": "391px", "sizeY": "443px" },
+    "data": ""
   },
   "85b15df3-8f7f-4e5e-af56-6119114534a3": {
     "purpose": "Timer",
@@ -38,9 +55,11 @@
         "workMode": true,
         "workInterval": 45,
         "restInterval": 15
-      }
+      },
+      "alreadyNotified": false
     },
-    "pos": { "x": 20, "y": 459 },
-    "size": { "sizeX": "320px", "sizeY": "220px" }
+    "pos": { "x": 819, "y": 1 },
+    "size": { "sizeX": "322px", "sizeY": "260px" },
+    "zIndex": 2
   }
 }

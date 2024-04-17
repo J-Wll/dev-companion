@@ -41,6 +41,10 @@ export default function App() {
     return await window.electron.getWorkspaces();
   }
 
+  function getFilepath() {
+    return window.electron.getFilepath();
+  }
+
   function updateLatestWorkspace(newest) {
     nodeWriteFileSync("data/config.json", JSON.stringify({ "latestWorkspace": newest }));
   }
@@ -179,6 +183,7 @@ export default function App() {
         <button onClick={() => { addModule("Todo") }}>Add To-do</button>
         <button onClick={() => { addModule("Kanban") }}>Add Kanban</button>
         <button onClick={() => { addModule("Timer") }}>Add Timer</button>
+        <button onClick={() => { addModule("Resources") }}>Add Resources</button>
       </div>
     )
   }
@@ -193,8 +198,8 @@ export default function App() {
     if (renameMode) {
       renameControls =
         <div className='workspace-selector'>
-          <label>New name:</label>
-          <input ref={renameRef}></input>
+          <label htmlFor='rename-input'>New name:</label>
+          <input name="rename-input" ref={renameRef}></input>
           <button onClick={() => renameWorkspace(renameRef.current.value)}>Apply</button>
         </div>
     }
@@ -239,6 +244,14 @@ export default function App() {
       clearWorkspace();
     }
 
+    function saveBackup() {
+      const a = document.createElement("a");
+      const file = new Blob([JSON.stringify(globalModuleData.current)]);
+      a.href = URL.createObjectURL(file);
+      a.download = `${globalModuleData.current.name}.json`;
+      a.click();
+    }
+
     console.log(options, "ff");
     console.log(nodeGetWorkspaces(), typeof nodeGetWorkspaces(), "ff");
 
@@ -246,10 +259,10 @@ export default function App() {
       <div className="workspace-selector">
         <label htmlFor="workspace-input">Select workspace:</label>
         {/* TODO: populate with data from data folder, unique name by default and can be renamed */}
-        {renameControls}
         <select ref={selectRef} name="workspace-input" id="workspace-input" >
           {options}
         </select>
+        {renameControls}
         <div>
           <button onClick={createWorkspace}>Create</button>
           <button onClick={() => setRenameMode(!renameMode)}>Rename</button>
@@ -259,6 +272,7 @@ export default function App() {
           <button onClick={clearWorkspace}>Clear</button>
           <button onClick={() => deleteWorkspace(selectRef.current.selectedOptions[0].innerText)}>Delete</button>
         </div>
+        <button onClick={saveBackup}>Save backup</button>
       </div>
     )
   }

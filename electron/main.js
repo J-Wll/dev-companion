@@ -62,6 +62,10 @@ ipcMain.handle("getWorkspaces", async (_) => {
   })
 })
 
+ipcMain.handle("getFilepath", (_) => {
+  return appPath;
+})
+
 let win
 // 🚧 Use ['ENV_NAME'] avoid vite:define plugin - Vite@2.x
 const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL']

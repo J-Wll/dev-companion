@@ -57,6 +57,9 @@ contextBridge.exposeInMainWorld('electron', {
   },
   getWorkspaces: async () => {
     return await ipcRenderer.invoke("getWorkspaces");
+  },
+  getFilepath: () => {
+    return ipcRenderer.invoke("getFilepath");
   }
 },);
 

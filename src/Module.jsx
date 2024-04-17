@@ -4,6 +4,7 @@ import NoteContent from "./module-contents/NoteContent";
 import TodoContent from "./module-contents/TodoContent";
 import TimerContent from "./module-contents/TimerContent";
 import KanbanContent from "./module-contents/KanbanContent";
+import ResourcesContent from "./module-contents/ResourcesContent";
 
 import { useRef, useEffect, useState } from "react";
 import Draggable from 'react-draggable';
@@ -58,6 +59,10 @@ export default function Module(props) {
             component = <KanbanContent {...componentProps} />;
             title = "Kanban Board";
             defaultSize = ["650px", "500px"];
+            break;
+        case "Resources":
+            component = <ResourcesContent {...componentProps} />;
+            title = "Resources";
             break;
         default:
             component = <></>;
