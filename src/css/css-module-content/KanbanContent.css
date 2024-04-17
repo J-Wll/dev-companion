@@ -73,6 +73,7 @@
     border: solid black;
     border-width: 1px;
     border-radius: 3px;
+    min-height: 45px;
 
     padding: 5px;
     margin: 10px;

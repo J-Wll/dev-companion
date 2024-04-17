@@ -49,7 +49,7 @@ function KanbanColumn(props) {
                 lowestItem = item.location.y;
             }
         });
-        const spawnY = lowestItem + 40
+        const spawnY = lowestItem > 0 ? lowestItem + 60 : 40;
 
         props.setLocalData(
             { ...props.localData, items: [...props.localData.items, { key: itemKey, text: "", location: { x: props.position * 200, y: spawnY } }] }
