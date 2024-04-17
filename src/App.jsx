@@ -41,12 +41,13 @@ export default function App() {
   function nodeGetWorkspaces() {
     return window.electron.getWorkspaces();
   }
+
   function nodeGetFilepath() {
     return window.electron.getFilepath();
   }
 
   const nodeFunctions = {
-    nodeGetFilepath, nodeGetWorkspaces
+    nodeGetFilepath, nodeGetWorkspaces, nodeReadFileSync
   }
 
 
@@ -212,12 +213,12 @@ export default function App() {
 
     useEffect((() => {
       nodeGetWorkspaces().then((val) => {
-        setOptions(val.map((option) => {
+        setOptions(val.map((option, index) => {
           let selected;
           if (option === `${globalModuleData.current.name}.json`) {
             selected = "selected"
           }
-          return <option selected={selected} value={option}>{option}</option>
+          return <option key={index} selected={selected} value={option}>{option}</option>
         }))
       });
       console.log(selectRef.current.selectedOptions[0].innerText)
@@ -264,7 +265,6 @@ export default function App() {
     return (
       <div className="workspace-selector">
         <label htmlFor="workspace-input">Select workspace:</label>
-        {/* TODO: populate with data from data folder, unique name by default and can be renamed */}
         <select ref={selectRef} name="workspace-input" id="workspace-input" >
           {options}
         </select>

@@ -60,6 +60,9 @@ contextBridge.exposeInMainWorld('electron', {
   },
   getFilepath: () => {
     return ipcRenderer.invoke("getFilepath");
+  },
+  openLink: (link) => {
+    ipcRenderer.invoke("openLink", link);
   }
 },);
 

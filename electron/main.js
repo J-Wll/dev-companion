@@ -1,6 +1,7 @@
 import { app, BrowserWindow, contentTracing, ipcMain } from "electron";
 import path from "node:path";
 import fs from "node:fs";
+import { shell } from "electron";
 
 // The built directory structure
 //
@@ -64,6 +65,10 @@ ipcMain.handle("getWorkspaces", async (_) => {
 
 ipcMain.handle("getFilepath", (_) => {
   return appPath;
+})
+
+ipcMain.handle("openLink", (_, link) => {
+  shell.openExternal(link);
 })
 
 let win
