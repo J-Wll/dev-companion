@@ -19,6 +19,26 @@
       "name": "LeetCode",
       "description": "A leading online platform for interview preparation and learning data structures and algorithms",
       "link": "https://leetcode.com/"
+    },
+    {
+      "name": "HackerRank",
+      "description": "Practice coding, prepare for interviews, and compete in challenges",
+      "link": "https://www.hackerrank.com/"
+    },
+    {
+      "name": "Regex101",
+      "description": "Online regular expression tester and debugger with syntax highlighting and explanations",
+      "link": "https://regex101.com/"
+    },
+    {
+      "name": "Repl.it",
+      "description": "An online IDE for programming in various languages, with collaborative features",
+      "link": "https://replit.com/"
+    },
+    {
+      "name": "Godbolt",
+      "description": "Interactive tool for exploring the output of compiler optimization on code snippets",
+      "link": "https://godbolt.org/"
     }
   ],
   "Learning": [
@@ -31,6 +51,11 @@
       "name": "Coursera",
       "description": "Offers a wide range of online courses, including programming",
       "link": "https://www.coursera.org/"
+    },
+    {
+      "name": "KhanAcademy",
+      "description": "Good for learning the basics of computing and programming",
+      "link": "https://www.khanacademy.org/computing"
     }
   ],
   "HTML": [

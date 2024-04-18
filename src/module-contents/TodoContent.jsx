@@ -2,46 +2,47 @@ import { useState, useEffect } from 'react'
 import '../css/css-module-content/TodoContent.css'
 import { ContentEditableDiv } from "../small-components/ContentEditableDiv";
 
-// TODO: Should probably convert todoList to an object mapped into an array at render. Because there are so many Maps going on here
+// TODO: Should probably convert localData to an object mapped into an array at render. Because there are so many Maps going on here
 
 export default function TodoContent(props) {
-    const [todoList, setTodoList] = useState(props.dataFromGlobal);
+    const [localData, setlocalData] = useState(props.dataFromGlobal);
 
+    console.log(localData, !localData, localData === undefined, Array.isArray(localData), !Array.isArray(localData));
     // Set initial state to an array to prevent errors
-    if (todoList === undefined) {
-        setTodoList([]);
+    if (localData === undefined || !Array.isArray(localData)) {
+        setlocalData(() => []);
         // Add an item by default
         addTodo(null, []);
     }
 
     useEffect(() => {
         // Updating data in the global state when state changes
-        if (todoList) {
-            props.setData(props.counter, todoList)
+        if (localData) {
+            props.setData(props.counter, localData)
         }
-    }, [todoList])
+    }, [localData])
 
-    function addTodo(e, targetArray = todoList) {
+    function addTodo(e, targetArray = localData) {
         // Arguments are used to avoid an issue with out of sync state when trying to add an item by default
-        setTodoList((prev) => [...targetArray, { key: self.crypto.randomUUID(), order: targetArray.length, checked: false, data: "" }]);
+        setlocalData((prev) => [...targetArray, { key: self.crypto.randomUUID(), order: targetArray.length, checked: false, data: "" }]);
     }
 
     function deleteTodo(iKey) {
-        const deletedTodo = todoList.filter((todo) => todo.key !== iKey);
+        const deletedTodo = localData.filter((todo) => todo.key !== iKey);
         // Assigns the new index order to each entry after deletion
-        setTodoList(deletedTodo.map((todo, index) => { return { ...todo, order: index } }));
+        setlocalData(deletedTodo.map((todo, index) => { return { ...todo, order: index } }));
     }
 
     function updateTodoText(newVal, iKey) {
-        setTodoList((prev) => prev.map((todo) => todo.key === iKey ? { ...todo, data: newVal } : todo));
+        setlocalData((prev) => prev.map((todo) => todo.key === iKey ? { ...todo, data: newVal } : todo));
     }
 
     function checkTodo(iKey, currentVal) {
-        setTodoList((prev) => prev.map((todo) => todo.key === iKey ? { ...todo, checked: !currentVal } : todo));
+        setlocalData((prev) => prev.map((todo) => todo.key === iKey ? { ...todo, checked: !currentVal } : todo));
     }
 
     function changeTodoOrder(event, direction, target, currentOrder) {
-        if (todoList.length < 2) {
+        if (localData.length < 2) {
             return;
         }
 
@@ -50,18 +51,18 @@ export default function TodoContent(props) {
             moveTo = event.shiftKey ? 0 : currentOrder - 1;
         }
         else {
-            moveTo = event.shiftKey ? todoList.length : currentOrder + 1;
+            moveTo = event.shiftKey ? localData.length : currentOrder + 1;
         }
         // If it is negative become 0
         moveTo = moveTo < 0 ? 0 : moveTo;
         // If it's bigger than the array + 1 (0 index) become the length of the array -1
-        moveTo = moveTo > todoList.length - 1 ? todoList.length - 1 : moveTo;
+        moveTo = moveTo > localData.length - 1 ? localData.length - 1 : moveTo;
         // If it has not changed then return before doing anything else
         if (moveTo === currentOrder) {
             return;
         }
 
-        console.log(todoList);
+        console.log(localData);
         console.log(moveTo);
 
         // If it's more than 1 difference in either direction
@@ -70,7 +71,7 @@ export default function TodoContent(props) {
         let changedOrder;
         if (shiftBottom || shiftTop) {
             console.log("-----Shift key-----");
-            changedOrder = todoList.map((todo) => {
+            changedOrder = localData.map((todo) => {
                 if (todo.key === target) {
                     return { ...todo, order: moveTo };
                 }
@@ -90,7 +91,7 @@ export default function TodoContent(props) {
             })
         }
         else {
-            changedOrder = todoList.map((todo) => {
+            changedOrder = localData.map((todo) => {
                 // If it's the target set to moveTo
                 if (todo.key === target) {
                     return { ...todo, order: moveTo };
@@ -104,15 +105,15 @@ export default function TodoContent(props) {
         }
 
 
-        // Sorts the todolist by the new orders
-        setTodoList(changedOrder.sort((a, b) => a.order - b.order));
-        console.log(todoList);
+        // Sorts the localData by the new orders
+        setlocalData(changedOrder.sort((a, b) => a.order - b.order));
+        console.log(localData);
     }
 
     function getTodos() {
-        // Prevents an error from trying to map todolist when it is still undefined
-        if (todoList) {
-            return (todoList.map((todo) => <TodoItem key={todo.key} counter={todo.key} text={todo.data} order={todo.order} checked={todo.checked} checkTodo={checkTodo} updateTodoText={updateTodoText} changeTodoOrder={changeTodoOrder} deleteTodo={deleteTodo} />))
+        // Prevents an error from trying to map localData when it is still undefined
+        if (localData && Array.isArray(localData)) {
+            return (localData.map((todo) => <TodoItem key={todo.key} counter={todo.key} text={todo.data} order={todo.order} checked={todo.checked} checkTodo={checkTodo} updateTodoText={updateTodoText} changeTodoOrder={changeTodoOrder} deleteTodo={deleteTodo} />))
         }
     }
 

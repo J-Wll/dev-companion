@@ -4,6 +4,7 @@ import './css/ModuleHandler.css'
 
 import Module from './Module';
 import defaultWorkspace from "./assets/Default Workspace.json";
+import ErrorBoundary from './small-components/ErrorBoundary';
 import { useState, useEffect, useRef } from "react";
 
 export default function App() {
@@ -296,7 +297,9 @@ export default function App() {
     <>
       <main className="container">
         <Sidebar />
-        <ModuleHandler />
+        <ErrorBoundary fallback={<p>Something went wrong with a module. Try loading a new workspace/clearing the workspace and refreshing</p>} >
+          <ModuleHandler />
+        </ErrorBoundary>
       </main>
     </>
   );

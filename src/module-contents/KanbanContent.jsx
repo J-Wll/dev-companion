@@ -78,7 +78,7 @@ export default function KanbanContent(props) {
     const [refresh, triggerRefresh] = useState(false);
 
     useEffect(() => {
-        if (!localData) {
+        if (!localData || !localData.columns) {
             setLocalData({ columns: [{ key: "default-do", text: "Do" }, { key: "default-doing", text: "Doing" }, { key: "default-done", text: "Done" }], items: [{ key: "default-item", text: "Do this", location: { x: 0, y: 40 } }] })
         }
         triggerRefresh(!refresh);

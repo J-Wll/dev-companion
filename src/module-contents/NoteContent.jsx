@@ -35,6 +35,9 @@ export default function NoteContent(props) {
 
     let templateSelect = <></>
 
+    if (typeof localData != "string") {
+        setLocalData("");
+    }
 
     if (props.reflective) {
         if (!localData) {

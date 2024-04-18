@@ -13,7 +13,7 @@ export default function TimerContent(props) {
 
     // default values if no global data
     useEffect(() => {
-        if (localData === undefined) {
+        if (!localData || !localData.time) {
             setLocalData(() => ({ timerActive: true, time: 0, interval: 10, notifies: false, repeats: false, pomodoro: { on: false, workMode: true, workInterval: 45, restInterval: 15 } }));
         }
     }, [])
