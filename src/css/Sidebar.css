@@ -12,16 +12,17 @@
 
     height: fit-content;
     margin-top: 20px;
-    margin-bottom: auto; 
+    margin-bottom: auto;
     padding: 12px;
-    padding-right: 16px;
-    padding-bottom: 30px;
+    padding-right: 20px;
+    padding-bottom: 25px;
 
     width: fit-content;
     box-sizing: border-box;
 
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border-top-right-radius: 55px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 10px;
 
     background-color: #474747;
 }
