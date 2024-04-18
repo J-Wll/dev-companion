@@ -118,7 +118,7 @@ export default function TodoContent(props) {
 
     return (
         <section className="todo-content">
-            <button onClick={addTodo}>Add To-do Item</button>
+            <button onClick={addTodo} className='add-todo-button'>Add To-do Item</button>
             {getTodos()}
         </section>
     )

@@ -8,13 +8,8 @@
 
   box-sizing: border-box;
 
-  /* max-width: 90%; */
   margin: 2px;
   border-radius: 8px;
-  /* background-color: grey; */
-  /* border: 3px solid white; */
-  /* width: 22vw;
-  height: 45vh; */
 }
 
 .module-title {
@@ -29,12 +24,10 @@
 
   cursor: pointer;
 
-  /* width: 80%; */
   width: calc(100% - 51px);
 }
 
 .module-bar-buttons {
-  /* align-items: end; */
   display: flex;
   justify-content: end;
   min-width: 135px;
@@ -55,6 +48,8 @@
 }
 
 .big-menu-bar-button {
+  padding-left: 2px;
+  padding-right: 2px;
   font-size: 14px;
   width: fit-content;
 }

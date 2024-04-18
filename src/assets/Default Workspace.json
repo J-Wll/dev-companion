@@ -1,8 +1,9 @@
 {
   "16f058f3-8691-40a2-9bce-9d78b1e51b93": {
     "purpose": "Notes",
-    "pos": { "x": 23, "y": -1 },
-    "size": { "sizeX": "391px", "sizeY": "441px" }
+    "pos": { "x": 23, "y": 4 },
+    "size": { "sizeX": "391px", "sizeY": "441px" },
+    "zIndex": 1
   },
   "0bd52b97-33f6-40f0-8110-2ce1de07f318": {
     "purpose": "Todo",
@@ -14,14 +15,14 @@
         "data": ""
       }
     ],
-    "pos": { "x": 813, "y": 265 },
-    "size": { "sizeX": "320px", "sizeY": "671px" },
-    "zIndex": 1
+    "pos": { "x": 815, "y": 267 },
+    "size": { "sizeX": "302px", "sizeY": "368px" },
+    "zIndex": 4
   },
   "3be09f30-ca74-490f-a64b-f1754300b4cc": {
     "purpose": "Kanban",
-    "pos": { "x": 23, "y": 444 },
-    "size": { "sizeX": "781px", "sizeY": "493px" },
+    "pos": { "x": 22, "y": 449 },
+    "size": { "sizeX": "790px", "sizeY": "513px" },
     "data": {
       "columns": [
         { "key": "default-do", "text": "Do" },
@@ -36,13 +37,13 @@
         }
       ]
     },
-    "zIndex": 3
+    "zIndex": 6
   },
   "0f02c175-61fe-4714-b371-8f733fa01c1c": {
     "purpose": "Reflective",
-    "pos": { "x": 420, "y": -3 },
+    "pos": { "x": 418, "y": 3 },
     "size": { "sizeX": "391px", "sizeY": "443px" },
-    "data": ""
+    "zIndex": 2
   },
   "85b15df3-8f7f-4e5e-af56-6119114534a3": {
     "purpose": "Timer",
@@ -58,8 +59,117 @@
       },
       "alreadyNotified": false
     },
-    "pos": { "x": 819, "y": 1 },
+    "pos": { "x": 813, "y": 5 },
     "size": { "sizeX": "322px", "sizeY": "260px" },
-    "zIndex": 2
+    "zIndex": 3
+  },
+  "name": "default-name-ac68e5f3-b922-4611-b373-9365e97bb2df",
+  "dfdf17db-34cc-479f-9845-9d942a04f504": {
+    "purpose": "Resources",
+    "data": {
+      "data": {
+        "General": [
+          {
+            "name": "Stack Overflow",
+            "description": "A popular Q&A platform for programmers",
+            "link": "https://stackoverflow.com/"
+          },
+          {
+            "name": "GitHub",
+            "description": "A platform for hosting and collaborating on code repositories",
+            "link": "https://github.com/"
+          },
+          {
+            "name": "DevDocs",
+            "description": "Information on over 600 languages/frameworks",
+            "link": "https://devdocs.io"
+          },
+          {
+            "name": "LeetCode",
+            "description": "A leading online platform for interview preparation and learning data structures and algorithms",
+            "link": "https://leetcode.com/"
+          }
+        ],
+        "Learning": [
+          {
+            "name": "FreeCodeCamp",
+            "description": "A comprehensive platform for learning web development",
+            "link": "https://www.freecodecamp.org/"
+          },
+          {
+            "name": "Coursera",
+            "description": "Offers a wide range of online courses, including programming",
+            "link": "https://www.coursera.org/"
+          }
+        ],
+        "HTML": [
+          {
+            "name": "allthetags",
+            "description": "A website that shows every HTML tag",
+            "link": "https://allthetags.com"
+          },
+          {
+            "name": "w3schools",
+            "description": "A useful resource for the basics of HTML",
+            "link": "https://www.w3schools.com/html/"
+          }
+        ],
+        "CSS": [
+          {
+            "name": "MDN Web Docs - CSS",
+            "description": "Mozilla's documentation on CSS properties and usage",
+            "link": "https://developer.mozilla.org/en-US/docs/Web/CSS"
+          },
+          {
+            "name": "CSS Tricks",
+            "description": "A blog with tips, tricks, and tutorials related to CSS",
+            "link": "https://css-tricks.com/"
+          },
+          {
+            "name": "w3schools",
+            "description": "A useful resource for the basics of CSS",
+            "link": "https://www.w3schools.com/css/"
+          }
+        ],
+        "JavaScript": [
+          {
+            "name": "MDN Web Docs - JavaScript",
+            "description": "Mozilla's comprehensive JavaScript documentation",
+            "link": "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+          },
+          {
+            "name": "Eloquent JavaScript",
+            "description": "An online book for learning JavaScript",
+            "link": "https://eloquentjavascript.net/"
+          },
+          {
+            "name": "w3schools",
+            "description": "A useful resource for the basics of JavaScript",
+            "link": "https://www.w3schools.com/js/"
+          }
+        ],
+        "React": [
+          {
+            "name": "React Official Documentation",
+            "description": "The official documentation for React",
+            "link": "https://react.dev/reference/react"
+          },
+          {
+            "name": "React for Beginners",
+            "description": "A beginner-friendly course on React",
+            "link": "https://reactforbeginners.com/"
+          },
+          {
+            "name": "w3schools",
+            "description": "A useful resource for the basics of React",
+            "link": "https://www.w3schools.com/react/"
+          }
+        ]
+      },
+      "selected": "General"
+    },
+    "zIndex": 5,
+    "size": { "sizeX": "506px", "sizeY": "316px" },
+    "pos": { "x": 816, "y": 640 }
   }
 }

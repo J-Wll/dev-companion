@@ -1,3 +1,7 @@
+.todo-module .module-body {
+    background-color: rgb(237, 255, 237);
+}
+
 .todo-module .module-body section {
     width: 95%;
     max-width: 98%;
@@ -11,6 +15,10 @@
     height: fit-content;
 
     font-family: inherit;
+}
+
+.add-todo-button {
+    margin-top: 5px;
 }
 
 .todo-item {
