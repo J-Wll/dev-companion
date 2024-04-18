@@ -14,8 +14,36 @@
     height: calc(100% - 42px) !important;
 }
 
+.reflective-module .module-body {
+    background-color: white;
+}
+
+.reflective-module .quill {
+    height: calc(100% - 49px);
+}
+
+.notes-module .quill {
+    height: calc(100%);
+}
+
 .notes-module,
 .reflective-module {
     /* background-color: floralwhite; */
     overflow: hidden;
+}
+
+.reflective-module .module-body {
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+}
+
+.reflective-template-div {
+    background-color: white;
+}
+
+.reflective-template-div button {
+    background-color: white;
+    cursor: pointer;
+    border-color: darkslategrey;
 }
