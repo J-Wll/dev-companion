@@ -7,7 +7,7 @@ import { ContentEditableDiv } from "../small-components/ContentEditableDiv";
 export default function TodoContent(props) {
     const [localData, setlocalData] = useState(props.dataFromGlobal);
 
-    console.log(localData, !localData, localData === undefined, Array.isArray(localData), !Array.isArray(localData));
+    // console.log(localData, !localData, localData === undefined, Array.isArray(localData), !Array.isArray(localData));
     // Set initial state to an array to prevent errors
     if (localData === undefined || !Array.isArray(localData)) {
         setlocalData(() => []);
@@ -62,8 +62,6 @@ export default function TodoContent(props) {
             return;
         }
 
-        console.log(localData);
-        console.log(moveTo);
 
         // If it's more than 1 difference in either direction
         const shiftBottom = moveTo > currentOrder + 1;
@@ -107,7 +105,6 @@ export default function TodoContent(props) {
 
         // Sorts the localData by the new orders
         setlocalData(changedOrder.sort((a, b) => a.order - b.order));
-        console.log(localData);
     }
 
     function getTodos() {

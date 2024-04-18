@@ -59,7 +59,6 @@ export default function NoteContent(props) {
     }, [localData])
 
     function handleChange(val) {
-        console.log(val)
         setLocalData(() => val);
     }
 

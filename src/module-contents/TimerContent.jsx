@@ -75,14 +75,10 @@ export default function TimerContent(props) {
                 }
 
                 if (localData.time >= targetInterval * 60) {
-                    console.log("TIMER DONE")
                     if (localData.repeats && !localData.pomodoro.on) {
                         timerZero();
                     }
                 }
-            }
-            else {
-                console.log("Paused");
             }
 
             timerMode();

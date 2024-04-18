@@ -19,7 +19,6 @@ function KanbanColumn(props) {
 
     function addItem() {
         const itemKey = self.crypto.randomUUID();
-        console.log(props.position * 200);
 
         let lowestItem = 0;
         props.localData.items.filter((item) => item.location.x === props.position * 200).forEach(item => {
@@ -84,7 +83,6 @@ export default function KanbanContent(props) {
         triggerRefresh(!refresh);
     }, [])
 
-    console.log(localData)
 
     useEffect(() => {
         if (localData) {

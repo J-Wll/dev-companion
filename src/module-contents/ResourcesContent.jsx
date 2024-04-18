@@ -6,8 +6,6 @@ import defaultResources from "../assets/Default Resources.json";
 import { ContentEditableDiv } from "../small-components/ContentEditableDiv";
 
 function Resources(props) {
-    console.log(props.data.data[props.selected]);
-
     try {
         const returnVal = props.data.data[props.selected].map((item, index) =>
             <li key={index}><a href="#" onClick={() => window.electron.openLink(item.link)}>{item.name}</a> - {item.description} <button onClick={() => { props.deleteResource(item.name) }} className="delete-resource">X</button></li>
@@ -19,7 +17,7 @@ function Resources(props) {
         )
     }
     catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 
@@ -97,7 +95,6 @@ export default function ResourcesContent(props) {
         newLocalData.data = JSON.parse(JSON.stringify(defaultResources));
         newLocalData.selected = "General";
 
-        console.log(newLocalData);
         setLocalData(() => newLocalData);
     }
 

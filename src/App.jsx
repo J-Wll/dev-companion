@@ -56,7 +56,7 @@ export default function App() {
     nodeWriteFileSync("data/config.json", JSON.stringify({ "latestWorkspace": newest }));
   }
 
-  console.log(nodeFunctions.nodeGetFilepath());
+  // console.log(nodeFunctions.nodeGetFilepath());
   function loadWorkspace(name) {
     nodeGetWorkspaces().then((workspaces) => {
       // if that workspace exists
@@ -71,9 +71,7 @@ export default function App() {
           }
 
           if (!globalModuleData.current.name) {
-            console.log(globalModuleData.current.name);
             globalModuleData.current.name = `default-name-${self.crypto.randomUUID()}`
-            console.log(globalModuleData.current.name);
           }
 
           setModuleList(newModuleList);
@@ -94,22 +92,17 @@ export default function App() {
     nodeWriteFileSync("data/workspaces/!defaultWorkspace.json", JSON.stringify(defaultWorkspace));
 
     const config = nodeReadFileSync("data/config.json");
-    console.log(config);
     config.then((res) => {
       const parsed = JSON.parse(res);
-      console.log(parsed);
       if (parsed.latestWorkspace) {
-        console.log(parsed);
         loadWorkspace(`${parsed.latestWorkspace}.json`);
       }
       else if (!globalModuleData.current.name) {
-        console.log("Inside then")
         loadWorkspace("!defaultWorkspace.json");
       }
     }).catch((err) => {
       console.error(err);
       if (!globalModuleData.current.name) {
-        console.log("Inside catch")
         loadWorkspace("!defaultWorkspace.json");
       }
     })
@@ -142,7 +135,7 @@ export default function App() {
     });
 
     mods.forEach((val, ind) => {
-      console.log(val, ind + 1, globalModuleData.current[val].zIndex, globalModuleData.current[val].purpose)
+      // console.log(val, ind + 1, globalModuleData.current[val].zIndex, globalModuleData.current[val].purpose)
       globalModuleData.current[val].zIndex = ind + 1;
       // console.log(val, ind, globalModuleData.current[val].zIndex)
     })
@@ -152,8 +145,6 @@ export default function App() {
 
 
   function addModule(moduleType) {
-    console.log("!!!!!!!!!!!!!!!!!ADD MODULE!!!!!!!!!!!!!!!!!!!");
-    console.log(globalModuleData.current);
 
     const moduleKey = self.crypto.randomUUID();
 
@@ -163,16 +154,11 @@ export default function App() {
   }
 
   function deleteModule(target) {
-    console.log("!!!!!!!!!!!!!!!!! deleteModule !!!!!!!!!!!!!!!!!!!");
     setModuleList((modList) => modList.filter((module) => module.key !== target))
     delete globalModuleData.current[target];
   }
 
   function getModuleList() {
-    console.log("!!!!!!!!!!!!!!!!! getModuleList !!!!!!!!!!!!!!!!!!!");
-    console.log(globalModuleData.current);
-
-    console.log(moduleList);
     return moduleList.map((module) =>
       <Module key={module.key} counter={module.key} purpose={module.purpose} data={module.data} setData={setModuleData} deleteModule={deleteModule} dataFromGlobal={globalModuleData.current[module.key]} topZIndex={topZIndex} />
     )
@@ -222,7 +208,7 @@ export default function App() {
           return <option key={index} selected={selected} value={option}>{option}</option>
         }))
       });
-      console.log(selectRef.current.selectedOptions[0].innerText)
+      // console.log(selectRef.current.selectedOptions[0].innerText)
     }), [])
 
     // Load workspace defined higher up
@@ -239,7 +225,7 @@ export default function App() {
     }
 
     function renameWorkspace(name) {
-      console.log(`${name}.json`);
+      // console.log(`${name}.json`);
       nodeRenameFileSync(`data/workspaces/${globalModuleData.current.name}.json`, `data/workspaces/${name}.json`);
       globalModuleData.current.name = name;
       updateLatestWorkspace(globalModuleData.current.name);
@@ -260,8 +246,7 @@ export default function App() {
       a.click();
     }
 
-    console.log(options, "ff");
-    console.log(nodeGetWorkspaces(), typeof nodeGetWorkspaces(), "ff");
+    // console.log(nodeGetWorkspaces(), typeof nodeGetWorkspaces(), "ff");
 
     return (
       <div className="workspace-selector">
@@ -285,7 +270,7 @@ export default function App() {
   }
 
   function ModuleHandler() {
-    console.log(getModuleList());
+    // console.log(getModuleList());
     return (
       <div className="module-container">
         {getModuleList()}

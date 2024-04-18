@@ -40,7 +40,7 @@ function domReady(condition = ['complete', 'interactive']) {
 // connects react code with node js
 contextBridge.exposeInMainWorld('electron', {
   createFolder: async (filePath) => {
-    console.log("AAA", filePath);
+    console.log("Filepath is: ", filePath);
     ipcRenderer.invoke('createFolder', filePath);
   },
   readFile: async (filePath) => {

@@ -18,13 +18,14 @@ export default function Module(props) {
     const [refresh, triggerRefresh] = useState(false);
 
     const myObserver = new ResizeObserver(() => {
-        props.setData(props.counter, { sizeX: moduleRef.current.style.width, sizeY: moduleRef.current.style.height }, "size")
+        if (moduleRef.current != undefined) {
+            props.setData(props.counter, { sizeX: moduleRef.current.style.width, sizeY: moduleRef.current.style.height }, "size")
+        }
     })
 
     // Triggers after the first render when the ref is defined
     useEffect(() => {
         if (moduleRef.current) {
-            console.log(moduleRef.current.style.height, moduleRef.current.style.width);
             myObserver.observe(moduleRef.current);
         }
 
@@ -50,7 +51,6 @@ export default function Module(props) {
             title = "To-do List";
             break;
         case "Timer":
-            console.log("IIIIIIIIIIIIIIIII")
             component = <TimerContent {...componentProps} />;
             title = "Timer";
             defaultSize = ["325px", "275px"];
@@ -119,10 +119,10 @@ export default function Module(props) {
     }
 
     const defaultPos = props.dataFromGlobal.pos ? props.dataFromGlobal.pos : { x: 10, y: 10 }
-    console.log(props.dataFromGlobal.size ? [props.dataFromGlobal.size.sizeX, props.dataFromGlobal.size.sizeY] : defaultSize)
+    // console.log(props.dataFromGlobal.size ? [props.dataFromGlobal.size.sizeX, props.dataFromGlobal.size.sizeY] : defaultSize)
     let [sizeX, sizeY] = props.dataFromGlobal.size ? [props.dataFromGlobal.size.sizeX, props.dataFromGlobal.size.sizeY] : defaultSize;
     let zIndexVal = props.dataFromGlobal.zIndex ? props.dataFromGlobal.zIndex : 1;
-    console.log(component, title);
+    // console.log(component, title);
 
 
 
@@ -130,7 +130,6 @@ export default function Module(props) {
     let resizeVal = "both";
     let char = "-";
     let pointerVal = "all";
-    console.log(props.dataFromGlobal.minimised || undefined);
     if (props.dataFromGlobal.minimised || undefined) {
         hide = {
             display: "none", zIndex: "-1"

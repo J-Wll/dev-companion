@@ -25,8 +25,8 @@ const appPath =
 ipcMain.handle("createFolder", async (_, fileName) => {
   console.log("Creating file", _, fileName);
   if (fileName) {
-    console.log(app.isPackaged, process.env.NODE_ENV);
-    console.log(appPath, fileName, path.join(appPath, fileName))
+    // console.log(app.isPackaged, process.env.NODE_ENV);
+    // console.log(appPath, fileName, path.join(appPath, fileName))
     fs.mkdirSync(path.join(appPath, fileName));
   }
 });
@@ -35,7 +35,7 @@ ipcMain.handle("readFile", async (_, fileName) => {
   if (fileName) {
     try {
       const data = fs.readFileSync(path.join(appPath, fileName), 'utf8');
-      console.log(data);
+      // console.log(data);
       return data;
     }
     catch (err) {
