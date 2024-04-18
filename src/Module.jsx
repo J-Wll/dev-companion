@@ -7,7 +7,8 @@ import KanbanContent from "./module-contents/KanbanContent";
 import ResourcesContent from "./module-contents/ResourcesContent";
 
 import { useRef, useEffect, useState } from "react";
-import Draggable from 'react-draggable';
+import { DndContext } from '@dnd-kit/core';
+import Draggable from "./small-components/Draggable";
 
 // TODO: Optimise resize observers (Only one)
 
@@ -73,8 +74,10 @@ export default function Module(props) {
     // on stop assign the update global data ref for this module, that will be used as the default position if it is loaded again
     // similar mechanism for size
     // misallignment problem is probably due to using cursor position, which can grab any point along the bar
-    function handleStop(mouseEvent, draggableProps) {
-        props.setData(props.counter, { x: draggableProps.x, y: draggableProps.y }, "pos")
+    function handleStop(event) {
+        console.log(event)
+        console.log(event.delta.x, event.delta.y)
+        props.setData(props.counter, { x: event.delta.x, y: event.delta.y }, "pos")
         props.topZIndex();
         triggerRefresh(!refresh);
     }
@@ -108,19 +111,22 @@ export default function Module(props) {
 
 
     return (
-        <Draggable handle=".module-title" defaultPosition={defaultPos} onStop={handleStop} onStart={handleStart}>
-            <div ref={moduleRef} className={`module ${props.purpose.toLowerCase()}-module`} style={{ height: sizeY, width: sizeX, zIndex: zIndexVal, resize: resizeVal, pointerEvents: pointerVal }} >
-                <div className="menu-bar" style={{ pointerEvents: "all" }}>
-                    <p className="module-title">{title}</p>
-                    <div className="module-bar-buttons">
-                        <button onClick={() => { props.setData(props.counter, !props.dataFromGlobal.minimised, "minimised"); triggerRefresh(!refresh) }} className="close-module">{char}</button>
-                        <button onClick={() => props.deleteModule(props.counter)} className="close-module">X</button>
+        <DndContext onDragEnd={handleStop}>
+            {/* <Draggable handle=".module-title" defaultPosition={defaultPos} onStop={handleStop} onStart={handleStart}> */}
+            <Draggable defaultPos={defaultPos}>
+                <div ref={moduleRef} className={`module ${props.purpose.toLowerCase()}-module`} style={{ height: sizeY, width: sizeX, zIndex: zIndexVal, resize: resizeVal, pointerEvents: pointerVal }} >
+                    <div className="menu-bar" style={{ pointerEvents: "all" }}>
+                        <p className="module-title">{title}</p>
+                        <div className="module-bar-buttons">
+                            <button onClick={() => { props.setData(props.counter, !props.dataFromGlobal.minimised, "minimised"); triggerRefresh(!refresh) }} className="close-module">{char}</button>
+                            <button onClick={() => props.deleteModule(props.counter)} className="close-module">X</button>
+                        </div>
+                    </div>
+                    <div className="module-body" style={hide} >
+                        {component}
                     </div>
                 </div>
-                <div className="module-body" style={hide} >
-                    {component}
-                </div>
-            </div>
-        </Draggable>
+            </Draggable>
+        </DndContext>
     )
 }
