@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 
 
-// Pass a class name, placeholder text and on change function
+// Pass a value, class name, placeholder text and on change function
 // This might be against how react is supposed to work but it seemed the easiest way have automatically resizing inputs
 export function ContentEditableDiv(props) {
     const contentEditableRef = useRef();

@@ -1,6 +1,25 @@
+.resources-module {
+    background-color: rgb(255, 255, 239);
+}
+
 .resources-module .module-body {
     padding: 5px;
     background-color: rgb(255, 255, 239);
+}
+
+.resources-module .module-body button {
+    margin: 2px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.resource-field-inp {
+    background-color: white;
+    border: solid black;
+    border-width: 1px;
+    margin: 2px;
+    width: 100%;
+    height: fit-content;
 }
 
 .delete-resource {
