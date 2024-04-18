@@ -1,0 +1,10 @@
+.resources-module .module-body {
+    padding: 5px;
+    background-color: rgb(255, 255, 239);
+}
+
+.delete-resource {
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+}

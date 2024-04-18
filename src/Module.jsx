@@ -63,6 +63,7 @@ export default function Module(props) {
         case "Resources":
             component = <ResourcesContent {...componentProps} />;
             title = "Resources";
+            defaultSize = ["450px", "280px"];
             break;
         default:
             component = <></>;

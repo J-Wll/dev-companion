@@ -15,8 +15,7 @@
 }
 
 .notes-module,
-.reflective-module,
-.resources-module {
+.reflective-module {
     /* background-color: floralwhite; */
     overflow: hidden;
 }
