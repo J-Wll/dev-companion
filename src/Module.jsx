@@ -63,12 +63,45 @@ export default function Module(props) {
         case "Resources":
             component = <ResourcesContent {...componentProps} />;
             title = "Resources";
-            defaultSize = ["450px", "280px"];
+            defaultSize = ["500px", "280px"];
             break;
         default:
             component = <></>;
             title = props.purpose;
             break;
+    }
+
+    function saveFile() {
+        const dateTime = new Date().toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        const a = document.createElement("a");
+        const file = new Blob([JSON.stringify(props.dataFromGlobal.data)]);
+        a.href = URL.createObjectURL(file);
+        a.download = `${props.purpose}-${dateTime}-${props.counter}.json`;
+        a.click();
+    }
+
+    function loadFile() {
+        let a = document.createElement('input');
+        a.type = 'file';
+        a.onchange = _ => {
+            const reader = new FileReader();
+            let file = Array.from(a.files)[0];
+            reader.onload = (e) => {
+                let data = "";
+                try {
+                    data = JSON.parse(e.target.result);
+                    console.log('Loaded data:', data);
+                    props.setData(props.counter, data);
+                    props.topZIndex();
+                    triggerRefresh(!refresh);
+                } catch (error) {
+                    alert(error);
+                }
+            };
+            reader.readAsText(file);
+        }
+        a.click();
+
     }
 
     // on stop assign the update global data ref for this module, that will be used as the default position if it is loaded again
@@ -114,8 +147,10 @@ export default function Module(props) {
                 <div className="menu-bar" style={{ pointerEvents: "all" }}>
                     <p className="module-title">{title}</p>
                     <div className="module-bar-buttons">
-                        <button onClick={() => { props.setData(props.counter, !props.dataFromGlobal.minimised, "minimised"); triggerRefresh(!refresh) }} className="close-module">{char}</button>
-                        <button onClick={() => props.deleteModule(props.counter)} className="close-module">X</button>
+                        <button onClick={saveFile} className="menu-bar-button big-menu-bar-button">Save</button>
+                        <button onClick={loadFile} className="menu-bar-button big-menu-bar-button">Load</button>
+                        <button onClick={() => { props.setData(props.counter, !props.dataFromGlobal.minimised, "minimised"); triggerRefresh(!refresh) }} className="menu-bar-button">{char}</button>
+                        <button onClick={() => props.deleteModule(props.counter)} className="menu-bar-button">X</button>
                     </div>
                 </div>
                 <div className="module-body" style={hide} >

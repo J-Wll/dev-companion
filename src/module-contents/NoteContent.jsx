@@ -32,7 +32,6 @@ function getTemplate(tName) {
 
 export default function NoteContent(props) {
     const [localData, setLocalData] = useState(props.dataFromGlobal);
-    console.log(props);
 
     let templateSelect = <></>
 

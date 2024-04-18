@@ -37,10 +37,10 @@
   /* align-items: end; */
   display: flex;
   justify-content: end;
-  min-width: 50px;
+  min-width: 135px;
 }
 
-.close-module {
+.menu-bar-button {
   background-color: aquamarine;
   width: 20px;
   height: 20px;
@@ -52,6 +52,11 @@
   margin-right: 2px;
   margin-left: 2px;
   cursor: pointer;
+}
+
+.big-menu-bar-button {
+  font-size: 14px;
+  width: fit-content;
 }
 
 .menu-bar {
