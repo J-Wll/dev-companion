@@ -1,33 +1,11 @@
 // TODO: Use DND-KIT with draggable and droppable for a better implementation https://dndkit.com
 // TODO: Tidy this up and add some comments
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Draggable from 'react-draggable';
 
 import "../css/css-module-content/kanbanContent.css"
-
-// This might be against how react is supposed to work but it seemed the easiest way have automatically resizing inputs
-function ContentEditableDiv(props) {
-    const contentEditableRef = useRef();
-    useEffect(() => {
-        if (contentEditableRef.current.textContent !== props.value) {
-            contentEditableRef.current.textContent = props.value;
-        }
-    });
-
-    return (
-        <div
-            contentEditable="true"
-            role="textbox"
-            className={props.class}
-            ref={contentEditableRef}
-            Placeholder={props.Placeholder}
-            onInput={event => {
-                props.onChange(event.target.textContent);
-            }}
-        />
-    );
-}
+import { ContentEditableDiv } from "../small-components/ContentEditableDiv";
 
 function KanbanColumn(props) {
 
@@ -85,7 +63,6 @@ function KanbanItem(props) {
 
 
     return (
-
         <Draggable bounds={"parent"} axis={"both"} grid={[200, 5]} defaultPosition={props.location} onStop={handleStop}>
             {/* Uses placeholder styling in KanbanContent.css */}
             <div className="draggable-wrapper">

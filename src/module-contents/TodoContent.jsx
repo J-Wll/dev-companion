@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import '../css/css-module-content/TodoContent.css'
+import { ContentEditableDiv } from "../small-components/ContentEditableDiv";
 
 // TODO: Should probably convert todoList to an object mapped into an array at render. Because there are so many Maps going on here
 
@@ -132,7 +133,7 @@ function TodoItem(props) {
                 <button onClick={(e) => props.changeTodoOrder(e, "u", props.counter, props.order)}>^</button>
                 <button onClick={(e) => props.changeTodoOrder(e, "d", props.counter, props.order)}>⌄</button>
             </div>
-            <textarea type="text" placeholder="What would you like to do?" style={strikeThrough} value={props.text} onChange={(e) => props.updateTodoText(e.target.value, props.counter)} />
+            <ContentEditableDiv type="text" class="todo-item-text" Placeholder="What would you like to do?" style={strikeThrough} value={props.text} onChange={(newVal) => props.updateTodoText(newVal, props.counter)} />
             <button className="delete-todo" onClick={() => props.deleteTodo(props.counter)}>X</button>
         </div>
     )

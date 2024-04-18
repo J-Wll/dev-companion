@@ -24,23 +24,26 @@
     border-style: solid;
     border-color: black;
     border-radius: 3px;
+    box-sizing: border-box;
 
     margin: 5px;
     margin-bottom: 7px;
     padding: 5px;
 }
 
-.todo-item textarea {
+.todo-item-text {
     box-sizing: border-box;
     border: none;
+    box-sizing: border-box;
     text-align: center;
     font-size: 15px !important;
-    width: 100%;
+    width: calc(100% - 80px);
+    /* max-width: 100%; */
 
-    resize: none;
-    resize:vertical;
+    /* resize: none; */
+    resize: vertical;
     padding: 0;
-    height: 50px;
+    min-height: 40px;
 
     margin: 4px;
 }
