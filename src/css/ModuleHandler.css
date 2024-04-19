@@ -1,5 +1,6 @@
 .module-container {
   width: 100%;
+  padding-left: 10px;
 }
 
 .module-container-old {

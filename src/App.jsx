@@ -10,6 +10,7 @@ import { useState, useEffect, useRef } from "react";
 export default function App() {
   const [moduleList, setModuleList] = useState([]);
   const [refresh, triggerRefresh] = useState(false);
+  const [rowCreate, setRowCreate] = useState(false);
 
   // Data decoupled from modules at this level because otherwise every component is re-rendered whenever data changes
   // This way each component "controls" itself and updates the global data for saving/loading
@@ -146,9 +147,43 @@ export default function App() {
 
   function addModule(moduleType) {
 
-    const moduleKey = self.crypto.randomUUID();
+    function sizeToNum(i) {
+      return Number(i.substring(0, i.length - 2));
+    }
 
-    globalModuleData.current[moduleKey] = { purpose: moduleType, data: undefined, zIndex: 1001 };
+    const moduleKey = self.crypto.randomUUID();
+    let defaultPos = { x: 0, y: 10 }
+
+    if (rowCreate) {
+      // a system for setting the default position to not overlap. Wasn't initially going to exist but without it keyboard only users can't really use the program. Temporary solution to accessible draggability.
+      console.log(globalModuleData, screen.width, screen.height, window.innerWidth, window.innerHeight);
+      const modKeys = Object.keys(globalModuleData.current);
+      console.log(modKeys)
+      // 1 is name, 2 means a module already exists
+      if (modKeys.length >= 2) {
+        let xSize = 0, ySize = 10, biggestY = 10;
+        for (const mod of modKeys) {
+          if (globalModuleData.current[mod].purpose) {
+            xSize += sizeToNum(globalModuleData.current[mod].size.sizeX) + 15;
+            const modYSize = sizeToNum(globalModuleData.current[mod].size.sizeY) + globalModuleData.current[mod].pos.y;
+            if (modYSize > biggestY) {
+              biggestY = modYSize;
+            }
+
+            // 500 for module size, 300 for sidebar size and etc
+            if (xSize + 400 > screen.width - 300) {
+              ySize = biggestY + 20;
+              xSize = 0;
+            }
+          }
+        }
+        defaultPos.x = xSize;
+        defaultPos.y = ySize;
+      }
+    }
+
+
+    globalModuleData.current[moduleKey] = { purpose: moduleType, data: undefined, zIndex: 1001, pos: defaultPos };
     setModuleList(() => [...moduleList, { key: moduleKey, purpose: moduleType }]);
     topZIndex();
   }
@@ -172,6 +207,10 @@ export default function App() {
 
       <div className="sidebar">
         <WorkspaceController />
+        <div className='row-create-inp'>
+          <label htmlFor="rowCreateCheckbox">Create modules in rows?</label>
+          <input id="rowCreateCheckbox" type="checkbox" defaultChecked={rowCreate} onChange={() => { setRowCreate(!rowCreate) }} />
+        </div>
         <button onClick={() => { addModule("Notes") }}>Add Notes</button>
         <button onClick={() => { addModule("Reflective") }}>Add Reflective</button>
         <button onClick={() => { addModule("Todo") }}>Add To-do</button>

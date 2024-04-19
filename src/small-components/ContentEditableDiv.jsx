@@ -21,7 +21,7 @@ export function ContentEditableDiv(props) {
             className={className}
             style={style}
             ref={contentEditableRef}
-            Placeholder={props.Placeholder}
+            placeholder={props.Placeholder}
             onInput={event => {
                 props.onChange(event.target.textContent);
             }} />
