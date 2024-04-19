@@ -1,9 +1,23 @@
-Windows installer is available under releases
+<h1>Dev Companion is an organisational tool intended for developers.</h1>
 
-In theory, as an Electron program it should work on Linux and MacOS
+Built in React and Electron, Dev-Companion has a modular, moveable and resizable interface with basic implementations of the following features:
+- Todo-list
+- Kanban board
+- Reflective journal
+- Notes
+- Resources list
+- Timers (Regular and Pomodoro)
+
+Credit to React-Draggable and React-Quill for enabling draggability and note-taking respectively. 
+
+The program is still in a fairly early version. In testing it has been stable in terms of not crashing and not losing data.
+The main weaknesses of the current version are styling, keyboard controls and performance (The program doesn't lag but uses more CPU than it should). 
+<hr>
+Windows installer is available under releases.
+
+In theory, as an Electron program it should work on Linux and MacOS.
 
 To build for another platform (Requires NodeJS):
-
 - Download/clone the directory
 - Open an administrator terminal and navigate to the directory
 - Run 'npm i' to get dependencies
