@@ -8,7 +8,7 @@ Built in React and Electron, Dev-Companion has a modular, moveable and resizable
 - Resources list
 - Timers (Regular and Pomodoro)
 
-Credit to React-Draggable and React-Quill for enabling draggability and note-taking respectively. 
+React-Draggable and React-Quill are used for draggability and note-taking respectively. 
 
 The program is still in a fairly early version. In testing it has been stable in terms of not crashing and not losing data.
 The main weaknesses of the current version are styling, keyboard controls and performance (The program doesn't lag but uses more CPU than it should). 
