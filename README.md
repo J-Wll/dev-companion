@@ -12,6 +12,8 @@ React-Draggable and React-Quill are used for draggability and note-taking respec
 
 The program is still in a fairly early version. In testing it has been stable in terms of not crashing and not losing data.
 The main weaknesses of the current version are styling, keyboard controls and performance (The program doesn't lag but uses more CPU than it should). 
+
+When you first launch the program a default workspace will appear showing each module, if this is overwhelming, click the clear or create button on the left sidebar. Then you can build your own custom workspace.
 <hr>
 Windows installer is available under releases.
 
