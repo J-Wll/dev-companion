@@ -16,6 +16,10 @@ export default function TimerContent(props) {
         if (!localData || !localData.time) {
             setLocalData(() => ({ timerActive: true, time: 0, interval: 10, notifies: false, repeats: false, pomodoro: { on: false, workMode: true, workInterval: 45, restInterval: 15 } }));
         }
+        if (typeof localData === "object" && "label" in localData) {
+            console.log(localData.label, labelRef.current);
+            labelRef.current.value = localData.label;
+        }
     }, [])
 
     // autosave
