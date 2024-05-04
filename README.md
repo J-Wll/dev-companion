@@ -1,5 +1,7 @@
 <h1>Dev Companion is an organisational tool intended for developers.</h1>
 
+![image (3)](https://github.com/J-Wll/dev-companion/assets/80954812/04b988e7-d858-46a2-ad20-1959737cf5f1)
+
 Built in React and Electron, Dev-Companion has a modular, moveable and resizable interface with basic implementations of the following features:
 - Todo-list
 - Kanban board
