@@ -25,3 +25,11 @@
  .Px40W {
    width: 40px;
  }
+
+ /* Loads placeholder text */
+[contenteditable=true]:empty:not(:focus):before {
+  content: attr(placeholder);
+  pointer-events: none;
+  color: grey;
+  font-style: italic;
+}

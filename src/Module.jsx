@@ -114,7 +114,7 @@ export default function Module(props) {
     }
 
     function handleStart() {
-        props.setData(props.counter, 1000, "zIndex")
+        props.setData(props.counter, 2000, "zIndex")
         triggerRefresh(!refresh);
     }
 

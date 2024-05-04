@@ -11,6 +11,7 @@ export default function App() {
   const [moduleList, setModuleList] = useState([]);
   const [refresh, triggerRefresh] = useState(false);
   const [rowCreate, setRowCreate] = useState(false);
+  const [lastMods, setLastMods] = useState([]);
 
   // Data decoupled from modules at this level because otherwise every component is re-rendered whenever data changes
   // This way each component "controls" itself and updates the global data for saving/loading
@@ -121,6 +122,9 @@ export default function App() {
   }
 
   function topZIndex() {
+    if (moduleList.length <= 1) {
+      return;
+    }
     let mods = Object.keys(globalModuleData.current)
     mods = mods.filter((mod) => globalModuleData.current[mod].zIndex)
     mods = mods.sort((a, b) => {
@@ -135,13 +139,28 @@ export default function App() {
       return 0
     });
 
+
+    // Checking if mods is the same as the last time, if it is then no need to swap and refresh 
+    console.log(mods, lastMods);
+    let different = false;
+    for (let i = 0; i < mods.length; ++i) {
+      if (mods[i] !== lastMods[i]) {
+        different = true;
+      };
+    }
+
+    // This can't be in the different if because of an issue when clicking the same one multiple times
     mods.forEach((val, ind) => {
-      // console.log(val, ind + 1, globalModuleData.current[val].zIndex, globalModuleData.current[val].purpose)
       globalModuleData.current[val].zIndex = ind + 1;
-      // console.log(val, ind, globalModuleData.current[val].zIndex)
     })
 
-    triggerRefresh(!refresh);
+    if (different) {
+      console.log(mods, lastMods);
+
+      triggerRefresh(!refresh);
+
+      setLastMods(mods);
+    }
   }
 
 
@@ -170,8 +189,8 @@ export default function App() {
               biggestY = modYSize;
             }
 
-            // 500 for module size, 300 for sidebar size and etc
-            if (xSize + 400 > screen.width - 300) {
+            // 400 for module size, 300 for sidebar size and etc
+            if (xSize + 400 > window.innerWidth - 300) {
               ySize = biggestY + 20;
               xSize = 0;
             }

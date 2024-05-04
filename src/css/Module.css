@@ -23,6 +23,7 @@
   text-wrap: nowrap;
 
   cursor: pointer;
+  user-select: none;
 
   width: calc(100% - 51px);
 }
@@ -74,6 +75,7 @@
   display: flex;
   justify-content: center;
   box-sizing: border-box;
+  overflow-y: auto;
 
   background-color: rgb(180, 180, 180);
   border: solid rgb(255, 255, 255);
