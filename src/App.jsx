@@ -141,7 +141,6 @@ export default function App() {
 
 
     // Checking if mods is the same as the last time, if it is then no need to swap and refresh 
-    console.log(mods, lastMods);
     let different = false;
     for (let i = 0; i < mods.length; ++i) {
       if (mods[i] !== lastMods[i]) {
@@ -155,7 +154,6 @@ export default function App() {
     })
 
     if (different) {
-      console.log(mods, lastMods);
 
       triggerRefresh(!refresh);
 
@@ -175,9 +173,9 @@ export default function App() {
 
     if (rowCreate) {
       // a system for setting the default position to not overlap. Wasn't initially going to exist but without it keyboard only users can't really use the program. Temporary solution to accessible draggability.
-      console.log(globalModuleData, screen.width, screen.height, window.innerWidth, window.innerHeight);
+      // console.log(globalModuleData, screen.width, screen.height, window.innerWidth, window.innerHeight);
       const modKeys = Object.keys(globalModuleData.current);
-      console.log(modKeys)
+      // console.log(modKeys)
       // 1 is name, 2 means a module already exists
       if (modKeys.length >= 2) {
         let xSize = 0, ySize = 10, biggestY = 10;
@@ -203,8 +201,8 @@ export default function App() {
 
 
     globalModuleData.current[moduleKey] = { purpose: moduleType, data: undefined, zIndex: 1001, pos: defaultPos };
-    setModuleList(() => [...moduleList, { key: moduleKey, purpose: moduleType }]);
     topZIndex();
+    setModuleList(() => [...moduleList, { key: moduleKey, purpose: moduleType }]);
   }
 
   function deleteModule(target) {

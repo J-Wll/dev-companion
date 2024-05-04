@@ -27,7 +27,11 @@ ipcMain.handle("createFolder", async (_, fileName) => {
   if (fileName) {
     // console.log(app.isPackaged, process.env.NODE_ENV);
     // console.log(appPath, fileName, path.join(appPath, fileName))
-    fs.mkdirSync(path.join(appPath, fileName));
+    try {
+      fs.mkdirSync(path.join(appPath, fileName));
+    } catch (error) {
+
+    }
   }
 });
 
@@ -77,6 +81,8 @@ const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL']
 
 function createWindow() {
   win = new BrowserWindow({
+    width: 1200,
+    height: 720,
     icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),

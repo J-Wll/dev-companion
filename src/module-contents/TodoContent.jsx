@@ -68,7 +68,7 @@ export default function TodoContent(props) {
         const shiftTop = moveTo < currentOrder - 1;
         let changedOrder;
         if (shiftBottom || shiftTop) {
-            console.log("-----Shift key-----");
+            // console.log("-----Shift key-----");
             changedOrder = localData.map((todo) => {
                 if (todo.key === target) {
                     return { ...todo, order: moveTo };
